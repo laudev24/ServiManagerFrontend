@@ -18,7 +18,6 @@ const NuevoCliente = () => {
     const campoContrasenia2 = useRef("")
     
     const registrar = () => {
-      // validar que las dos contraseñas ingresadas son iguales, etc 
       const clienteNuevo = {
         nombre: campoNombreUsuario.current.value,
         contraseña: campoContrasenia.current.value,
@@ -31,35 +30,37 @@ const NuevoCliente = () => {
         nombreContacto: campoNombreContacto.current.value
       };
 
+
       console.log("Datos a enviar:", clienteNuevo);
 
-      //En el backend estaria faltando la categoria y la fecha de pago, que tiene tres opciones: del 1 al 10, del 11 al 20 y del 21 al 30 
-      fetch("https://localhost:5201/api/cliente", {
-        method: 'POST',
-        body: JSON.stringify(clienteNuevo),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-        })
-        .then((response) => response.json())
-        .then((json) => {
-          if(json.codigo===204){
-            navigate("/clientes")
-            console.log(json.mensaje);
-            toast("Cliente creado con éxito.")
-          }
-          else {
-            // console.log(json.mensaje)
-            // toast(json.mensaje);
-            toast("Hasta aca llegue")
-          }
-        })
-      .catch((error) => {
-        console.error("Error al crear cliente:", error.message); // usa correctamente "error"
-        toast("Error al crear cliente.");
-      });
-
-         
+      //En el backend estaria faltando la categoria y la fecha de pago, que tiene tres opciones: del 1 al 10, del 11 al 20 y del 21 al 30. 
+      
+      if(campoContrasenia.current.value.toLowerCase() === campoContrasenia2.current.value.toLowerCase()){
+        fetch("https://localhost:5201/api/cliente", {
+          method: 'POST',
+          body: JSON.stringify(clienteNuevo),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+          })
+          .then((response) => response.json())
+          .then((json) => {
+            if(json.codigo===204){
+              navigate("/clientes")
+              console.log(json.mensaje);
+              toast("Cliente creado con éxito.")
+            }
+            else {
+              // console.log(json.mensaje)
+              // toast(json.mensaje);
+              toast("Hasta aca llegue")
+            }
+          })
+        .catch((error) => {
+          console.error("Error al crear cliente:", error.message); // usa correctamente "error"
+          toast("Error al crear cliente.");
+        });
+      }
     }
 
 
@@ -93,9 +94,9 @@ const NuevoCliente = () => {
         <label>RUT:
         <input type="text" className="rut" ref={campoRut}/>
         </label><br/>
-        <label>Cargo fijo:
+        {/* <label>Cargo fijo:
         <input type="text" className="numCargo" ref={campoCargoFijo}/>
-        </label><br/>
+        </label><br/> */}
         <label>Fecha de pago:
         <select className="selFechaPago" ref={campoFechaPago}>
             <option value="">Elegir rango</option>
