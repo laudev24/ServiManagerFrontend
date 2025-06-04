@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <Link to="/#######">
+                    <img
+                      src="/images/Back.png"
+                      alt="Ir atrás"
+                    />
+                  </Link>
+            </div>
+            <div>
+                <Link to="/home">
+                    <img
+                      src="/images/Home.png"
+                      alt="Ir a inicio"
+                    />
+                </Link>
+            </div>
+            <div>
+                <Link to="/########">
+                    <img
+                      src="/images/User.png"
+                      alt="Ver mis datos"
+                    />
+                </Link>
+            </div>
+        </nav>
+    </header>
+    <section id="login">
+        <h1>¡Hola!</h1>
+        <h2>Bienvenido a ServiManager.</h2>
+        <h3>Ingresá tu usuario y tu contraseña</h3>
+        <label for="usuario">Usuario:</label>
+        <input type="text" name="txtUsuario" id="usuario">
+        <label for="pass">contraseña:</label>
+        <input type="password" name="txtPass" id="pass">
+        <button>Login</button>
+        <a href="zzz">¿Olvidaste tu contraseña?</a>
+    </section>
+    <section id="regUsuario">
+
+    </section>
+    <section id="pantallaInicioAdm">
+  
+    </section>
+    <section id="verClientes">
+        <h1>Clientes</h1>
+        <Link  to="/regCliente">
+            <h2>Agregar nuevo cliente</h2>
+        </Link>
+        <button>Con alerta</button>
+        <select name="categoriaDeCliente" id="catDeCliente">
+
+        </select>
+        <div id="searchBar">
+             <!-- searchbar  ejemplo de chatGPT-->
+            <!-- 
+            import { useState } from 'react';
+
+            const items = ['Manzana', 'Banana', 'Cereza', 'Durazno', 'Uva'];
+
+            function SearchBar() {
+            const [search, setSearch] = useState('');
+
+            const filteredItems = items.filter(item =>
+                item.toLowerCase().includes(search.toLowerCase())
+            );
+
+            return (
+                <div style={{ padding: '1rem' }}>
+                <input
+                    type="text"
+                    placeholder="Buscar fruta..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    style={{
+                    padding: '0.5rem',
+                    fontSize: '1rem',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc'
+                    }}
+                />
+
+                <ul style={{ marginTop: '1rem' }}>
+                    {filteredItems.map((item, index) => (
+                    <li key={index}>{item}</li>
+                    ))}
+                    {filteredItems.length === 0 && <li>No hay resultados</li>}
+                </ul>
+                </div>
+            );
+            }
+
+            export default SearchBar;
+            -->
+        </div>
+       <!-- Listado de clientes, cada uno con su link a modificar y boton eliminar -->
+    </section>
+    <section id="regCliente">
+        <h1>Registro de nuevo cliente</h1>
+        <label for="nombreEmp">Nombre de la empresa:</label>
+        <input type="text" name="txtNombreEmp" id="nombreEmp">
+        <select name="categoriaCliente" id="catCliente">
+
+        </select>
+        <label for="direccion">Dirección:</label>
+        <input type="text" name="txtdireccion" id="direccion">
+        <label for="nombreContacto">Nombre del contacto:</label>
+        <input type="text" name="txtnombreContacto" id="nombreContacto">
+        <label for="tel">Teléfono/Celular de contacto:</label>
+        <input type="text" name="txtTel" id="tel">
+        <label for="rut">RUT:</label>
+        <input type="text" name="txtRut" id="rut">
+        <label for="cargo">Cargo fijo:</label>
+        <input type="number" name="numCargo" id="cargo">
+        <label for="fechaPago">Fecha de pago:</label>
+        <select name="selFechaPago" id="fechaPago">
+            <option value="10">1 al 10</option>
+            <option value="20">11 al 20</option>
+            <option value="10">21 al 30</option>
+        </select>
+        <div id="crearUsuario">
+            <label for="usu">Nombre de usuario:</label>
+            <input type="text" name="txtUsu" id="usu">
+            <label for="contra">Contraseña:</label>
+            <input type="password" name="txtContra" id="contra">
+            <label for="contra2">Repetir contraseña:</label>
+            <input type="password" name="txtContra" id="contra">
+        </div>
+    </section>
+    <section id="VerCliente">
+        <Link to="/modCliente">
+            <img
+              src="/images/Modificar.png"
+              alt="Modificar cliente"
+            />
+        </Link>
+    </section>
+    <section id="modCliente">
+        <h1>Modificación de cliente</h1>
+        <label for="nombreEmp">Nombre de la empresa:</label>
+        <input type="text" name="txtNombreEmp" id="nombreEmp">
+        <label for="direccion">Dirección:</label>
+        <input type="text" name="txtdireccion" id="direccion">
+        <label for="nombreContacto">Nombre del contacto:</label>
+        <input type="text" name="txtnombreContacto" id="nombreContacto">
+        <label for="tel">Teléfono/Celular de contacto:</label>
+        <input type="text" name="txtTel" id="tel">
+        <label for="rut">RUT:</label>
+        <input type="text" name="txtRut" id="rut">
+        <label for="cargo">Cargo fijo:</label>
+        <input type="number" name="numCargo" id="cargo">
+        <label for="fechaPago">Fecha de pago:</label>
+        <select name="selFechaPago" id="fechaPago">
+            <option value="10">1 al 10</option>
+            <option value="20">11 al 20</option>
+            <option value="10">21 al 30</option>
+        </select>
+    </section>
+    <section id="verMaquinas">
+        <h1>Máquinas</h1>
+        <Link  to="/regMaquina">
+            <h2>Agregar nueva máquina</h2>
+        </Link>
+        <select name="marcaMaq">
+        </select>
+       
+       <!-- Listado de maquinas, cada una con su link a modificar y boton eliminar -->
+    </section>
+    <section id="regCliente">
+        <h1>Registro de nueva máquina</h1>
+        <label for="numero">Número identificador:</label>
+        <input type="text" name="numero">
+        <label for="marca">Marca:</label>
+        <input type="text" name="marca">
+        <label for="modelo">Modelo:</label>
+        <input type="text" name="modelo">
+        <label for="anio">Año:</label>
+        <input type="text" name="anio">
+        <label for="tipoMaquina">Tipo de máquina:</label>
+        <select name="tipoMaquina">
+        </select>
+        <label for="tipoImpresion">Tipo de impresión:</label>
+        <select name="tipoImpresion">
+        </select>
+        <label for="cantcont">Cantidad de contadores:</label>
+        <input type="text" name="cantcont">
+        <label for="costoCopiaByn">Costo por copia B&N:</label>
+        <input type="number" name="costoCopiaByn">
+        <label for="costoCopiaColor">Costo por copia Color:</label>
+        <input type="number" name="costoCopiaColor">
+        <label for="clientesMaq">Clientes:</label>
+        <button>Asociar cliente</button>
+    </section>
+    <section id="VerMaquina">
+        <Link to="/modMaquina">
+            <img
+              src="/images/Modificar.png"
+              alt="Modificar máquina"
+            />
+        </Link>
+        <select name="listaClientesMaq">
+            <!-- nombre, alquilada desde, alquilada hasta, desasociar -->
+        </select>
+    </section>
+    <footer>
+        <Link to="/login">
+           Logout
+        </Link>
+    </footer>
+</body>
+</html>
