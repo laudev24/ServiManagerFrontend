@@ -2,12 +2,15 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+
 
 const Clientes = () => {
     const id = useSelector(state => state.usuarioSlice.id);
     const apikey = useSelector(state => state.usuarioSlice.apiKey);
+    const dispatch = useDispatch();
+
     const [clientesFiltrados, setClientesFiltrados] = useState([])
     const [categorias, setCategorias] = useState([])
     const [search, setSearch] = useState('')
@@ -43,6 +46,7 @@ const Clientes = () => {
     //       .then(r => r.json())
     //       .then(datos => {
     //          setCategorias(datos)
+      //        dispatch(guardarCategorias(datos))
     //       })
     //   }, [])
     
