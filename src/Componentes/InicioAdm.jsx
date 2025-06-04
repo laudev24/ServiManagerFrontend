@@ -17,15 +17,7 @@ const InicioAdm = () => {
 
       }
       const verMaquinas = () => {
-            // // Pedir al backend el listado de maquinas 
-      // useEffect(() => {
-      //     fetch("")
-      //     .then(r => r.json())
-      //     .then(datos => {
-      //        dispatch(guardarMaquinas(datos.maquinas))
-      //        navigate("/maquinas")
-      //     })
-      // }, [])
+       
              navigate("/maquinas")
       }
       const verFichas = () => {
