@@ -10,9 +10,12 @@ export const maquinasSlice = createSlice({
     reducers:{
         guardarMaquinas: (state, action) => {
             state.maquinas = action.payload;
+        },
+        eliminarMaquina:(state, action) => {
+            state.listaMaquinas=action.payload
         }
     }
 })
 
-export const {guardarMaquinas} = maquinasSlice.actions;
+export const {guardarMaquinas, eliminarMaquina} = maquinasSlice.actions;
 export default maquinasSlice.reducer;
