@@ -80,15 +80,15 @@ const InicioAdm = () => {
                 <figcaption>Ver mis datos</figcaption>
             </figure>
         </Link>
-        {/* Hasta aqui iba en el cabezal */}
+        {/* Hasta aqui va en el cabezal */}
 
-        <input type="button" value="Clientes" /* disabled={isDisabled} */ className="btnClientes" onClick={verClientes}/> <br />
-        <input type="button" value="Máquinas" /* disabled={isDisabled} */ className="btnMaquinas" onClick={verMaquinas}/><br />
-        <input type="button" value="Fichas Técnicas" /* disabled={isDisabled} */ className="btnFichasTecnicas" onClick={verFichas}/> <br />
+        <input type="button" value="Clientes" className="btnClientes" onClick={verClientes}/> <br />
+        <input type="button" value="Máquinas" className="btnMaquinas" onClick={verMaquinas}/><br />
+        <input type="button" value="Fichas Técnicas" className="btnFichasTecnicas" onClick={verFichas}/> <br />
         
-        <input type="button" value="Solicitudes" /* disabled={isDisabled} */ className="btnSolicitudes" onClick={verSolicitudes}/><br />
-        <input type="button" value="Insumos" /* disabled={isDisabled} */ className="btnInsumos" onClick={verInsumos}/><br />
-        <input type="button" value="Chats" /* disabled={isDisabled} */ className="btnChats" onClick={verChats}/>
+        <input type="button" value="Solicitudes" className="btnSolicitudes" onClick={verSolicitudes}/><br />
+        <input type="button" value="Insumos" className="btnInsumos" onClick={verInsumos}/><br />
+        <input type="button" value="Chats" className="btnChats" onClick={verChats}/>
 
     </div>
   )

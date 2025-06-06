@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { guardarClientes } from '../features/clientesSlice'
 
 const NuevoCliente = () => {
     const categorias = useSelector(state => state.categoriasSlice.categorias);
@@ -11,11 +12,15 @@ const NuevoCliente = () => {
     const campoNombreContacto = useRef("")
     const campoTelefono = useRef("")
     const campoRut = useRef("")
-    const campoCargoFijo = useRef("")
+    // const campoCargoFijo = useRef("")
     const campoFechaPago = useRef("")
     const campoNombreUsuario = useRef("")
     const campoContrasenia = useRef("")
     const campoContrasenia2 = useRef("")
+
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
     
     const registrar = () => {
       const clienteNuevo = {
@@ -44,16 +49,18 @@ const NuevoCliente = () => {
           },
           })
           .then((response) => response.json())
-          .then((json) => {
-            if(json.codigo===204){
+          .then((datos) => {
+            console.log(datos.codigo)
+            if(datos.codigo===201){
               navigate("/clientes")
-              console.log(json.mensaje);
+              console.log(datos.mensaje);
               toast("Cliente creado con éxito.")
+              dispatch(guardarClientes(datos))
             }
             else {
-              // console.log(json.mensaje)
-              // toast(json.mensaje);
-              toast("Hasta aca llegue")
+              console.log(json.mensaje)
+              toast(json.mensaje);
+              // toast("Hasta aca llegue")
             }
           })
         .catch((error) => {

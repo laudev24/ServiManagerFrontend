@@ -11,9 +11,11 @@ export const maquinasSlice = createSlice({
         guardarMaquinas: (state, action) => {
             state.maquinas = action.payload;
         },
-        eliminarMaquina:(state, action) => {
-            state.listaMaquinas=action.payload
+        eliminarMaquina: (state, action) => {
+            const idAEliminar = action.payload;
+            state.maquinas = state.maquinas.filter(m => m.id !== idAEliminar);
         }
+
     }
 })
 

@@ -19,6 +19,8 @@ import Solicitudes from './Componentes/Solicitudes'
 import NuevaMaquina from  './Componentes/NuevaMaquina'
 import ModificarMaquina from './Componentes/ModificarMaquina'
 import ModificarCliente from './Componentes/ModificarCliente'
+import VerCliente from './Componentes/VerCliente'
+
 
 
 
@@ -32,6 +34,7 @@ function App() {
             <Route path = "/" element={<Login/>}/>
             <Route path = "/inicioAdm" element={<InicioAdm/>}/>
             <Route path = "/clientes" element={<Clientes/>}/>
+            <Route path = "/verCliente/:id" element={<VerCliente/>}/>
             <Route path = "/nuevoCliente" element={<NuevoCliente/>}/>
             <Route path = "/nuevaMaquina" element={<NuevaMaquina/>}/>
             <Route path = "/chat" element={<Chat/>}/>
@@ -40,8 +43,8 @@ function App() {
             <Route path = "/fichasTecnicas" element={<FichasTecnicas/>}/>
             <Route path = "/insumos" element={<Insumos/>}/>
             <Route path = "/maquinas" element={<Maquinas/>}/>
-            <Route path = "/modificarMaquina" element={<ModificarMaquina/>}/>
-            <Route path = "/modificarCliente" element={<ModificarCliente/>}/>
+            <Route path = "/modificarMaquina/:id" element={<ModificarMaquina/>}/>
+            <Route path = "/modificarCliente/:id" element={<ModificarCliente/>}/>
             <Route path = "/mensaje" element={<Mensaje/>}/>
             <Route path = "/solicitudes" element={<Solicitudes/>}/>
             <Route path="*" element={<NoEncontrado/>}/>

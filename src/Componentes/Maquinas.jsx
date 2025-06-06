@@ -14,7 +14,7 @@ const Maquinas = () => {
   const modeloElegidoId = useRef("")
   const navigate = useNavigate()
   const dispatch = useDispatch();
-  let listaMaquinas = []
+  const listaMaquinas = useSelector(state => state.maquinasSlice.maquinas);
 
 
   // Pedir al backend el listado de maquinas 
@@ -29,7 +29,6 @@ const Maquinas = () => {
       .then(datos => {
           setMaquinasFiltradas(datos)
           dispatch(guardarMaquinas(datos))
-          listaMaquinas=useSelector(state => state.listaMaquinasSlice.listaMaquinas);
 
       })
       .catch(error => {
@@ -74,7 +73,7 @@ const Maquinas = () => {
   //   const marcaElegida = marcas.find(marcaElegidaId => marcaElegidaId === id)
   //   const modeloElegido = modelos.find(modeloElegidoId => modeloElegidoId === id)
   //   const maquinasPorModelo=[]
-  //   if(marcaElegida != "" && modeloElegido != ""){
+  //   if(marcaElegida != "" || modeloElegido != ""){
   //    for(m in maquinasFiltradas){
   //       if(m.marca == marcaElegida || m.modelo == modeloElegido) maquinasPorModelo.push(m)
   //     }
@@ -91,7 +90,9 @@ const Maquinas = () => {
   }
 
   const handleEliminar = (idMaquina) => { 
-    const index = listaMaquinas.indexOf(idEvento);
+    // const index = listaMaquinas.indexOf(idMaquina);
+    const index = listaMaquinas.findIndex(m => m.id === idMaquina);
+
 
     fetch(`https://localhost:5201/api/maquina/${idMaquina}`, {
       method: 'DELETE',
@@ -104,7 +105,7 @@ const Maquinas = () => {
         toast("Máquina eliminada");
         console.log(r.status)
         setMaquinasFiltradas(prev => prev.filter(c => c.id !== idMaquina));
-        dispatch(eliminarMaquina(listaMaquinas.splice(index, 1)))
+        dispatch(eliminarMaquina(index))
 
       } else {
         console.log(r.status)
@@ -119,9 +120,11 @@ const Maquinas = () => {
 
   const arrendada = (id) =>{
     const maquina = maquinasFiltradas.find(m => m.id === id)
-    if(maquina.arrendamientos[0].activo) 
-      return "Sí"
-    else return "No"
+    if(maquina.arrendamientos.length != 0){
+      if(maquina.arrendamientos[0].activo) 
+        return "Sí"
+      else return "No"
+    }
   }
 
 
@@ -152,7 +155,9 @@ const Maquinas = () => {
       <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
         <tbody>
           <thead>
-            <td>Numero</td><td>Marca</td><td>Modelo</td><td>Arrendada</td>
+            <tr>
+              <th>Numero</th><th>Marca</th><th>Modelo</th><th>Arrendada</th><th></th><th></th>
+            </tr>
           </thead>
           {maquinasFiltradas.map((maquina) => (
             <tr key={maquina.id}>

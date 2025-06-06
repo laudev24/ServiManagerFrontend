@@ -10,9 +10,14 @@ export const clientesSlice = createSlice({
     reducers:{
         guardarClientes: (state, action) => {
             state.clientes = action.payload;
+        },
+        eliminarCliente: (state, action) => {
+            const idAEliminar = action.payload;
+            state.clientes = state.clientes.filter(m => m.id !== idAEliminar);
         }
+
     }
 })
 
-export const {guardarClientes} = clientesSlice.actions;
+export const {guardarClientes, eliminarCliente} = clientesSlice.actions;
 export default clientesSlice.reducer;

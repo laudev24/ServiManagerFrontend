@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ModificarMaquina = () => {
+const ModificarMaquina = (id) => {
   return (
     <div>ModificarMaquina</div>
   )

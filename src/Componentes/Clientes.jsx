@@ -4,12 +4,19 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { guardarClientes, eliminarCliente } from '../features/clientesSlice' 
 
 
 const Clientes = () => {
     const id = useSelector(state => state.usuarioSlice.id);
     const apikey = useSelector(state => state.usuarioSlice.apiKey);
+    const listaClientes=useSelector(state => state.clientesSlice.clientes);
+    
     const dispatch = useDispatch();
+    const clientesOrdenados = [...listaClientes].sort((a, b) => 
+        a.nombre.localeCompare(b.nombre)
+    );
+
 
     const [clientesFiltrados, setClientesFiltrados] = useState([])
     const [categorias, setCategorias] = useState([])
@@ -27,6 +34,7 @@ const Clientes = () => {
             }) 
         .then(datos => {
            setClientesFiltrados(datos)
+            dispatch(guardarClientes(datos))
         })
         .catch(error => {
             console.error("Error al obtener los clientes:", error);
@@ -59,66 +67,51 @@ const Clientes = () => {
       //     })
     }
 
-    // revisar si esto funciona creando agregando clientes a la bd
-    const searchBar = () => {
-        setClientesFiltrados( clientesFiltrados.filter(item =>
-            item.toLowerCase().includes(search.toLowerCase())
-        ));
+    const searchBar = (value) => {
+        const textoBusqueda = value.toLowerCase().trim();
 
-    }
+        if (textoBusqueda !== "") {
+            setClientesFiltrados(
+            listaClientes.filter(cliente =>
+                cliente.nombreEmpresa.toLowerCase().startsWith(textoBusqueda)
+            )
+            );
+        } else {
+            setClientesFiltrados(listaClientes);
+        }
+    };
+
+    
 
     const handleModificar = (id) => {
         navigate(`/modificarCliente/${id}`) 
     }
 
     const handleEliminar = (idCliente) => {
+        const index = listaClientes.indexOf(idCliente);
+
             // // Pedir al backend que elimine a este cliente
-fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
-  method: 'DELETE',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-.then(async (r) => {
-  if (r.status === 204) {
-    toast("Cliente eliminado");
-    console.log(r.status)
-    setClientesFiltrados(prev => prev.filter(c => c.id !== idCliente));
-  } else {
-    console.log(r.status)
-    // const json = await r.json();
-    toast(json.mensaje || "Error eliminando cliente");
-  }
-})
-.catch((err) => {
-    console.log("Error en la conexión: " + err)
-
-  toast("Error de conexión al eliminar cliente");
-});
-
-
-
-    // fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //       'Content-Type': 'application/json',
-    //       //Elegir useSelector o localStorage
-    //     //   'apikey': apikey,
-    //     //   'iduser': localStorage.getItem("id"),
-    //   },
-    //   })
-    //   .then(r=>r.json())
-    //   .then((json) => {
-    //       if(json.codigo===204){
-    //         toast(json.mensaje)
-    //         setClientesFiltrados(clientesFiltrados.splice(idCliente, 1))
-    //       }
-    //       else {
-    //         toast(json.mensaje);
-    //       }
-
-    //   })             
-          
+        fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
+            method: 'DELETE',
+           headers: {
+            'Content-Type': 'application/json',
+        },
+        })
+        .then(async (r) => {
+            if (r.status === 204) {
+                toast("Cliente eliminado");
+                console.log(r.status)
+                setClientesFiltrados(prev => prev.filter(c => c.id !== idCliente));
+                dispatch(eliminarCliente(index))
+            } else {
+                console.log(r.status)
+                toast(json.mensaje || "Error eliminando cliente");
+            }
+        })
+        .catch((err) => {
+            console.log("Error en la conexión: " + err)
+            toast("Error de conexión al eliminar cliente");
+        });
     }
 
 
@@ -140,7 +133,10 @@ fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
                 type="text"
                 placeholder="Buscar cliente..."
                 value={search}
-                onChange={(e) => {setSearch(e.target.value), searchBar(e.target.value)}}
+                onChange={(e) => {
+                    setSearch(e.target.value); 
+                    searchBar(e.target.value);
+                }}
                 style={{
                 padding: '0.5rem',
                 fontSize: '1rem',
@@ -154,7 +150,7 @@ fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
         {/* Listado de clientes, cada uno con su link a modificar y boton eliminar  */}
         <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
             <tbody>
-                {clientesFiltrados.map((cliente) => (
+                {clientesOrdenados.map((cliente) => (
                 <tr key={cliente.id}>
                     <td style={{ padding: "8px" }}>
                         {/* Iconos condicionales */}
@@ -165,7 +161,7 @@ fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
                             </span>
                         )}
                         {/* Nombre */}
-                        <span style={{ marginLeft: "10px" }}>{cliente.nombre}</span>
+                        <span style={{ marginLeft: "10px" }}><Link to={`/verCliente/${cliente.id}`}>{cliente.nombreEmpresa}</Link></span>
                     </td>
                     <td style={{ padding: "8px" }}>
                     <button onClick={() => handleModificar(cliente.id)}>Modificar</button>
@@ -177,7 +173,7 @@ fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
                     </td>
                 </tr>
                 ))}
-                {clientesFiltrados.length === 0 && <tr><td>No hay resultados</td></tr>}
+                {clientesOrdenados.length === 0 && <tr><td>No hay resultados</td></tr>}
             </tbody>
         </table>
     </div>
