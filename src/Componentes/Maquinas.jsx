@@ -15,7 +15,7 @@ const Maquinas = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const listaMaquinas = useSelector(state => state.maquinasSlice.maquinas);
-
+  const maquinasPorNumero = [...listaMaquinas].sort((a, b) => a.numero - b.numero); 
 
   // Pedir al backend el listado de maquinas 
   useEffect(() => {
@@ -90,8 +90,6 @@ const Maquinas = () => {
   }
 
   const handleEliminar = (idMaquina) => { 
-    // const index = listaMaquinas.indexOf(idMaquina);
-    const index = listaMaquinas.findIndex(m => m.id === idMaquina);
 
 
     fetch(`https://localhost:5201/api/maquina/${idMaquina}`, {
@@ -105,7 +103,7 @@ const Maquinas = () => {
         toast("Máquina eliminada");
         console.log(r.status)
         setMaquinasFiltradas(prev => prev.filter(c => c.id !== idMaquina));
-        dispatch(eliminarMaquina(index))
+        dispatch(eliminarMaquina(idMaquina))
 
       } else {
         console.log(r.status)
@@ -155,12 +153,10 @@ const Maquinas = () => {
       <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
         <tbody>
           <thead>
-            <tr>
               <th>Numero</th><th>Marca</th><th>Modelo</th><th>Arrendada</th><th></th><th></th>
-            </tr>
           </thead>
-          {maquinasFiltradas.map((maquina) => (
-            <tr key={maquina.id}>
+          {maquinasPorNumero.map((maquina) => (
+            <tr key={maquina.id}><Link to={`/verMaquina/${maquina.id}`}>
               <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{maquina.numero}</span>
               </td>
@@ -170,6 +166,7 @@ const Maquinas = () => {
                <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{maquina.modelo}</span>
               </td>
+              </Link>
                <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{arrendada(maquina.id)}</span>
               </td>

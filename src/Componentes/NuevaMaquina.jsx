@@ -56,6 +56,7 @@ const NuevaMaquina = () => {
             numero: campoNumero.current.value,
             marca: campoMarca.current.value,
             modelo: campoModelo.current.value,
+            año: campoAnio.current.value,
             tiposImpresion: campoTipoImpresion.current.value,
             tiposMaquina: campoTipoMaquina.current.value,
             cantidadContadores: campoCantidadContadores.current.value,
@@ -107,21 +108,27 @@ const NuevaMaquina = () => {
             <label>Año:
                 <input type="text" className="anio" ref={campoAnio}/>
             </label><br/>
+            <label>Tipo de máquina:
+                <input type="text" className="tipoMaquina" ref={campoTipoMaquina}/>
+            </label><br/>
+            {/* <label>Tipo de impresión:
+                <input type="text" className="tipoImpresion" ref={campoTipoImpresion}/>
+            </label><br/> */}
 
-            <select className="tipoMaquina" ref={campoTipoMaquina}>
+            {/* <select className="tipoMaquina" ref={campoTipoMaquina}>
                 <option value="">Tipo de máquina</option>
                 {tiposMaquina.map((tm) => (
                     <option key={tm.id}>{tm.nombre}</option>
                 ))}
                 {tiposMaquina.length===0 && <option key="">No hay tipos de máquina para mostrar</option>}
-            </select><br/>
+            </select><br/> */}
         
             <select className="tipoImpresion" ref={campoTipoImpresion}>
                 <option value="">Tipo de impresión</option>
                 {tiposImpresion.map((ti) => (
                     <option key={ti.id}>{ti.nombre}</option>
                 ))}
-                {tiposImpresion.length===0 && <option key="">No hay tipos de impresión  para mostrar</option>}
+                {tiposImpresion.length===0 && <option key="">No hay tipos de impresión para mostrar</option>}
             </select><br/>
 
             <label>Cantidad de contadores:

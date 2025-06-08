@@ -2,10 +2,13 @@ import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'
 
 
 const ModificarCliente = () => {
   const { id } = useParams();
+  let navigate = useNavigate();
+
   const categorias = useSelector(state => state.categoriasSlice.categorias);
   const clientes = useSelector(state => state.clientesSlice.clientes);
   const cliente = clientes.find(c => c.id === Number(id))
@@ -49,7 +52,8 @@ const ModificarCliente = () => {
     .then((response) => response.json())
     .then((datos) => {
       console.log(datos.codigo)
-      if(datos.codigo===200){
+      // if(datos.codigo===200){
+      if(datos.codigo===undefined || datos.codigo===200){ // el codigo que llega es undefined
         dispatch(guardarClientes(datos))
         navigate("/clientes")
         console.log(datos.codigo);
@@ -73,8 +77,7 @@ const ModificarCliente = () => {
         <label>Nombre de la empresa:
         <input type="text" className="nombreEmp" ref={campoNombreEmpresa} defaultValue={cliente?.nombreEmpresa || ''}/>
         </label><br/>
-        <select className="categoriaCliente" ref={campoCategoria}>
-            <option value="">Elegir categoría</option>
+        <select className="categoriaCliente" ref={campoCategoria} defaultValue={cliente?.categoria || ''}>
             {categorias.map((cat) => (
                 <option key={cat.id}>{cat.nombre}</option>
             ))}

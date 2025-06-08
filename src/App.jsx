@@ -20,6 +20,9 @@ import NuevaMaquina from  './Componentes/NuevaMaquina'
 import ModificarMaquina from './Componentes/ModificarMaquina'
 import ModificarCliente from './Componentes/ModificarCliente'
 import VerCliente from './Componentes/VerCliente'
+import VerMaquina from './Componentes/VerMaquina'
+import AsociarMaquinas from './Componentes/AsociarMaquinas';
+import AsociarCliente from './Componentes/AsociarCliente';
 
 
 
@@ -35,6 +38,7 @@ function App() {
             <Route path = "/inicioAdm" element={<InicioAdm/>}/>
             <Route path = "/clientes" element={<Clientes/>}/>
             <Route path = "/verCliente/:id" element={<VerCliente/>}/>
+            <Route path = "/verMaquina/:id" element={<VerMaquina/>}/>
             <Route path = "/nuevoCliente" element={<NuevoCliente/>}/>
             <Route path = "/nuevaMaquina" element={<NuevaMaquina/>}/>
             <Route path = "/chat" element={<Chat/>}/>
@@ -47,6 +51,8 @@ function App() {
             <Route path = "/modificarCliente/:id" element={<ModificarCliente/>}/>
             <Route path = "/mensaje" element={<Mensaje/>}/>
             <Route path = "/solicitudes" element={<Solicitudes/>}/>
+            <Route path = "/asociarMaquinas/:id" element={<AsociarMaquinas/>}/>
+            <Route path = "/asociarCliente/:id" element={<AsociarCliente/>}/>
             <Route path="*" element={<NoEncontrado/>}/>
         </Routes>
       </BrowserRouter>

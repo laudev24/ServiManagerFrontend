@@ -88,7 +88,6 @@ const Clientes = () => {
     }
 
     const handleEliminar = (idCliente) => {
-        const index = listaClientes.indexOf(idCliente);
 
             // // Pedir al backend que elimine a este cliente
         fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
@@ -102,7 +101,7 @@ const Clientes = () => {
                 toast("Cliente eliminado");
                 console.log(r.status)
                 setClientesFiltrados(prev => prev.filter(c => c.id !== idCliente));
-                dispatch(eliminarCliente(index))
+                dispatch(eliminarCliente(idCliente))
             } else {
                 console.log(r.status)
                 toast(json.mensaje || "Error eliminando cliente");
@@ -120,7 +119,7 @@ const Clientes = () => {
         <h1>Clientes</h1>
         <Link to="/nuevoCliente">Crear nuevo cliente</Link> <br />
         <input type="button" value="Con Alertas" onClick={conAlerta}/> <br />
-        <select name="categoriaDeCliente">
+        <select className="categoriaDeCliente">
             <option value="">Elegir categoría</option>
             {categorias.map((categoria) => (
                 <option key={categoria.id}>{categoria.nombre}</option>
