@@ -10,7 +10,7 @@ import { guardarClientes, eliminarCliente } from '../features/clientesSlice'
 const Clientes = () => {
     const id = useSelector(state => state.usuarioSlice.id);
     const apikey = useSelector(state => state.usuarioSlice.apiKey);
-    const listaClientes=useSelector(state => state.clientesSlice.clientes);
+    const listaClientes=useSelector(state => state.clientesSlice.clientes || []);
     
     const dispatch = useDispatch();
     const clientesOrdenados = [...listaClientes].sort((a, b) => 
@@ -89,7 +89,6 @@ const Clientes = () => {
 
     const handleEliminar = (idCliente) => {
 
-            // // Pedir al backend que elimine a este cliente
         fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
             method: 'DELETE',
            headers: {
@@ -104,7 +103,7 @@ const Clientes = () => {
                 dispatch(eliminarCliente(idCliente))
             } else {
                 console.log(r.status)
-                toast(json.mensaje || "Error eliminando cliente");
+                toast(r.mensaje || "Error eliminando cliente");
             }
         })
         .catch((err) => {
@@ -163,7 +162,8 @@ const Clientes = () => {
                         <span style={{ marginLeft: "10px" }}><Link to={`/verCliente/${cliente.id}`}>{cliente.nombreEmpresa}</Link></span>
                     </td>
                     <td style={{ padding: "8px" }}>
-                    <button onClick={() => handleModificar(cliente.id)}>Modificar</button>
+                    <button onClick={() => handleModificar(cliente.id)}>
+                        Modificar</button>
                     </td>
                     <td style={{ padding: "8px" }}>
                     <button onClick={() => handleEliminar(cliente.id)} style={{ color: "red" }}>

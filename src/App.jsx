@@ -23,6 +23,7 @@ import VerCliente from './Componentes/VerCliente'
 import VerMaquina from './Componentes/VerMaquina'
 import AsociarMaquinas from './Componentes/AsociarMaquinas';
 import AsociarCliente from './Componentes/AsociarCliente';
+import NuevaFichaTecnica from './Componentes/NuevaFichaTecnica';
 
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path = "/verMaquina/:id" element={<VerMaquina/>}/>
             <Route path = "/nuevoCliente" element={<NuevoCliente/>}/>
             <Route path = "/nuevaMaquina" element={<NuevaMaquina/>}/>
+            <Route path = "/nuevaFichaTecnica" element={<NuevaFichaTecnica/>}/>
             <Route path = "/chat" element={<Chat/>}/>
             <Route path = "/chats" element={<Chats/>}/>
             <Route path = "/datosUsuario" element={<DatosUsuario/>}/>

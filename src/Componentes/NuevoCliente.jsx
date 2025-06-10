@@ -1,10 +1,13 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { guardarClientes } from '../features/clientesSlice'
+import { useNavigate } from 'react-router-dom';
 
 const NuevoCliente = () => {
     const categorias = useSelector(state => state.categoriasSlice.categorias);
+    const [mensaje, setMensaje] = useState("")
+
     const campoNombreEmpresa = useRef("")
     const campoDireccion = useRef("")
     const campoEmail = useRef("")
@@ -48,24 +51,47 @@ const NuevoCliente = () => {
             'Content-type': 'application/json; charset=UTF-8',
           },
           })
-          .then((response) => response.json())
-          .then((datos) => {
-            console.log(datos.codigo)
-            if(datos.codigo===201){
-              navigate("/clientes")
-              console.log(datos.mensaje);
-              toast("Cliente creado con éxito.")
-              dispatch(guardarClientes(datos))
+          .then(async (response) => {
+            const contentType = response.headers.get('content-type');
+            
+            let data;
+            if (contentType && contentType.includes('application/json')) {
+              data = await response.json();
+            } else {
+              const text = await response.text();
+              throw new Error(text);
             }
-            else {
-              console.log(json.mensaje)
-              toast(json.mensaje);
-              // toast("Hasta aca llegue")
+            console.log(data.codigo)
+            console.log(response.ok)
+            if (response.ok && data.codigo === 201 || data.codigo === undefined) {
+              toast("Cliente creado con éxito.");
+              dispatch(guardarClientes(data));
+              navigate("/clientes");
+            } else {
+              toast(data.message || "Error al registrar cliente.");
+              setMensaje(data.message || "Error al registrar cliente.");
             }
           })
+          // .then((response) => response.json())
+          // .then((datos) => {
+          //   console.log(datos.codigo)
+          //   if(datos.codigo===201){
+          //     navigate("/clientes")
+          //     console.log(datos.mensaje);
+          //     toast("Cliente creado con éxito.")
+          //     dispatch(guardarClientes(datos))
+          //   }
+          //   else {
+          //     console.log(datos.message)
+          //     toast("Error al registrar cliente.");
+          //     setMensaje(datos.message)
+          //     // toast("Hasta aca llegue")
+          //   }
+          // })
         .catch((error) => {
-          console.error("Error al crear cliente:", error.message); // usa correctamente "error"
-          toast("Error al crear cliente.");
+          console.error("Error al crear cliente:", error.message); 
+          toast(error.message);
+          setMensaje(error.message)
         });
       }
     }
@@ -123,6 +149,7 @@ const NuevoCliente = () => {
             <input type="password" className="contra2" ref={campoContrasenia2}/>
             </label><br/>
         </div>
+        <p>{mensaje}</p>
         <input type="button" value="Registrar Cliente" onClick={registrar}/>
     </div>
   )

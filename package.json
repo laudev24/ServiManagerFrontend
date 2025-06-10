@@ -1,7 +1,7 @@
 {
   "name": "servimanagerfrontend",
   "private": true,
-  "homepage": "/react",
+  "homepage": "",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

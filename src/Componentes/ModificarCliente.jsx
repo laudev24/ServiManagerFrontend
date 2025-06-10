@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'
+import { guardarClientes } from '../features/clientesSlice';
 
 
 const ModificarCliente = () => {
   const { id } = useParams();
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const categorias = useSelector(state => state.categoriasSlice.categorias);
   const clientes = useSelector(state => state.clientesSlice.clientes);
