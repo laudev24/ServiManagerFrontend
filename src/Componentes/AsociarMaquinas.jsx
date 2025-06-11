@@ -75,12 +75,6 @@ const AsociarMaquinas = () => {
                         toast(datos.mensaje);
                     }
                 })
-                // .then(async (response) => {
-                //     const responseBody = await response.json();
-                //     console.log("Status real:", response.status);
-                //     console.log("Body:", responseBody);
-                //     return responseBody;
-                // })
                 .catch((error) => {
                     console.error("Error al asociar máquina: ", error.message); // usa correctamente "error"
                     toast("Error al asociar máquina.");

@@ -12,10 +12,16 @@ const AsociarCliente = () => {
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
     
     const campoIdClienteElegido = useRef("")
+    const campoCargoFijo = useRef("")
+    const campoCostoColor = useRef("")
+    const campoCostoBYN = useRef("")
     
     const maquina = maquinas.find(c => c.id === Number(id))
     // const clienteElegido = clientes.find(c => c.id === Number(campoIdClienteElegido)) 
     const clientesAsociados = []
+     // const mostrarFormulario = () => {
+        
+    // }
 
     useEffect(() => {
         fetch("https://localhost:5201/api/cliente")
@@ -36,17 +42,17 @@ const AsociarCliente = () => {
 
     const asociar = () => {
         const arrendamiento = {
-            cliente : Number(campoIdClienteElegido.current.value),
-            maquina : Number(id),
-            fechaInicio : new Date().toISOString(),
+            clienteId : Number(campoIdClienteElegido.current.value),
+            maquinaId : Number(id),
+            fechaInicio : null,
             fechaFin : null,
-            activo : true,
+            activo : null,
             cargoFijo : campoCargoFijo.current.value,
         costoPorCopiaBYN : campoCostoBYN.current.value,
             costoPorCopiaColor : campoCostoColor.current.value
         }
-    
-        fetch("https://localhost:5201/api/maquina", {
+        console.log("Enviando: " + JSON.stringify(arrendamiento))
+        fetch("https://localhost:5201/api/arrendamiento", {
             method: 'POST',
             body: JSON.stringify(arrendamiento),
             headers: {
@@ -76,10 +82,10 @@ const AsociarCliente = () => {
   return (
     <div>
         <h1>Asociar Clientes a la Máquina {maquina.numero}</h1>
-        <select className="clientes" ref={campoIdClienteElegido}  >
+        <select className="clientes" ref={campoIdClienteElegido}  /*onChange={mostrarFormulario}*/ >
             <option value="">Elegir cliente</option>
             {clientes.map((cliente) => (
-                <option key={cliente.id}>{cliente.nombreEmpresa}</option>
+                <option key={cliente.id} value={cliente.id}>{cliente.nombreEmpresa}</option>
             ))}
             {clientes.length===0 && <option key="">No hay clientes para mostrar.</option>}
         </select><br />
@@ -90,19 +96,21 @@ const AsociarCliente = () => {
         <label>Costo por Copia Color:
             <input type="text" className='costoColor' ref={campoCostoColor}/>
         </label>}
-        {maquina?.tipoImpresion == 'B&N' && 
+        {maquina?.tipoImpresion == 'Monocromatico' && 
         <label>Costo por Copia B&N:
             <input type="text" className='costoBYN' ref={campoCostoBYN}/>
         </label>}
         <input type="button" value="Asociar Cliente" onClick={asociar}/><br />
         <h2>Clientes asociados:</h2>
         <table>
-            <tr>
-                {clientesAsociados.map((cliente) => (
-                <td key={cliente.id}>{cliente.nombreEmpresa}</td>
-                ))}
-                {clientesAsociados.length===0 && <td key="">No hay clientes asociados a esta máquina.</td>}
-            </tr>
+            <tbody>
+                <tr>
+                    {clientesAsociados.map((cliente) => (
+                    <td key={cliente.id}>{cliente.nombreEmpresa}</td>
+                    ))}
+                    {clientesAsociados.length===0 && <td key="">No hay clientes asociados a esta máquina.</td>}
+                </tr>
+            </tbody>
         </table>
     </div>
   )

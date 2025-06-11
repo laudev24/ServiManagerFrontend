@@ -151,13 +151,15 @@ const Maquinas = () => {
 
       <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
           <thead>
+            <tr>
               <th>Numero</th><th>Marca</th><th>Modelo</th><th>Arrendada</th><th></th><th></th>
+            </tr>
           </thead>
         <tbody>
           {maquinasPorNumero.map((maquina) => (
-             <tr key={maquina.id}> {/*<Link to={`/verMaquina/${maquina.id}`}>*/}
+             <tr key={maquina.id}>
               <td style={{ padding: "8px" }}>
-                <span style={{ marginLeft: "10px" }}>{maquina.numero}</span>
+                <span style={{ marginLeft: "10px" }}><Link to={`/verMaquina/${maquina.id}`}>{maquina.numero}</Link></span>
               </td>
               <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{maquina.marca}</span>
@@ -165,7 +167,6 @@ const Maquinas = () => {
                <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{maquina.modelo}</span>
               </td>
-              {/* </Link> */}
                <td style={{ padding: "8px" }}>
                 <span style={{ marginLeft: "10px" }}>{arrendada(maquina.id)}</span>
               </td>
