@@ -127,9 +127,6 @@ const NuevoCliente = () => {
         <label>RUT:
         <input type="text" className="rut" ref={campoRut}/>
         </label><br/>
-        {/* <label>Cargo fijo:
-        <input type="text" className="numCargo" ref={campoCargoFijo}/>
-        </label><br/> */}
         <label>Fecha de pago:
         <select className="selFechaPago" ref={campoFechaPago}>
             <option value="">Elegir rango</option>

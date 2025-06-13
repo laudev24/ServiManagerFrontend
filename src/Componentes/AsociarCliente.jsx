@@ -52,6 +52,31 @@ const AsociarCliente = () => {
             costoPorCopiaColor : campoCostoColor.current.value
         }
         console.log("Enviando: " + JSON.stringify(arrendamiento))
+        // try {
+        //     const response = await fetch("https://localhost:5201/api/arrendamiento", {
+        //     method: 'POST',
+        //     body: JSON.stringify(arrendamiento),
+        //     headers: {
+        //         'Content-Type': 'application/json; charset=UTF-8',
+        //     },
+        //     });
+
+        //     const datos = await response.json();
+
+        //     if (response.status === 201) {
+        //     console.log(datos.mensaje);
+        //     toast("Cliente asociado con éxito.");
+        //     console.log(maquina);
+        //     } else {
+        //     console.warn("Error desde API:", datos.mensaje);
+        //     toast(datos.mensaje);
+        //     }
+        // } catch (error) {
+        //     console.error("Error al asociar cliente:", error.message);
+        //     toast("Error al asociar cliente.");
+        // }
+        // };
+
         fetch("https://localhost:5201/api/arrendamiento", {
             method: 'POST',
             body: JSON.stringify(arrendamiento),
@@ -59,17 +84,11 @@ const AsociarCliente = () => {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
-        .then((response) => response.json())
-        .then((datos) => {
-            console.log(datos.codigo)
-            if(datos.codigo===201 || datos.codigo === undefined){
-                console.log(datos.mensaje);
-                toast("Cliente asociado con éxito.")
-                console.log(maquina)
-            }
-            else {
-                console.log(datos.mensaje)
-                toast(datos.mensaje);
+        .then((response) => {
+            response.json()
+            console.log(response)
+            if(response.status===201){
+                toast("Cliente asociado con exito")
             }
         })
         .catch((error) => {

@@ -13,6 +13,8 @@ const Clientes = () => {
     const listaClientes=useSelector(state => state.clientesSlice.clientes || []);
     
     const dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const clientesOrdenados = [...listaClientes].sort((a, b) => 
         a.nombre.localeCompare(b.nombre)
     );
@@ -21,7 +23,6 @@ const Clientes = () => {
     const [clientesFiltrados, setClientesFiltrados] = useState([])
     const [categorias, setCategorias] = useState([])
     const [search, setSearch] = useState('')
-    let navigate = useNavigate();
 
     // Pedir al backend el listado de clientes - Funciona bien
     useEffect(() => {

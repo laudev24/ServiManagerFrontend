@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -10,6 +10,7 @@ const AsociarMaquinas = () => {
     
     const clientes = useSelector(state => state.clientesSlice.clientes);
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
+    const [maquinaElegida, setMaquinaElegida] = useState(null)
     
     const campoIdMaquinaElegida = useRef("")
     const campoCargoFijo = useRef("")
@@ -17,11 +18,10 @@ const AsociarMaquinas = () => {
     const campoCostoBYN = useRef("")
 
     const cliente = clientes.find(c => c.id === Number(id))
-    // const maquinaElegida = maquinas.find(c => c.id === Number(campoIdMaquinaElegida))
     const maquinasAsociadas = []
-    // const mostrarFormulario = () => {
-        
-    // }
+    const mostrarFormulario = () => {
+        setMaquinaElegida(maquinas.find(c => c.id === Number(campoIdMaquinaElegida)))
+    }
 
      useEffect(() => {
           fetch("https://localhost:5201/api/maquina")
@@ -42,7 +42,6 @@ const AsociarMaquinas = () => {
 
     const asociar = () => {
         const idMaquina = Number(campoIdMaquinaElegida.current.value);
-        const maquinaElegida = maquinas.find(m => m.id === idMaquina);
 
         const arrendamiento = {
             clienteId : Number(id),
@@ -62,21 +61,15 @@ const AsociarMaquinas = () => {
                     'Content-type': 'application/json; charset=UTF-8',
                 },
                 })
-                .then((response) => response.json())
-                .then((datos) => {
-                    console.log(datos.codigo)
-                    if(datos.codigo===201 || datos.codigo == undefined ){
-                        console.log(datos.mensaje);
-                        toast("Máquina asociada con éxito.")
-                        console.log(cliente)
-                    }
-                    else {
-                        console.log(datos.mensaje)
-                        toast(datos.mensaje);
+                .then((response) => {
+                    response.json()
+                    console.log(response)
+                    if(response.status===201){
+                        toast("Máquina asociada con exito")
                     }
                 })
                 .catch((error) => {
-                    console.error("Error al asociar máquina: ", error.message); // usa correctamente "error"
+                    console.error("Error al asociar máquina: ", error.message);
                     toast("Error al asociar máquina.");
                 });
     }
@@ -85,7 +78,7 @@ const AsociarMaquinas = () => {
     <div>
         <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
       
-        <select className="maquinas" ref={campoIdMaquinaElegida} /*onChange={mostrarFormulario}*/ >
+        <select className="maquinas" ref={campoIdMaquinaElegida} onChange={mostrarFormulario} >
             <option value="">Elegir máquina</option>
             {maquinas.map((maquina) => (
                 <option key={maquina.id} value={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</option>
@@ -95,23 +88,25 @@ const AsociarMaquinas = () => {
         <label>Cargo fijo:
             <input type="text" className='cargoFijo' ref={campoCargoFijo}/>
         </label><br />
-        {/* {maquinaElegida?.tipoImpresion == 'Color' && 
+        {maquinaElegida?.tipoImpresion == 'Color' && 
         <label>Costo por Copia Color:
             <input type="text" className='costoColor' ref={campoCostoColor}/>
         </label>}
         {maquinaElegida?.tipoImpresion == 'B&N' && 
         <label>Costo por Copia B&N:
             <input type="text" className='costoBYN' ref={campoCostoBYN}/>
-        </label>} */}
+        </label>} 
         <input type="button" value="Asociar Máquina" onClick={asociar}/><br />
         <h2>Máquinas asociadas:</h2>
         <table>
-            <tr>
-                {maquinasAsociadas.map((maquina) => (
-                <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
-                ))}
-                {maquinasAsociadas.length===0 && <td key="">No hay máquinas asociadas a este cliente.</td>}
-            </tr>
+            <tbody>
+                <tr>
+                    {maquinasAsociadas.map((maquina) => (
+                    <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
+                    ))}
+                    {maquinasAsociadas.length===0 && <td key="">No hay máquinas asociadas a este cliente.</td>}
+                </tr>
+            </tbody>
         </table>
     </div>
   )

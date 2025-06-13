@@ -12,14 +12,28 @@ const VerMaquina = () => {
 
   return (
     <div>  
-        <h1>Datos de la Máquina</h1>
-        <Link to ={`/asociarCliente/${id}`}>Asociar Cliente</Link>
-        <table>
-            <tr>
-                <td>Número: </td>
-                <td>{maquina.numero}</td>
-            </tr>
-        </table>
+      <h1>Datos de la Máquina</h1>
+      <Link to ={`/asociarCliente/${id}`}>Asociar Cliente</Link>
+      <table>
+        <tbody>
+          <tr>
+              <td>Número: </td>
+              <td>{maquina.numero}</td>
+          </tr>
+           <tr>
+              <td>Marca: </td>
+              <td>{maquina.marca}</td>
+          </tr>
+           <tr>
+              <td>Modelo: </td>
+              <td>{maquina.modelo}</td>
+          </tr>
+           <tr>
+              <td>Año: </td>
+              <td>{maquina.año}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }

@@ -21,7 +21,7 @@ const NuevaMaquina = () => {
     
 
     // useEffect(() => {
-    //   fetch("https://localhost:5201/api/tipoMaquina")
+    //   fetch("https://localhost:5201/api/tipo")
     //   .then(r =>{
     //         if(!r.ok){
     //             throw new Error("Error en la respuesta del servidor");
@@ -71,19 +71,12 @@ const NuevaMaquina = () => {
             'Content-type': 'application/json; charset=UTF-8',
         },
         })
-        .then((response) => response.json())
-        .then((datos) => {
-            console.log(datos.codigo)
-            if(datos.codigo===201){
-                navigate("/maquinas")
-                console.log(datos.mensaje);
+        .then((response) => {
+            response.json()
+            console.log(response)
+            if(response.status===201){
                 toast("Máquina creada con éxito.")
-            }
-            else {
-            console.log(datos.mensaje)
-                toast(datos.mensaje);
-                dispatch(guardarMaquinas(datos))
-                // toast("Hasta aca llegue")
+                navigate("/maquinas")
             }
         })
         .catch((error) => {
