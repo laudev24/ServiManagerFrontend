@@ -7,6 +7,8 @@ const VerCliente = () => {
 
     const listaClientes = useSelector(state => state.clientesSlice.clientes);
     const cliente = listaClientes.find(c => c.id === Number(id))
+    const categorias = useSelector(state => state.categoriasSlice.categorias);
+    const [categoria, setCategoria] = useState("")
 
     useEffect(() => {
         if(listaClientes.length==0){
@@ -27,6 +29,13 @@ const VerCliente = () => {
         }
     }, [])
 
+    useEffect(() => {
+        const cat = categorias.find(c => c.id === cliente.categoria)
+        setCategoria(cat)
+
+    }, [cat])
+    
+
     if (!cliente) {
         return <p>Cargando cliente o cliente no encontrado...</p>;
     }
@@ -46,7 +55,7 @@ const VerCliente = () => {
                         </tr> 
                          <tr>
                             <th>Categoría: </th>
-                            <td>{cliente.categoria}</td>
+                            <td>{categoria.nombre}</td>
                         </tr> 
                          <tr>
                             <th>Dirección: </th>

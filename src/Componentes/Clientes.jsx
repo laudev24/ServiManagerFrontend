@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { guardarClientes, eliminarCliente } from '../features/clientesSlice' 
+import { guardarCategorias } from '../features/categoriasSlice';
 
 
 const Clientes = () => {
-    const id = useSelector(state => state.usuarioSlice.id);
-    const apikey = useSelector(state => state.usuarioSlice.apiKey);
+    // const id = useSelector(state => state.usuarioSlice.id);
+    // const apikey = useSelector(state => state.usuarioSlice.apiKey);
     const listaClientes=useSelector(state => state.clientesSlice.clientes || []);
+    const categorias=useSelector(state => state.categoriasSlice.categorias || []);
+
     
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -21,10 +24,9 @@ const Clientes = () => {
 
 
     const [clientesFiltrados, setClientesFiltrados] = useState([])
-    const [categorias, setCategorias] = useState([])
+    // const [categorias, setCategorias] = useState([])
     const [search, setSearch] = useState('')
 
-    // Pedir al backend el listado de clientes - Funciona bien
     useEffect(() => {
         fetch("https://localhost:5201/api/cliente")
         .then(r =>{
@@ -34,7 +36,7 @@ const Clientes = () => {
             return r.json()
             }) 
         .then(datos => {
-           setClientesFiltrados(datos)
+            setClientesFiltrados(datos)
             dispatch(guardarClientes(datos))
         })
         .catch(error => {
@@ -42,30 +44,55 @@ const Clientes = () => {
         })
     }, [])
 
-    // Crear metodo obtenerCategorias en backend
-    // useEffect(() => {
-    //       fetch("https://localhost:5201/api/cliente", {
-    //         method: 'GET',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'apikey': apiKey,
-    //           'iduser':  id
-    //         },
-    //       })
-    //       .then(r => r.json())
-    //       .then(datos => {
-    //          setCategorias(datos)
-      //        dispatch(guardarCategorias(datos))
-    //       })
-    //   }, [])
+    useEffect(() => {
+          fetch("https://localhost:5201/api/categoria")
+          .then(r =>{
+            if(!r.ok){
+                throw new Error("Error en la respuesta del servidor");
+            }
+            return r.json()
+            })
+          .then(datos => {
+            //  setCategorias(datos)
+             dispatch(guardarCategorias(datos))
+          })
+      }, [])
     
     const conAlerta = () => {
     // // Pedir al backend el listado de clientes con alerta - o filtrarlo aca?
       //     fetch("")
-      //     .then(r => r.json())
+      //     .then(r =>{
+            // if(!r.ok){
+            //     throw new Error("Error en la respuesta del servidor");
+            // }
+            // return r.json()
+            // })
       //     .then(datos => {
                 // setclientesFiltrados = datos.Clientes
       //     })
+    }
+
+    const filtrarPorCategoria = (c) => {
+        const idCategoria = Number(c)
+        if(c != ""){
+            fetch(`https://localhost:5201/api/cliente/por-categoria?id=${idCategoria}`)
+            .then(r =>{
+                if(!r.ok){
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                return r.json()
+                }) 
+            .then(datos => {
+                setClientesFiltrados(datos)
+                // dispatch(guardarClientes(datos))
+            })
+            .catch(error => {
+                console.error("Error al obtener los clientes:", error);
+            })
+        }
+        else{
+            setClientesFiltrados(listaClientes)
+        }
     }
 
     const searchBar = (value) => {
@@ -119,10 +146,10 @@ const Clientes = () => {
         <h1>Clientes</h1>
         <Link to="/nuevoCliente">Crear nuevo cliente</Link> <br />
         <input type="button" value="Con Alertas" onClick={conAlerta}/> <br />
-        <select className="categoriaDeCliente">
+        <select className="categoriaDeCliente" onChange={(e) =>filtrarPorCategoria(e.target.value)}>
             <option value="">Elegir categoría</option>
             {categorias.map((categoria) => (
-                <option key={categoria.id}>{categoria.nombre}</option>
+                <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
             ))}
             {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
         </select>
