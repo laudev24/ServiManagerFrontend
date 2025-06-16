@@ -1,43 +1,57 @@
-import { useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react'
+// import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { guardarMaquinas } from '../features/maquinasSlice'
 import { useNavigate } from 'react-router-dom'
-
 
 
 const ModificarMaquina = () => {
   const { id } = useParams();
   let navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const maquinas = useSelector(state => state.maquinasSlice.maquinas);
-  const maquina = maquinas.find(m => m.id === Number(id))
-  // const tiposMaquina = useSelector(state => state.tiposMaquinaSlice.maquinas);
-  // const tiposImpresion = useSelector(state => state.tiposImpresionSlice.maquinas);
+  const [maquina, setMaquina] = useState("")
+  const [numero, setNumero] = useState("")
+  const [marca, setMarca] = useState("")
+  const [modelo, setModelo] = useState("")
+  const [anio, setAnio] = useState("")
+  const [tipoMaquina, setTipoMaquina] = useState("")
+  const [tipoImpresion, setTipoImpresion] = useState("")
+  const [cantidadContadores, setCantidadContadores] = useState("")
 
-
-
-  const campoNumero = useRef("")
-  const campoMarca = useRef("")
-  const campoModelo = useRef("")
-  const campoAnio = useRef("")
-  const campoTipoMaquina = useRef("")
-  const campoTipoImpresion = useRef("")
-  const campoCantidadContadores = useRef("")
-
+  useEffect(() => {
+    fetch(`https://localhost:5201/api/maquina/${id}`)
+    .then(r =>{
+      if(!r.ok){
+          throw new Error("Error en la respuesta del servidor");
+      }
+      return r.json()
+      }) 
+    .then(datos => {
+      setMaquina(datos)
+    })
+    .catch(error => {
+      console.error("Error al obtener la máquina:", error);
+    })
+    setNumero(maquina.numero)
+    setMarca(maquina.marca)
+    setModelo(maquina.modelo)
+    setAnio(maquina.año)
+    setTipoMaquina(maquina.tipo)
+    setTipoImpresion(maquina.tipoImpresion)
+    setCantidadContadores(maquina.cantidadContadores)
+  }, [maquina])
+  
   const modificar = () => {
     const maquinaModificada = {
       id: Number(id),
       activa: maquina.activa,
-      numero: campoNumero.current.value,
-      marca: campoMarca.current.value,
-      modelo: campoModelo.current.value,
-      año: campoAnio.current.value,
-      tiposImpresion: campoTipoImpresion.current.value,
-      tiposMaquina: campoTipoMaquina.current.value,
-      cantidadContadores: Number(campoCantidadContadores.current.value),
+      numero: numero,
+      marca: marca,
+      modelo: modelo,
+      año: anio,
+      tiposImpresion: tipoImpresion,
+      tiposMaquina: tipoMaquina,
+      cantidadContadores: Number(cantidadContadores),
     };
 
     console.log("Datos a enviar:", maquinaModificada);
@@ -50,23 +64,14 @@ const ModificarMaquina = () => {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-    .then((response) => response.json())
-    .then((datos) => {
-      console.log(datos.codigo)
-      if(datos.codigo===undefined || datos.codigo===200){ // el codigo que llega es undefined
-        dispatch(guardarMaquinas(datos))
+    .then(r =>{
+      if(!r.ok){
+          throw new Error("Error en la respuesta del servidor");
+      }
         navigate("/maquinas")
-        // console.log("Entre por el codigo undefined") // Si se descomenta muestra este mensaje 
-        console.log(datos.codigo);
         toast("Máquina modificada con éxito.")
-      }
-      else {
-        console.log("No entre por el codigo undefined")
-        console.log(datos.codigo)
-        toast(datos.mensaje);
-        // toast("Hasta aca llegue")
-      }
-    })
+      return r.json()
+    }) 
     .catch((error) => {
       console.log("Error")
       console.error("Error al modificar máquina:", error.message);
@@ -79,39 +84,39 @@ const ModificarMaquina = () => {
     <div>
        <h1>Modificar máquina</h1>
               <label>Número:
-                <input type="text" className="numero" ref={campoNumero} defaultValue={maquina?.numero || ''}/>
+                <input type="text" className="numero" onChange={(e) => setNumero(e.target.value)} value={numero || ''}/>
               </label><br/>
               <label>Marca:
-                <input type="text" className="marca" ref={campoMarca} defaultValue={maquina?.marca || ''}/>
+                <input type="text" className="marca" onChange={(e) => setMarca(e.target.value)} value={marca || ''}/>
               </label><br/>
               <label>Modelo:
-                <input type="text" className="modelo" ref={campoModelo} defaultValue={maquina?.modelo || ''}/>
+                <input type="text" className="modelo" onChange={(e) => setModelo(e.target.value)} value={modelo || ''}/>
               </label><br/>
               <label>Año:
-                <input type="text" className="anio" ref={campoAnio} defaultValue={maquina?.año || ''}/>
+                <input type="text" className="anio" onChange={(e) => setAnio(e.target.value)} value={anio || ''}/>
               </label><br/>
                <label>Tipo de máquina:
-                <input type="text" className="tipoMaquina" ref={campoTipoMaquina} defaultValue={maquina?.tipo || ''}/>
+                <input type="text" className="tipoMaquina" onChange={(e) => setTipoMaquina(e.target.value)} value={tipoMaquina || ''}/>
               </label><br/>
               <label>Tipo de impresión:
-                <input type="text" className="tipoImpresion" ref={campoTipoImpresion} defaultValue={maquina?.tipoImpresion || ''}/>
+                <input type="text" className="tipoImpresion" onChange={(e) => setTipoImpresion(e.target.value)} value={tipoImpresion || ''}/>
               </label><br/>
               {/* 
-              <select className="tipoMaquina" ref={campoTipoMaquina} defaultValue={maquina?.tipo || ''}>
+              <select className="tipoMaquina" onChange={(e) => setTipoMaquina(e.target.value)} value={tipo || ''}>
                 {tiposMaquina.map((tm) => (
                   <option key={tm.id}>{tm.nombre}</option>
                 ))}
                 {tiposMaquina.length===0 && <option key="">No hay tipos de máquina para mostrar</option>}
               </select><br/>
             
-              <select className="tipoImpresion" ref={campoTipoImpresion} defaultValue={maquina?.tipoImpresion}>
+              <select className="tipoImpresion" onChange={(e) => setTipoImpresion(e.target.value)} value={tipoImpresion}>
                 {tiposImpresion.map((ti) => (
                   <option key={ti.id}>{ti.nombre}</option>
                 ))}
                 {tiposImpresion.length===0 && <option key="">No hay tipos de impresión para mostrar</option>}
               </select><br/> */}
               <label>Cantidad de contadores:
-                <input type="text" className="cantidadContadores" ref={campoCantidadContadores} defaultValue={maquina?.cantidadContadores || ''}/>
+                <input type="text" className="cantidadContadores" onChange={(e) => setCantidadContadores(e.target.value)} value={cantidadContadores || ''}/>
               </label><br/>
               
               <input type="button" value="Modificar Máquina" onClick={modificar}/>

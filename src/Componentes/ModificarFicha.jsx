@@ -7,6 +7,7 @@ const ModificarFicha = () => {
     const { id } = useParams();
 
     let navigate = useNavigate()
+    const [ficha, setFicha] = useState("")
     const [insumosSeleccionados, setInsumosSeleccionados] = useState([])
     const [idClienteElegido, setIdClienteElegido] = useState("")
     const [idMaquinaElegida, setIdMaquinaElegida] = useState("")
@@ -19,13 +20,26 @@ const ModificarFicha = () => {
 
     const campoIdInsumosElegidos = useRef("")
 
-    const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
+    // const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
     const clientes = useSelector(state => state.clientesSlice.clientes);
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
     
-    const ficha = fichas.find(m => m.id === Number(id))
+    // const ficha = fichas.find(m => m.id === Number(id))
     
     useEffect(() => {
+        fetch(`https://localhost:5201/api/fichaTecnica/${id}`)
+        .then(r =>{
+        if(!r.ok){
+            throw new Error("Error en la respuesta del servidor");
+        }
+        return r.json()
+        }) 
+        .then(datos => {
+        setFicha(datos)
+        })
+        .catch(error => {
+        console.error("Error al obtener la ficha:", error);
+        })
         if(ficha != undefined) {
             setInsumosSeleccionados(ficha.insumos)
             setIdClienteElegido(ficha.clienteId)

@@ -8,9 +8,9 @@ const AsociarMaquinas = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     
-    const clientes = useSelector(state => state.clientesSlice.clientes);
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
     const [maquinaElegida, setMaquinaElegida] = useState(null)
+    const [maquinasAsociadas, setMaquinasAsociadas] = useState([])
     
     const campoIdMaquinaElegida = useRef("")
     const campoCargoFijo = useRef("")
@@ -18,27 +18,44 @@ const AsociarMaquinas = () => {
     const campoCostoBYN = useRef("")
 
     const cliente = clientes.find(c => c.id === Number(id))
-    const maquinasAsociadas = []
+
     const mostrarFormulario = () => {
         setMaquinaElegida(maquinas.find(c => c.id === Number(campoIdMaquinaElegida)))
     }
 
-     useEffect(() => {
-          fetch("https://localhost:5201/api/maquina")
-          .then(r =>{
-                if(!r.ok){
-                    throw new Error("Error en la respuesta del servidor");
-                }
-                return r.json()
-                })
-          .then(datos => {
-              dispatch(guardarMaquinas(datos))
+    useEffect(() => {
+        fetch("https://localhost:5201/api/maquina")
+        .then(r =>{
+            if(!r.ok){
+                throw new Error("Error en la respuesta del servidor");
+            }
+            return r.json()
+            })
+        .then(datos => {
+            dispatch(guardarMaquinas(datos))
+
+        })
+        .catch(error => {
+            console.error("Error al obtener las maquinas:", error);
+        })
+    }, [])
+
+       useEffect(() => {
+         fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`)
+            .then(r =>{
+            if(!r.ok){
+                throw new Error("Error en la respuesta del servidor");
+            }
+            return r.json()
+            }) 
+            .then(datos => {
+                setMaquinasAsociadas(datos)
+            })
+            .catch(error => {
+            console.error("Error al obtener las maquinas:", error);
+            })
     
-          })
-          .catch(error => {
-              console.error("Error al obtener las maquinas:", error);
-          })
-      }, [])
+        }, [maquinasAsociadas])
 
     const asociar = () => {
         const idMaquina = Number(campoIdMaquinaElegida.current.value);
@@ -55,23 +72,24 @@ const AsociarMaquinas = () => {
         }
         console.log("Enviando: " + JSON.stringify(arrendamiento))
         fetch("https://localhost:5201/api/arrendamiento", {
-                method: 'POST',
-                body: JSON.stringify(arrendamiento),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-                })
-                .then((response) => {
-                    response.json()
-                    console.log(response)
-                    if(response.status===201){
-                        toast("Máquina asociada con exito")
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error al asociar máquina: ", error.message);
-                    toast("Error al asociar máquina.");
-                });
+            method: 'POST',
+            body: JSON.stringify(arrendamiento),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then((response) => {
+            response.json()
+            console.log(response)
+            if(response.status===201){
+                toast("Máquina asociada con exito")
+
+            }
+        })
+        .catch((error) => {
+            console.error("Error al asociar máquina: ", error.message);
+            toast("Error al asociar máquina.");
+        });
     }
 
   return (
@@ -100,12 +118,14 @@ const AsociarMaquinas = () => {
         <h2>Máquinas asociadas:</h2>
         <table>
             <tbody>
-                <tr>
-                    {maquinasAsociadas.map((maquina) => (
-                    <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
-                    ))}
-                    {maquinasAsociadas.length===0 && <td key="">No hay máquinas asociadas a este cliente.</td>}
-                </tr>
+                
+                {maquinasAsociadas.map((maquina) => (
+                    <tr> 
+                        <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
+                    </tr>
+                ))}
+                {maquinasAsociadas.length===0 && <tr><td key="">No hay máquinas asociadas a este cliente.</td></tr>}
+                
             </tbody>
         </table>
     </div>

@@ -12,8 +12,9 @@ const ModificarCliente = () => {
   const dispatch = useDispatch();
 
   const categorias = useSelector(state => state.categoriasSlice.categorias);
-  const clientes = useSelector(state => state.clientesSlice.clientes);
-  const cliente = clientes.find(c => c.id === Number(id))
+  // const clientes = useSelector(state => state.clientesSlice.clientes);
+  // const cliente = clientes.find(c => c.id === Number(id))
+  const [cliente, setCliente] = useState("")
   const [nombreEmpresa, setNombreEmpresa] = useState("")
   const [direccion, setDireccion] = useState("")
   const [email, setEmail] = useState("")
@@ -38,20 +39,38 @@ const ModificarCliente = () => {
     })
   }, [])
   useEffect(() => {
-    const cat = categorias.find(c => c.id === cliente.categoria)
-    // console.log(cliente.categoria)
-    // console.log(cat)
-    setNombreEmpresa(cliente.nombreEmpresa)
-    setDireccion(cliente.direccion)
-    setEmail(cliente.email)
-    setCategoria(cat)
-    setNombreContacto(cliente.nombreContacto)
-    setTelefono(cliente.telefono)
-    setRut(cliente.rut)
-    setFechaPago(cliente.fechaPago)
-    setNombre(cliente.nombre)
-    // console.log(categorias)
-  }, [cliente])
+      fetch(`https://localhost:5201/api/cliente/${id}`)
+    .then(r =>{
+      if(!r.ok){
+          throw new Error("Error en la respuesta del servidor");
+      }
+      return r.json()
+      }) 
+    .then(datos => {
+      setCliente(datos)
+   
+    })
+    .catch(error => {
+      console.error("Error al obtener el cliente:", error);
+    })
+ 
+  }, [])
+
+  useEffect(() => {
+    if (cliente && categorias.length > 0) {
+      setNombreEmpresa(cliente.nombreEmpresa)
+      setDireccion(cliente.direccion)
+      setEmail(cliente.email)
+      const cat = categorias.find(c => c.id === cliente.categoria)
+      setCategoria(cat)
+      setNombreContacto(cliente.nombreContacto)
+      setTelefono(cliente.telefono)
+      setRut(cliente.rut)
+      setFechaPago(cliente.fechaPago)
+      setNombre(cliente.nombre)
+    }
+  }, [cliente, categorias])
+  
   
 
   const modificar = () => {
@@ -93,6 +112,9 @@ const ModificarCliente = () => {
       toast("Error al modificar cliente.");
     });
   }
+  if (!cliente) {
+    return <p>Cargando cliente...</p>;
+  }
 
   return (
     <div>
@@ -101,9 +123,9 @@ const ModificarCliente = () => {
           <input type="text" className="nombreEmp" onChange={(e) =>setNombreEmpresa(e.target.value)} value={nombreEmpresa || ''}/>
         </label><br/>
         <select className="categoriaCliente" onChange={(e) =>setCategoria(e.target.value)} value={categoria || ''}>
-            <option value={categoria.id || ''}>{categoria.nombre}</option>
+            <option value={categoria?.id || ''}>{categoria?.nombre}</option>
             {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                <option key={cat?.id} value={cat?.id}>{cat?.nombre}</option>
             ))}
             {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
         </select><br/>
