@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const VerMaquina = () => {
-  const { id } = useParams();
-
+  const { id } = useParams()
+  let navigate = useNavigate()
   const [maquina, setMaquina] = useState("")
   const [clientesAsociados, setClientesAsociados] = useState([])
 
@@ -101,7 +101,7 @@ const VerMaquina = () => {
   }
 
   const mostrarFichas = () => {
-    
+    navigate(`/fichasMaquina/${id}`)
   }
 
   return (

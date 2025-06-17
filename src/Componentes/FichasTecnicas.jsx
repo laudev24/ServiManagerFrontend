@@ -12,22 +12,16 @@ const FichasTecnicas = () => {
   let navigate = useNavigate()
 
   const listaFichas=useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
-  const listaClientes=useSelector(state => state.clientesSlice.clientes);
-  const listaMaquinas=useSelector(state => state.maquinasSlice.maquinas);
+  // const listaClientes=useSelector(state => state.clientesSlice.clientes);
+  // const listaMaquinas=useSelector(state => state.maquinasSlice.maquinas);
 
   const [insumos, setInsumos] = useState([])
-  const [insumosElegidos, setInsumosElegidos] = useState("")
-
+  const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
   const [clientes, setClientes] = useState([])
   const [maquinas, setMaquinas] = useState([])
   const [fichas, setFichas] = useState([])
-
-
-  // const campoMaquinaElegidaId = useRef("")
-  // const campoClienteElegidoId = useRef("")
   const [campoMaquinaElegidaId, setCampoMaquinaElegidaId] = useState("")
   const [campoClienteElegidoId, setCampoClienteElegidoId] = useState("")
-  // const insumosElegidos = useRef("")
   
  
 
@@ -39,7 +33,6 @@ const FichasTecnicas = () => {
   }, [])
 
    const cargarFichas = () => {
-     //Traigo todas las fichas
     fetch("https://localhost:5201/api/fichaTecnica")
     .then(r =>{
       if(!r.ok){
@@ -58,7 +51,6 @@ const FichasTecnicas = () => {
   }
 
   const cargarClientes = () => {
-    //traigo todos los clientes
     fetch("https://localhost:5201/api/cliente")
     .then(r =>{
       if(!r.ok){
@@ -76,7 +68,6 @@ const FichasTecnicas = () => {
   }
 
   const cargarMaquinas = () => {
-    //traigo todas las maquinas
     fetch("https://localhost:5201/api/maquina")
     .then(r =>{
       if(!r.ok){
@@ -94,7 +85,6 @@ const FichasTecnicas = () => {
   }
 
   const cargarInsumos = () => {
-    //traigo todos los insumos
     fetch("https://localhost:5201/api/Insumo")
     .then(r =>{
       if(!r.ok){
@@ -104,7 +94,6 @@ const FichasTecnicas = () => {
     }) 
     .then(datos => {
       setInsumos(datos)
-      // console.log(datos)
     })
     .catch(error => {
       console.error("Error al obtener los insumos:", error);
@@ -155,7 +144,6 @@ const FichasTecnicas = () => {
     }
     else{
       cargarClientes()
-      // setClientes(listaClientes)
     }
   }
 
@@ -184,8 +172,8 @@ const FichasTecnicas = () => {
     const insId = Number(insumosElegidos)
 
     if(campoMaquinaElegidaId == "" && campoClienteElegidoId == "" && insumosElegidos == ""){
-      // cargarFichas()
-      setFichas(listaFichas)
+      cargarFichas()
+      // setFichas(listaFichas)
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId != "" && insumosElegidos != ""){
       //[HttpGet("Cliente/{clienteId}/Maquina/{maquinaId}/Insumo/{insumoId}")]
@@ -198,7 +186,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -215,8 +203,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -233,8 +220,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -251,8 +237,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -269,8 +254,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -287,8 +271,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -305,8 +288,7 @@ const FichasTecnicas = () => {
       }) 
       .then(datos => {
         setFichas(datos)
-        console.log(fichas)
-
+        // console.log(fichas)
       })
       .catch(error => {
         console.error("Error al obtener las fichas:", error);
@@ -327,22 +309,20 @@ const FichasTecnicas = () => {
       }
     })
     .then(async (r) => {
-        if (r.status === 204) {
-            toast("Ficha eliminada");
-            console.log(r.status)
-            // setClientesFiltrados(prev => prev.filter(c => c.id !== idFicha));
-            dispatch(eliminarFichaTecnica(idFicha))
-        } else {
-            console.log(r.status)
-            toast(r.mensaje || "Error eliminando ficha");
-        }
+      if (r.status === 204) {
+          toast("Ficha eliminada");
+          console.log(r.status)
+          setFichas(prev => prev.filter(c => c.id !== idFicha));
+      } else {
+          console.log(r.status)
+          toast(r.mensaje || "Error eliminando ficha");
+      }
     })
     .catch((err) => {
-        console.log("Error en la conexión: " + err)
-        toast("Error de conexión al eliminar ficha");
+      console.log("Error en la conexión: " + err)
+      toast("Error de conexión al eliminar ficha");
     });
   }
-// console.log("🔎 Fichas con posibles IDs duplicados:", listaFichas.map(f => f.id));
 
   const mostrarNombreEmpresa = (id) => {
     
@@ -356,15 +336,15 @@ const FichasTecnicas = () => {
   }
 
   const formatearFechaHora = (fechaISO) => {
-  const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
-  const dia = String(fecha.getDate()).padStart(2, '0');
-  const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-  const anio = fecha.getFullYear();
-  const horas = String(fecha.getHours()).padStart(2, '0');
-  const minutos = String(fecha.getMinutes()).padStart(2, '0');
+    const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const horas = String(fecha.getHours()).padStart(2, '0');
+    const minutos = String(fecha.getMinutes()).padStart(2, '0');
 
-  return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
-};
+    return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+  }
 
   return (
     <div>

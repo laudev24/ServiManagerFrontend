@@ -26,7 +26,7 @@ import VerFichaTecnica from './Componentes/VerFichaTecnica'
 import AsociarMaquinas from './Componentes/AsociarMaquinas';
 import AsociarCliente from './Componentes/AsociarCliente';
 import NuevaFichaTecnica from './Componentes/NuevaFichaTecnica';
-
+import FichasMaquina from './Componentes/FichasMaquina';
 
 
 
@@ -59,6 +59,8 @@ function App() {
             <Route path = "/solicitudes" element={<Solicitudes/>}/>
             <Route path = "/asociarMaquinas/:id" element={<AsociarMaquinas/>}/>
             <Route path = "/asociarCliente/:id" element={<AsociarCliente/>}/>
+            <Route path = "/fichasMaquina/:id" element={<FichasMaquina/>}/>
+
             <Route path="*" element={<NoEncontrado/>}/>
         </Routes>
       </BrowserRouter>
