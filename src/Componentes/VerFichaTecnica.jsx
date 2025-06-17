@@ -32,6 +32,17 @@ const VerFichaTecnica = () => {
         return <p>Cargando ficha o ficha no encontrada...</p>;
     }
 
+     const formatearFechaHora = (fechaISO) => {
+  const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
+  const dia = String(fecha.getDate()).padStart(2, '0');
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+  const anio = fecha.getFullYear();
+  const horas = String(fecha.getHours()).padStart(2, '0');
+  const minutos = String(fecha.getMinutes()).padStart(2, '0');
+
+  return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+};
+
   return (
     <div>
         <h1>Ficha Técnica nro. {id}</h1>
@@ -48,7 +59,7 @@ const VerFichaTecnica = () => {
                 </tr>
                 <tr>
                     <th>Fecha: </th>
-                    <td>{ficha.fechaYHora}</td>
+                    <td>{formatearFechaHora(ficha.fechaYHora)}</td>
                 </tr> 
                 <tr>
                     <th>Contador BYN: </th>

@@ -100,10 +100,15 @@ const VerMaquina = () => {
     });
   }
 
+  const mostrarFichas = () => {
+    
+  }
+
   return (
     <div>  
       <h1>Datos de la Máquina</h1>
       <Link to ={`/asociarCliente/${id}`}>Asociar Cliente</Link>
+      <button onClick={mostrarFichas}>Ver fichas</button>
       <table>
         <tbody>
           <tr>
@@ -123,6 +128,7 @@ const VerMaquina = () => {
               <td>{maquina.año}</td>
           </tr>
         </tbody>
+
       </table>
       <h2>Cliente/s asociado/s:</h2>
         <table>
