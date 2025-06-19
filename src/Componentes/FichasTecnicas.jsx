@@ -349,7 +349,9 @@ const FichasTecnicas = () => {
   return (
     <div>
       <h1>Fichas Técnicas</h1>
-      <Link to="/nuevaFichaTecnica">Crear Ficha Técnica</Link> <br />
+      <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' }})} > 
+        Crear Ficha Técnica
+      </button> <br />
       <label>Seleccionar Cliente:
         <select value={campoClienteElegidoId}  onChange={(e) => {
           setCampoClienteElegidoId(e.target.value);

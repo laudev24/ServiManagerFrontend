@@ -176,10 +176,6 @@ const FichasMaquina = () => {
     }
 
     //  const handleChange = (event) => {
-    //     if(insumosElegidos!="")
-    //         setInsumosElegidos(event);
-    //     else
-    //         cargarInsumos()
     //     //Si queremos usar select multiple:
     //     //   const options = event.target.options;
     //     //   const values = [];
@@ -207,33 +203,28 @@ const FichasMaquina = () => {
     return (
         <div>
             <h1>Fichas Técnicas de la Máquina {maquina.numero}</h1>
-            <Link to="/nuevaFichaTecnica">Crear Ficha Técnica</Link> <br />
+            <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasMaquina' ,  id }})} > 
+                Crear Ficha Técnica
+            </button><br />
             <label>Seleccionar Cliente:
-                <select value={campoClienteElegidoId}  onChange={(e) => {
+                <select value={campoClienteElegidoId} onChange={(e) => {
                     setCampoClienteElegidoId(e.target.value);
-                }}>
+                } }>
                     <option key="" value="">Todos los Clientes</option>
                     {clientes.map(m => <option key={m.id} value={m.id}> {m.nombreEmpresa}</option>)}
                     {clientes.length === 0 && (
                         <option value="">No hay clientes para mostrar</option>
                     )}
-                </select> 
-            </label>
-            <br/>
-            <label>Seleccionar Insumo:  
-                <select /*multiple*/ value={insumosElegidos} onChange={(e) => {setInsumosElegidos(e.target.value)}}>
-                <option key="" value="">Todos los Insumos</option>
-                {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
-                {insumos.length === 0 && (
-                    <option value="">No hay insumos para mostrar.</option>
-                )}
                 </select>
-            </label>
-            <br />
-        
-            <button onClick={filtrarFichas}>Filtrar</button>
-        
-            <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+            </label><br /><label>Seleccionar Insumo:
+                <select /*multiple*/ value={insumosElegidos} onChange={(e) => { setInsumosElegidos(e.target.value); } }>
+                    <option key="" value="">Todos los Insumos</option>
+                    {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
+                    {insumos.length === 0 && (
+                        <option value="">No hay insumos para mostrar.</option>
+                    )}
+                </select>
+            </label><br /><button onClick={filtrarFichas}>Filtrar</button><table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
                 <tbody>
                     {fichas.map((ficha) => (
                         <tr key={ficha.id}>
@@ -246,7 +237,7 @@ const FichasMaquina = () => {
                             <td style={{ padding: "8px" }}>
                                 <span style={{ marginLeft: "10px" }}>{maquina.numero}</span>
                             </td>
-                    
+
                             <td style={{ padding: "8px" }}>
                                 <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
                             </td>

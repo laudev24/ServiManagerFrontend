@@ -178,7 +178,7 @@ const VerCliente = () => {
                 <tbody>
                     {maquinasAsociadas.map((maq) => (
                         <tr key={maq.id}>
-                            <td>{maq.numero}</td>
+                            <td><Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link></td>
                             <td> <button onClick={() => mostrarToast(maq.id)}  style={{ color: "red" }}>Desasociar </button></td>
                         </tr>
                     ))}
