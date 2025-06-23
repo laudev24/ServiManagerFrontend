@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -6,6 +7,10 @@ import { toast } from 'react-toastify';
 const FichasMaquina = () => {
     const { id } = useParams();
     let navigate = useNavigate()
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
     
     const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
     const [fichas, setFichas] = useState([])
@@ -17,6 +22,8 @@ const FichasMaquina = () => {
     
     
     useEffect(() => {
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
         cargarFichas()
         cargarInsumos()
         cargarClientes()
@@ -25,7 +32,13 @@ const FichasMaquina = () => {
     
     
     const cargarFichas = () => {
-        fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}`)
+        fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -41,7 +54,13 @@ const FichasMaquina = () => {
         })
     }
     const cargarInsumos = () => {
-        fetch("https://localhost:5201/api/Insumo")
+        fetch("https://localhost:5201/api/Insumo", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -57,7 +76,13 @@ const FichasMaquina = () => {
     }
     const cargarClientes = () => {
         const maquinaId = Number(id)
-        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaId}`)
+        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -81,7 +106,13 @@ const FichasMaquina = () => {
             cargarFichas()
         }
         else if(campoClienteElegidoId != "" && insumosElegidos != ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`)
+            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
                 if(!r.ok){
                     throw new Error("Error en la respuesta del servidor");
@@ -96,7 +127,13 @@ const FichasMaquina = () => {
             })
         }
         else if(campoClienteElegidoId == "" && insumosElegidos != ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}/insumo/${insId}`)
+            fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
                 if(!r.ok){
                     throw new Error("Error en la respuesta del servidor");
@@ -111,7 +148,13 @@ const FichasMaquina = () => {
             })
         }
         else if(campoClienteElegidoId != "" && insumosElegidos == ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${id}`)
+            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
                 if(!r.ok){
                     throw new Error("Error en la respuesta del servidor");
@@ -133,10 +176,11 @@ const FichasMaquina = () => {
 
     const handleEliminar = (idFicha) => {
         fetch(`https://localhost:5201/api/fichaTecnica/${idFicha}`, {
-          method: 'DELETE',
-          headers: {
-          'Content-Type': 'application/json',
-          }
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         })
         .then(async (r) => {
             if (r.status === 204) {
@@ -160,7 +204,13 @@ const FichasMaquina = () => {
     }
 
     const cargarMaquina = () => {
-        fetch(`https://localhost:5201/api/maquina/${id}`)
+        fetch(`https://localhost:5201/api/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");

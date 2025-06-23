@@ -2,9 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { guardarMaquinas } from '../features/maquinasSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const NuevaMaquina = () => {
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+
     const campoNumero = useRef("")
     const campoMarca = useRef("")
     const campoModelo = useRef("")
@@ -19,9 +24,20 @@ const NuevaMaquina = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     
+    // useEffect(() => {
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //         else setToken(tokenSelector)
+    // }, [])
+    
 
     // useEffect(() => {
-    //   fetch("https://localhost:5201/api/tipo")
+    //   fetch("https://localhost:5201/api/tipo", {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //        'Authorization': `Bearer ${token}`
+        //     }
+        // })
     //   .then(r =>{
     //         if(!r.ok){
     //             throw new Error("Error en la respuesta del servidor");
@@ -36,7 +52,13 @@ const NuevaMaquina = () => {
     //   })
     // }, [])
     // useEffect(() => {
-    //   fetch("https://localhost:5201/api/tipoImpresion")
+    //   fetch("https://localhost:5201/api/tipoImpresion", {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //        'Authorization': `Bearer ${token}`
+        //     }
+        // })
     //   .then(r =>{
     //         if(!r.ok){
     //             throw new Error("Error en la respuesta del servidor");
@@ -69,6 +91,8 @@ const NuevaMaquina = () => {
         body: JSON.stringify(maquinaNueva),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': `Bearer ${token}`
+
         },
         })
         .then((response) => {

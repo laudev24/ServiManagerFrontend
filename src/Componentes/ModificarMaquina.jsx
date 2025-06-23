@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom'
 const ModificarMaquina = () => {
   const { id } = useParams();
   let navigate = useNavigate();
+  const tokenSelector = useSelector(state => state.usuarioSlice.token)
+  // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+
 
   const [maquina, setMaquina] = useState("")
   const [numero, setNumero] = useState("")
@@ -19,7 +24,19 @@ const ModificarMaquina = () => {
   const [cantidadContadores, setCantidadContadores] = useState("")
 
   useEffect(() => {
-    fetch(`https://localhost:5201/api/maquina/${id}`)
+    if(maquina==="")traerMaquina()
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+  }, [])
+
+  const traerMaquina = () => {
+    fetch(`https://localhost:5201/api/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -39,7 +56,7 @@ const ModificarMaquina = () => {
     setTipoMaquina(maquina.tipo)
     setTipoImpresion(maquina.tipoImpresion)
     setCantidadContadores(maquina.cantidadContadores)
-  }, [maquina])
+  }
   
   const modificar = () => {
     const maquinaModificada = {
@@ -62,6 +79,8 @@ const ModificarMaquina = () => {
       body: JSON.stringify(maquinaModificada),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': `Bearer ${token}`
+
       },
     })
     .then(r =>{

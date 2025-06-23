@@ -6,6 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 const NuevoCliente = () => {
     const categorias = useSelector(state => state.categoriasSlice.categorias);
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+    
     const [mensaje, setMensaje] = useState("")
 
     const campoNombreEmpresa = useRef("")
@@ -24,6 +29,10 @@ const NuevoCliente = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
+    // useEffect(() => {
+    //   if(token==="")setToken(localStorage.getItem("token"))
+    //     else setToken(tokenSelector)
+    // }, [])
     
     const registrar = () => {
       const clienteNuevo = {
@@ -49,6 +58,8 @@ const NuevoCliente = () => {
           body: JSON.stringify(clienteNuevo),
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': `Bearer ${token}`
+
           },
           })
           .then(async (response) => {
@@ -72,22 +83,6 @@ const NuevoCliente = () => {
               setMensaje(data.message || "Error al registrar cliente.");
             }
           })
-          // .then((response) => response.json())
-          // .then((datos) => {
-          //   console.log(datos.codigo)
-          //   if(datos.codigo===201){
-          //     navigate("/clientes")
-          //     console.log(datos.mensaje);
-          //     toast("Cliente creado con éxito.")
-          //     dispatch(guardarClientes(datos))
-          //   }
-          //   else {
-          //     console.log(datos.message)
-          //     toast("Error al registrar cliente.");
-          //     setMensaje(datos.message)
-          //     // toast("Hasta aca llegue")
-          //   }
-          // })
         .catch((error) => {
           console.error("Error al crear cliente:", error.message); 
           toast(error.message);

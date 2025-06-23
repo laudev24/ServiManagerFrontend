@@ -7,12 +7,25 @@ const VerFichaTecnica = () => {
     const { id } = useParams()
 
     const dispatch = useDispatch()
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
     const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
     const ficha = fichas.find(m => m.id === Number(id))
     
     useEffect(() => {
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
+        
         if(fichas.length==0){
-            fetch("https://localhost:5201/api/fichaTecnica")
+            fetch("https://localhost:5201/api/fichaTecnica", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
                 if(!r.ok){
                     throw new Error("Error en la respuesta del servidor");

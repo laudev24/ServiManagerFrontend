@@ -6,11 +6,25 @@ import { toast } from 'react-toastify'
 const VerMaquina = () => {
   const { id } = useParams()
   let navigate = useNavigate()
+  const tokenSelector = useSelector(state => state.usuarioSlice.token)
+  // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+  
   const [maquina, setMaquina] = useState("")
   const [clientesAsociados, setClientesAsociados] = useState([])
 
   useEffect(() => {
-    fetch(`https://localhost:5201/api/maquina/${id}`)
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+    
+    fetch(`https://localhost:5201/api/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -26,7 +40,13 @@ const VerMaquina = () => {
   }, [maquina])
 
   const cargarClientesAsociados = () => {
-    fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`)
+    fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+    })
       .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -82,6 +102,8 @@ const VerMaquina = () => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+
       },
     })
     .then(async (r) => {

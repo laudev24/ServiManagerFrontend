@@ -7,6 +7,10 @@ import { guardarClientes } from '../features/clientesSlice';
 const AsociarCliente = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+     const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
         
     const clientes = useSelector(state => state.clientesSlice.clientes);
     const [clientesAsociados, setClientesAsociados] = useState([])
@@ -17,10 +21,23 @@ const AsociarCliente = () => {
     const campoCostoColor = useRef("")
     const campoCostoBYN = useRef("")
 
-    // const clientesAsociados = []
 
     useEffect(() => {
-        fetch("https://localhost:5201/api/cliente")
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
+        if(clientes.length===0)cargarClientes
+        cargarClientesAsociados()
+
+    }, [])
+
+    const cargarClientes = () => {
+        fetch("https://localhost:5201/api/cliente", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -34,9 +51,15 @@ const AsociarCliente = () => {
         .catch(error => {
             console.error("Error al obtener los clientes:", error);
         })
-    }, [])
+    }
     const cargarClientesAsociados = () => {
-        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`)
+        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -51,9 +74,7 @@ const AsociarCliente = () => {
             console.error("Error al obtener los clientes:", error);
         })
     }
-    useEffect(() => {
-        cargarClientesAsociados()
-    }, [])
+ 
 
     const asociar = () => {
         const idCliente = Number(campoIdClienteElegido.current.value)
@@ -75,6 +96,7 @@ const AsociarCliente = () => {
             body: JSON.stringify(arrendamiento),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
+               'Authorization': `Bearer ${token}`
             },
         })
         .then((response) => {

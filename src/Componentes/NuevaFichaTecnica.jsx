@@ -10,6 +10,11 @@ const NuevaFichaTecnica = () => {
   const clientes = useSelector(state => state.clientesSlice.clientes);
   const maquinas = useSelector(state => state.maquinasSlice.maquinas);
   const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
+  const tokenSelector = useSelector(state => state.usuarioSlice.token)
+  // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+
   const campoIdClienteElegido = useRef("");
   const campoIdMaquinaElegida = useRef("");
   const campoContadorBYN = useRef("");
@@ -22,14 +27,25 @@ const NuevaFichaTecnica = () => {
   const { from, id } = location.state || {};
   const [maquina, setMaquina] = useState("")
   const [insumoElegido, setInsumoElegido] = useState("")
-  
-
   const [insumos, setInsumos] = useState([])
 
 
   useEffect(() => {
-    //traigo los clientes
-    fetch("https://localhost:5201/api/cliente")
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+    if(clientes.length===0)traerClientes()
+    if(insumos.length===0)traerInsumos()
+    traerMaquinas()
+  }, [])
+
+  const traerClientes = () => {
+    fetch("https://localhost:5201/api/cliente", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
         if(!r.ok){
             throw new Error("Error en la respuesta del servidor");
@@ -42,9 +58,16 @@ const NuevaFichaTecnica = () => {
     .catch(error => {
         console.error("Error al obtener los clientes:", error);
     })
-    
-   // traigo los insumos
-    fetch("https://localhost:5201/api/insumo")
+  }
+
+  const traerInsumos = () => {
+    fetch("https://localhost:5201/api/insumo", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
         if(!r.ok){
             throw new Error("Error en la respuesta del servidor");
@@ -57,11 +80,17 @@ const NuevaFichaTecnica = () => {
     .catch(error => {
         console.error("Error al obtener los insumos:", error);
     })
-  }, [clientes])
+  }
 
-  useEffect(() => {
+  const traerMaquinas = () => {
     if(from == "fichasTecnicas"){
-      fetch("https://localhost:5201/api/maquina")
+      fetch("https://localhost:5201/api/maquina", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
           if(!r.ok){
               throw new Error("Error en la respuesta del servidor");
@@ -76,7 +105,13 @@ const NuevaFichaTecnica = () => {
       })
     }
     else if(from == "fichasMaquina"){
-      fetch(`https://localhost:5201/api/maquina/${id}`)
+      fetch(`https://localhost:5201/api/maquina/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
             throw new Error("Error en la respuesta del servidor");
@@ -90,7 +125,7 @@ const NuevaFichaTecnica = () => {
         console.error("Error al obtener las maquinas:", error);
       })
     }
-  }, [maquinas])
+  }
   
   
   const ingresarFicha = () => {
@@ -119,6 +154,8 @@ const NuevaFichaTecnica = () => {
       body: JSON.stringify(ficha),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': `Bearer ${token}`
+
       },
       })
       .then((response) => {

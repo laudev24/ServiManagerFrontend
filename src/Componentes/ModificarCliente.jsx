@@ -10,6 +10,9 @@ const ModificarCliente = () => {
   const { id } = useParams();
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  // const token = useSelector(state => state.usuarioSlice.token)
+    const token = localStorage.getItem("token")
+  
 
   const categorias = useSelector(state => state.categoriasSlice.categorias);
   // const clientes = useSelector(state => state.clientesSlice.clientes);
@@ -26,7 +29,20 @@ const ModificarCliente = () => {
   const [nombre, setNombre] = useState("")
 
   useEffect(() => {
-    fetch("https://localhost:5201/api/categoria")
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+    if(categorias.length===0)cargarCategorias()
+    if(cliente==="")traerCliente()
+  }, [])
+
+  const cargarCategorias = () => {
+    fetch("https://localhost:5201/api/categoria", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -37,9 +53,16 @@ const ModificarCliente = () => {
       //  setCategorias(datos)
         dispatch(guardarCategorias(datos))
     })
-  }, [])
-  useEffect(() => {
-      fetch(`https://localhost:5201/api/cliente/${id}`)
+  }
+
+  const traerCliente = () => {
+      fetch(`https://localhost:5201/api/cliente/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -54,7 +77,7 @@ const ModificarCliente = () => {
       console.error("Error al obtener el cliente:", error);
     })
  
-  }, [])
+  }
 
   useEffect(() => {
     if (cliente && categorias.length > 0) {
@@ -97,6 +120,8 @@ const ModificarCliente = () => {
     body: JSON.stringify(clienteModificado),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
+      'Authorization': `Bearer ${token}`
+
     },
     })
     .then((response) => {

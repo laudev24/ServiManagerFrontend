@@ -16,10 +16,27 @@ const Maquinas = () => {
   const dispatch = useDispatch();
   const listaMaquinas = useSelector(state => state.maquinasSlice.maquinas || []);
   const maquinasPorNumero = [...listaMaquinas].sort((a, b) => a.numero - b.numero); 
+  const tokenSelector = useSelector(state => state.usuarioSlice.token)
+  // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+  
 
   // Pedir al backend el listado de maquinas 
   useEffect(() => {
-      fetch("https://localhost:5201/api/maquina")
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+    if(listaMaquinas.length===0)cargarMaquinas()
+      else setMaquinasFiltradas(listaMaquinas)
+  }, [])
+
+  const cargarMaquinas = () => {
+    fetch("https://localhost:5201/api/maquina", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -34,11 +51,17 @@ const Maquinas = () => {
       .catch(error => {
           console.error("Error al obtener las maquinas:", error);
       })
-  }, [])
+  }
 
   //Pedir al backend el listado de marcas
   // useEffect(() => {
-  //     fetch("https://localhost:5201/api/maquina")
+  //     fetch("https://localhost:5201/api/maquina", {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //        'Authorization': `Bearer ${token}`
+        //     }
+        // })
   //     .then(r =>{
   //           if(!r.ok){
   //               throw new Error("Error en la respuesta del servidor");
@@ -54,7 +77,13 @@ const Maquinas = () => {
   // }, [])
 
   const mostrarModelos = (e) => {
-  //   fetch("https://localhost:5201/api/maquina")
+  //   fetch("https://localhost:5201/api/maquina", {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //        'Authorization': `Bearer ${token}`
+        //     }
+        // })
   //   .then(r =>{
   //     if(!r.ok){
   //       throw new Error("Error en la respuesta del servidor");
@@ -95,6 +124,8 @@ const Maquinas = () => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+
       },
     })
     .then(async (r) => {

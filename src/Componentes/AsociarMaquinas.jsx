@@ -7,6 +7,10 @@ import { guardarMaquinas } from '../features/maquinasSlice';
 const AsociarMaquinas = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+    
     
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
     const [maquinaElegida, setMaquinaElegida] = useState(null)
@@ -17,6 +21,7 @@ const AsociarMaquinas = () => {
     const campoCostoColor = useRef("")
     const campoCostoBYN = useRef("")
 
+    const clientes = useSelector(state => state.clientesSlice.clientes);
     const cliente = clientes.find(c => c.id === Number(id))
 
     const mostrarFormulario = () => {
@@ -24,7 +29,21 @@ const AsociarMaquinas = () => {
     }
 
     useEffect(() => {
-        fetch("https://localhost:5201/api/maquina")
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
+        if(maquinas.length===0)cargarMaquinas()
+        if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
+        if(clientes.length===0)traerClientes()
+    }, [])
+
+    const cargarMaquinas = () => {
+        fetch("https://localhost:5201/api/maquina", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -38,24 +57,52 @@ const AsociarMaquinas = () => {
         .catch(error => {
             console.error("Error al obtener las maquinas:", error);
         })
-    }, [])
+    }
 
-       useEffect(() => {
-         fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`)
-            .then(r =>{
+    const traerMaquinasDelCliente = () => {
+        fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
             }
             return r.json()
-            }) 
+        }) 
+        .then(datos => {
+            setMaquinasAsociadas(datos)
+        })
+        .catch(error => {
+            console.error("Error al obtener las maquinas:", error);
+        })
+    
+    }
+    const traerClientes = () => {
+            fetch("https://localhost:5201/api/cliente", {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                   'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(r =>{
+                if(!r.ok){
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                return r.json()
+                }) 
             .then(datos => {
-                setMaquinasAsociadas(datos)
+                setClientesFiltrados(datos)
+                dispatch(guardarClientes(datos))
             })
             .catch(error => {
-            console.error("Error al obtener las maquinas:", error);
+                console.error("Error al obtener los clientes:", error);
             })
-    
-        }, [maquinasAsociadas])
+        }
 
     const asociar = () => {
         const idMaquina = Number(campoIdMaquinaElegida.current.value);
@@ -76,6 +123,8 @@ const AsociarMaquinas = () => {
             body: JSON.stringify(arrendamiento),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
+               'Authorization': `Bearer ${token}`
+
             },
         })
         .then((response) => {

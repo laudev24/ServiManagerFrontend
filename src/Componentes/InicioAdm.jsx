@@ -1,82 +1,52 @@
-import React from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const InicioAdm = () => {
-    const clientes =useSelector(state => state.clientesSlice.clientes);
-    const maquinas =useSelector(state => state.maquinasSlice.clientes);
-    const fichasTecnicas =useSelector(state => state.fichasTecnicasSlice.clientes);
+  const nombreSelector = useSelector(state => state.usuarioSlice.nombre)
+  const [nombre, setNombre] = useState("")
+  
+  useEffect(() => {
+    if(nombre==="")setNombre(localStorage.getItem("nombre"))
+      else setNombre(nombreSelector)
+  }, [])
+  
 
-    const dispatch = useDispatch();
-    let navigate = useNavigate();
+  let navigate = useNavigate()
 
-      const verClientes = () => {
-              navigate("/clientes")
-   
+  const verClientes = () => {
+    navigate("/clientes")
+  }
 
-      }
-      const verMaquinas = () => {
-       
-             navigate("/maquinas")
-      }
-      const verFichas = () => {
-        // // Pedir al backend el listado de fichas tecnicas 
-      // useEffect(() => {
-      //     fetch("")
-      //     .then(r => r.json())
-      //     .then(datos => {
-      //        dispatch(guardarFichasTecnicas(datos.fichasTecnicas))
-      //        navigate("/fichasTecnicas")
-      //     })
-      // }, [])
-            navigate("/fichasTecnicas")
-      }
-      const verSolicitudes = () => {
-        // // Pedir al backend el listado de solicitudes
-      // useEffect(() => {
-      //     fetch("")
-      //     .then(r => r.json())
-      //     .then(datos => {
-      //        dispatch(guardarFichasTecnicas(datos.solicitudes))
-      //        navigate("/solicitudes")
-      //     })
-      // }, [])
-          navigate("/solicitudes")
-      }
+  const verMaquinas = () => {
+    navigate("/maquinas")
+  }
 
-      const verInsumos = () => {
-        // // Pedir al backend el listado de fichas tecnicas insumos
-      //     fetch("")
-      //     .then(r => r.json())
-      //     .then(datos => {
-      //        dispatch(guardarFichasTecnicas(datos.insumos))
-      //        navigate("/insumos")
-      //     })
-      // }, [])
-          navigate("/insumos")
-      }
+  const verFichas = () => {
+    navigate("/fichasTecnicas")
+  }
 
-      const verChats = () => {
-        // // Pedir al backend el listado de fichas chats
-      //     fetch("")
-      //     .then(r => r.json())
-      //     .then(datos => {
-      //        dispatch(guardarFichasTecnicas(datos.chats))
-      //        navigate("/chats")
-      //     })
-      // }, [])
-          navigate("/chats")
-      }
+  const verSolicitudes = () => {
+    navigate("/solicitudes")
+  }
+
+  const verInsumos = () => {
+    navigate("/insumos")
+  }
+
+  const verChats = () => {
+    navigate("/chats")
+  }
 
 
   return (
     <div>
       {/* Esto va en el cabezal: */}
-        <h1>Hola usuario!</h1>
+        <h1>Hola {nombre}!</h1>
         <Link to="/datosUsuario">
             <figure>
-                <img src="/react/usuarioAzul3.png" />
+                <img src="/public/usuarioAzul3.png" />
                 <figcaption>Ver mis datos</figcaption>
             </figure>
         </Link>

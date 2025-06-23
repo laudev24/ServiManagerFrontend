@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,18 +8,20 @@ import { guardarCategorias } from '../features/categoriasSlice';
 
 
 const Clientes = () => {
-    // const id = useSelector(state => state.usuarioSlice.id);
-    // const apikey = useSelector(state => state.usuarioSlice.apiKey);
     const listaClientes=useSelector(state => state.clientesSlice.clientes || []);
     const categorias=useSelector(state => state.categoriasSlice.categorias || []);
-
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
     
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const clientesOrdenados = [...listaClientes].sort((a, b) => 
-        a.nombre.localeCompare(b.nombre)
-    );
+    const ordenarClientes = () => {
+        const clientesOrdenados = [...clientesFiltrados].sort((a, b) => 
+            a.nombre.localeCompare(b.nombre))
+        setClientesFiltrados(clientesOrdenados)
+    }
 
 
     const [clientesFiltrados, setClientesFiltrados] = useState([])
@@ -28,8 +29,34 @@ const Clientes = () => {
     const [search, setSearch] = useState('')
 
     useEffect(() => {
-        fetch("https://localhost:5201/api/cliente")
+        // console.log("TokenSelector: ",tokenSelector)
+        // console.log("TokenPrueba: ",tokenPrueba)
+        // if(tokenSelector)setToken(tokenPrueba)
+        //     else setToken(tokenSelector)
+        // console.log("Token guardado: ", token)
+        console.log("ListaClientes: ", listaClientes)
+        console.log("Token: ", token)
+        if(listaClientes.length===0)traerClientes()
+        if(categorias.length===0)traerCategorias()
+    }, [])
+
+  
+    
+
+//     useEffect(() => {
+//   console.log("Token guardado en state:", token);
+// }, [token]);
+    
+    const traerClientes = () => {
+        fetch("https://localhost:5201/api/cliente", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
+            console.log("Status: ", r.status)
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
             }
@@ -38,14 +65,20 @@ const Clientes = () => {
         .then(datos => {
             setClientesFiltrados(datos)
             dispatch(guardarClientes(datos))
+            // ordenarClientes()
         })
         .catch(error => {
             console.error("Error al obtener los clientes:", error);
         })
-    }, [])
-
-    useEffect(() => {
-          fetch("https://localhost:5201/api/categoria")
+    }
+    const traerCategorias = () => {
+          fetch("https://localhost:5201/api/categoria", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
           .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -56,7 +89,7 @@ const Clientes = () => {
             //  setCategorias(datos)
              dispatch(guardarCategorias(datos))
           })
-      }, [])
+      }
     
     const conAlerta = () => {
     // // Pedir al backend el listado de clientes con alerta - o filtrarlo aca?
@@ -74,8 +107,15 @@ const Clientes = () => {
 
     const filtrarPorCategoria = (c) => {
         const idCategoria = Number(c)
+        console.log("ID de categoria: ", idCategoria)
         if(c != ""){
-            fetch(`https://localhost:5201/api/cliente/por-categoria?id=${idCategoria}`)
+            fetch(`https://localhost:5201/api/cliente/por-categoria?id=${idCategoria}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
                 if(!r.ok){
                     throw new Error("Error en la respuesta del servidor");
@@ -84,6 +124,9 @@ const Clientes = () => {
                 }) 
             .then(datos => {
                 setClientesFiltrados(datos)
+                // ordenarClientes()
+                console.log("Clientes que llegan del fetch: ",datos)
+                console.log("Clientes por categoria: ",clientesFiltrados)
                 // dispatch(guardarClientes(datos))
             })
             .catch(error => {
@@ -91,7 +134,9 @@ const Clientes = () => {
             })
         }
         else{
-            setClientesFiltrados(listaClientes)
+            if(listaClientes.length)traerClientes()
+                else setClientesFiltrados(listaClientes)
+            // ordenarClientes()
         }
     }
 
@@ -104,8 +149,10 @@ const Clientes = () => {
                 cliente.nombreEmpresa.toLowerCase().startsWith(textoBusqueda)
             )
             );
+            // ordenarClientes()
         } else {
             setClientesFiltrados(listaClientes);
+            // ordenarClientes()
         }
     };
 
@@ -121,6 +168,7 @@ const Clientes = () => {
             method: 'DELETE',
            headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         })
         .then(async (r) => {
@@ -129,6 +177,7 @@ const Clientes = () => {
                 console.log(r.status)
                 setClientesFiltrados(prev => prev.filter(c => c.id !== idCliente));
                 dispatch(eliminarCliente(idCliente))
+                // ordenarClientes()
             } else {
                 console.log(r.status)
                 toast(r.mensaje || "Error eliminando cliente");
@@ -176,7 +225,7 @@ const Clientes = () => {
         {/* Listado de clientes, cada uno con su link a modificar y boton eliminar  */}
         <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
             <tbody>
-                {clientesOrdenados.map((cliente) => (
+                {clientesFiltrados.map((cliente) => (
                 <tr key={cliente.id}>
                     <td style={{ padding: "8px" }}>
                         {/* Iconos condicionales */}
@@ -200,7 +249,7 @@ const Clientes = () => {
                     </td>
                 </tr>
                 ))}
-                {clientesOrdenados.length === 0 && <tr><td>No hay resultados</td></tr>}
+                {clientesFiltrados.length === 0 && <tr><td>No hay resultados</td></tr>}
             </tbody>
         </table>
     </div>

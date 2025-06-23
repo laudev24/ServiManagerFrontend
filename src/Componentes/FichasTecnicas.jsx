@@ -10,10 +10,14 @@ import { guardarClientes } from '../features/clientesSlice';
 const FichasTecnicas = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate()
+  const tokenSelector = useSelector(state => state.usuarioSlice.token)
+  // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
 
   const listaFichas=useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
-  // const listaClientes=useSelector(state => state.clientesSlice.clientes);
-  // const listaMaquinas=useSelector(state => state.maquinasSlice.maquinas);
+  const listaClientes=useSelector(state => state.clientesSlice.clientes);
+  const listaMaquinas=useSelector(state => state.maquinasSlice.maquinas);
+  const listaInsumos=useSelector(state => state.insumosSlice.insumos)
 
   const [insumos, setInsumos] = useState([])
   const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
@@ -26,14 +30,38 @@ const FichasTecnicas = () => {
  
 
   useEffect(() => {
-    cargarFichas()
+    // if(token==="")setToken(localStorage.getItem("token"))
+    //   else setToken(tokenSelector)
+    if(listaFichas.length===0){
+      cargarFichas()
+    }else{
+      setFichas(listaFichas)
+    }
+    if(listaClientes.length===0){
     cargarClientes()
-    cargarMaquinas()
-    cargarInsumos()
+    }else{
+      setClientes(listaClientes)
+    }
+    if(listaMaquinas.length===0){
+      cargarMaquinas()
+    }else{
+      setMaquinas(listaMaquinas)
+    }
+    if(listaInsumos.length===0){
+      cargarInsumos()
+    }else{
+      setInsumos(listaInsumos)
+    }
   }, [])
 
    const cargarFichas = () => {
-    fetch("https://localhost:5201/api/fichaTecnica")
+    fetch("https://localhost:5201/api/fichaTecnica", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -51,7 +79,13 @@ const FichasTecnicas = () => {
   }
 
   const cargarClientes = () => {
-    fetch("https://localhost:5201/api/cliente")
+    fetch("https://localhost:5201/api/cliente", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -68,7 +102,13 @@ const FichasTecnicas = () => {
   }
 
   const cargarMaquinas = () => {
-    fetch("https://localhost:5201/api/maquina")
+    fetch("https://localhost:5201/api/maquina", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -85,7 +125,13 @@ const FichasTecnicas = () => {
   }
 
   const cargarInsumos = () => {
-    fetch("https://localhost:5201/api/Insumo")
+    fetch("https://localhost:5201/api/Insumo", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
     .then(r =>{
       if(!r.ok){
         throw new Error("Error en la respuesta del servidor");
@@ -103,7 +149,13 @@ const FichasTecnicas = () => {
   const filtrarMaquinas = () => {
     if(campoClienteElegidoId != ""){
       const clienteElegidoId = Number(campoClienteElegidoId)
-      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/cliente/${clienteElegidoId}`)
+      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/cliente/${clienteElegidoId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -127,7 +179,13 @@ const FichasTecnicas = () => {
   const filtrarClientes = () => {
     if(campoMaquinaElegidaId != ""){
       const maquinaElegidaId = Number(campoMaquinaElegidaId)
-      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaElegidaId}`)
+      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaElegidaId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -177,7 +235,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId != "" && insumosElegidos != ""){
       //[HttpGet("Cliente/{clienteId}/Maquina/{maquinaId}/Insumo/{insumoId}")]
-        fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}/insumo/${insId}`)
+        fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -194,7 +258,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId != "" && insumosElegidos != ""){
       //        [HttpGet("Cliente/{clienteId}/Insumo/{insumoId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -211,7 +281,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId == "" && insumosElegidos != ""){
       //     [HttpGet("Maquina/{maquinaId}/Insumo/{insumoId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}/insumo/${insId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -228,7 +304,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId != "" && insumosElegidos == ""){
       //        [HttpGet("Cliente/{clienteId}/Maquina/{maquinaId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -245,7 +327,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId == "" && insumosElegidos != ""){
       //        [HttpGet("Insumo/{id}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/insumo/${insId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/insumo/${insId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -262,7 +350,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId != "" && insumosElegidos == ""){
       //     
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -279,7 +373,13 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId == "" && insumosElegidos == ""){
       //          [HttpGet("Maquina/{id}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}`)
+      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
@@ -306,6 +406,8 @@ const FichasTecnicas = () => {
       method: 'DELETE',
       headers: {
       'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+
       }
     })
     .then(async (r) => {

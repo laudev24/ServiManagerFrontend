@@ -8,13 +8,24 @@ const VerCliente = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
     const categorias = useSelector(state => state.categoriasSlice.categorias)
     const [categoria, setCategoria] = useState("")
     const [cliente, setCliente] = useState("")
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([])
 
-    useEffect(() => {
-        fetch(`https://localhost:5201/api/cliente/${id}`)
+
+    const traerCliente = () => {
+        fetch(`https://localhost:5201/api/cliente/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -27,10 +38,23 @@ const VerCliente = () => {
         .catch(error => {
             console.error("Error al obtener el cliente:", error);
         })
-    }, [cliente])
-
+    }
     useEffect(() => {
-     fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`)
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
+        if(cliente==="")traerCliente()
+        if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
+        if(categorias.length===0)traerCategorias()
+    }, [])
+
+    const traerMaquinasDelCliente = () => {
+     fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
         if(!r.ok){
             throw new Error("Error en la respuesta del servidor");
@@ -44,11 +68,16 @@ const VerCliente = () => {
         console.error("Error al obtener las maquinas:", error);
         })
 
-    }, [maquinasAsociadas])
+    }
     
-
-    useEffect(() => {
-          fetch("https://localhost:5201/api/categoria")
+    const traerCategorias = () => {
+          fetch("https://localhost:5201/api/categoria", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
               if(!r.ok){
                   throw new Error("Error en la respuesta del servidor");
@@ -59,7 +88,7 @@ const VerCliente = () => {
                 dispatch(guardarCategorias(datos))
             })
         
-    }, [categorias])
+    }
 
     useEffect(() => {
        const cat = categorias.find(c => c.id === cliente.categoria)
@@ -107,6 +136,7 @@ const VerCliente = () => {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         })
         .then(async (r) => {

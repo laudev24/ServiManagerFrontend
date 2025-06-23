@@ -1,8 +1,7 @@
 import React from 'react'
 import { useRef, useState  } from "react";
 import { useDispatch } from "react-redux";
-import { guardarApikey } from "../features/usuarioSlice";
-import { guardarId } from "../features/usuarioSlice";
+import { guardarNombre, guardarToken } from "../features/usuarioSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -38,13 +37,15 @@ const Login = () => {
         }
         else if(r.status===200){
           navigate("/inicioAdm")
-          // dispatch(guardarApikey(json.apiKey));
-          // dispatch(guardarId(json.id));
         }
         return r.json()
       })
       .then((datos) => {
         console.log(datos)
+        localStorage.setItem("token", datos.token)
+        localStorage.setItem("nombre", datos.nombre)
+        dispatch(guardarToken(datos.token));
+        dispatch(guardarNombre(datos.nombre));
       })
       .catch((error) => {
         console.error("Error al crear ficha:", error.message); 

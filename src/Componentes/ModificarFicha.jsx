@@ -23,11 +23,29 @@ const ModificarFicha = () => {
     // const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
     const clientes = useSelector(state => state.clientesSlice.clientes);
     const maquinas = useSelector(state => state.maquinasSlice.maquinas);
+    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const [token, setToken] = useState("")
+    const token = localStorage.getItem("token")
+
+    
     
     // const ficha = fichas.find(m => m.id === Number(id))
     
     useEffect(() => {
-        fetch(`https://localhost:5201/api/fichaTecnica/${id}`)
+        // if(token==="")setToken(localStorage.getItem("token"))
+        //     else setToken(tokenSelector)
+        if(ficha==="")traerFicha()
+
+    }, [])
+
+    const traerFicha = () => {
+        fetch(`https://localhost:5201/api/fichaTecnica/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
         .then(r =>{
         if(!r.ok){
             throw new Error("Error en la respuesta del servidor");
@@ -50,8 +68,7 @@ const ModificarFicha = () => {
             if(maquinasFiltradas.length==0) setMaquinasFiltradas(maquinas)
             if(clientesFiltrados.length==0) setClientesFiltrados(clientes)
         }
-
-    }, [ficha])
+    }
     
     const setMaquinasDelCliente = (e) => {
         setIdClienteElegido(e) 
@@ -59,7 +76,13 @@ const ModificarFicha = () => {
         if(e === "") setMaquinasFiltradas(maquinas)
         else{
             // /api/[controller]/maquinas-del-cliente?id=123
-            fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${idCliente}`)
+            fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${idCliente}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -79,7 +102,13 @@ const ModificarFicha = () => {
         const idMaquina = Number(e)
         if(e === "") setClientesFiltrados(clientes)
         else{
-            fetch(`https://localhost:5201/api/maquina/clientes-de-maquina?id=${idMaquina}`)
+            fetch(`https://localhost:5201/api/maquina/clientes-de-maquina?id=${idMaquina}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
+            }
+        })
             .then(r =>{
             if(!r.ok){
                 throw new Error("Error en la respuesta del servidor");
@@ -122,6 +151,8 @@ const ModificarFicha = () => {
           body: JSON.stringify(fichaAMandar),
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': `Bearer ${token}`
+
           },
           })
           .then((response) => {

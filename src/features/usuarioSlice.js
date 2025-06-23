@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    apiKey : "",
-    id : -1
+    token : "",
+    nombre : ""
 }
 export const usuarioSlice = createSlice({
     name: "usuario",
     initialState,
     reducers:{
-        guardarApikey:(state, action) =>{
-            state.apiKey=action.payload
+        guardarToken:(state, action) =>{
+            state.token=action.payload
         },
-        guardarId:(state, action) =>
+        guardarNombre:(state, action) =>
         {
-            state.id=action.payload
+            state.nombre=action.payload
         }
     }
 
 })
-export const {guardarApikey, guardarId} = usuarioSlice.actions;
+export const {guardarToken, guardarNombre} = usuarioSlice.actions;
 export default usuarioSlice.reducer;
