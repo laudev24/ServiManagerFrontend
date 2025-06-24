@@ -1,0 +1,73 @@
+/*Paleta de colores propuesta*/
+/*.color1 {color: #bed5c5;} verde claro
+.color2 {color: #dadad1;} beige
+.color3 {color: #132b3e;} azul oscuro
+.color4 {color: #889797;} gris azulado
+.color5 {color: #f7f7f1;} crema/*
+
+
+
+/* Centrado completo de la pantalla */
+.contenedor-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 100% del alto de la pantalla */
+    background-color: #889797; /* gris azulado como fondo */
+}
+
+/* Tarjeta de login con sombra */
+.card-login {
+    width: 100%;
+    max-width: 400px; /* Ancho máximo de la tarjeta */
+    margin: 1rem; /* Espacio alrededor de la tarjeta */
+    padding: 2rem;
+    background-color: #dadad1; /* beige */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+}
+
+/* Títulos centrados */
+.card-login h1,
+.card-login h2 {
+    color:#132b3e; /* azul oscuro */
+    text-align: center;
+    margin-bottom: 1rem;
+    
+}
+
+.card-login h2 {
+    font-size: 1rem;
+    color: #6c757d; /* gris Bootstrap */
+}
+
+/* Espaciado de campos */
+.card-login .form-group {
+    color:#6c757d; /* gris Bootstrap */
+    margin-bottom: 1rem;
+}
+
+/* Botón ancho completo */
+.card-login .btn-login {
+    width: 100%;
+}
+
+/* Enlace de recuperación */
+.card-login .enlace-recuperar {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.card-login .enlace-recuperar:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+

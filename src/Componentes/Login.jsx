@@ -53,19 +53,57 @@ const Login = () => {
 
   }
   return (
-    <div>
-      
-        <h1>Bienvenido a ServiManager.</h1>
+    <div className="contenedor-login">
+      <div className="card-login">
+        <h1>Bienvenido a ServiManager</h1>
         <h2>Ingresá tu usuario y tu contraseña</h2>
-        <label>Usuario:
-        <input type="text" ref={campoUsuario} className="txtUsuario" onChange={enableBtnLogin}/>
-        </label><br/>
-        <label>Contraseña:
-        <input type="password" ref={campoPassword} className="txtPass" onChange={enableBtnLogin}/>
-        </label><br/>
-        <input type="button" value='Login' disabled={isDisabled}  onClick={hacerLogin}/>
-        <Link to="/">¿Olvidaste tu contraseña?</Link> 
+
+        <div className="form-group">
+          <label>Usuario </label>
+          <input
+            type="text"
+            ref={campoUsuario}
+            className="form-control"
+            onChange={enableBtnLogin}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Contraseña </label>
+          <input
+            type="password"
+            ref={campoPassword}
+            className="form-control"
+            onChange={enableBtnLogin}
+          />
+        </div>
+
+        <button
+          className="btn btn-primary btn-login"
+          disabled={isDisabled}
+          onClick={hacerLogin}
+        >
+          Login
+        </button>
+
+        <Link to="/" className="enlace-recuperar">
+          ¿Olvidaste tu contraseña?
+        </Link>
+      </div>
     </div>
+    // <div id="login">
+      
+    //     <h1>Bienvenido a ServiManager.</h1>
+    //     <h2>Ingresá tu usuario y tu contraseña</h2>
+    //     <label>Usuario:
+    //     <input type="text" ref={campoUsuario} className="txtUsuario" onChange={enableBtnLogin}/>
+    //     </label><br/>
+    //     <label>Contraseña:
+    //     <input type="password" ref={campoPassword} className="txtPass" onChange={enableBtnLogin}/>
+    //     </label><br/>
+    //     <input type="button" value='Login' disabled={isDisabled}  onClick={hacerLogin}/>
+    //     <Link to="/">¿Olvidaste tu contraseña?</Link> 
+    // </div>
   )
 }
 
