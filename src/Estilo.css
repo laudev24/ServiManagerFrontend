@@ -1,55 +1,72 @@
-/*Paleta de colores propuesta*/
-/*.color1 {color: #bed5c5;} verde claro
-.color2 {color: #dadad1;} beige
-.color3 {color: #132b3e;} azul oscuro
-.color4 {color: #889797;} gris azulado
-.color5 {color: #f7f7f1;} crema/*
+:root {
+    --verde-claro: #bed5c5;
+    --beige: #dadad1;
+    --azul-oscuro: #132b3e;
+    --gris-azulado: #889797;
+    --crema: #f7f7f1;
+}
+
+*{
+    background-color: var(--crema);
+    margin: auto;
+}
 
 
-
-/* Centrado completo de la pantalla */
+/* Fondo principal */
 .contenedor-login {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 100% del alto de la pantalla */
-    background-color: #889797; /* gris azulado como fondo */
+    height: 100vh;
+    background-color: var(--verde-claro);
 }
 
-/* Tarjeta de login con sombra */
+/* Tarjeta de login */
 .card-login {
     width: 100%;
-    max-width: 400px; /* Ancho máximo de la tarjeta */
-    margin: 1rem; /* Espacio alrededor de la tarjeta */
+    margin: auto 2rem;
+    max-width: 400px;
     padding: 2rem;
-    background-color: #dadad1; /* beige */
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
 }
 
-/* Títulos centrados */
+/* Títulos */
 .card-login h1,
 .card-login h2 {
-    color:#132b3e; /* azul oscuro */
     text-align: center;
     margin-bottom: 1rem;
-    
 }
 
 .card-login h2 {
     font-size: 1rem;
-    color: #6c757d; /* gris Bootstrap */
+    color: var(--gris-azulado);
 }
 
-/* Espaciado de campos */
+/* Campos del formulario */
 .card-login .form-group {
-    color:#6c757d; /* gris Bootstrap */
     margin-bottom: 1rem;
 }
 
-/* Botón ancho completo */
+/* Input de Bootstrap ya viene estilizado, pero podés personalizar más si querés */
+.card-login .form-control {
+    background-color: var(--beige);
+    border: 1px solid var(--gris-azulado);
+    color: var(--azul-oscuro);
+}
+
+/* Botón de login */
 .card-login .btn-login {
     width: 100%;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+}
+
+.card-login .btn-login:hover {
+    background-color: #0f2332; /* un poco más oscuro */
 }
 
 /* Enlace de recuperación */
@@ -58,7 +75,7 @@
     text-align: center;
     margin-top: 1rem;
     text-decoration: none;
-    color: #0d6efd;
+    color: var(--azul-oscuro);
 }
 
 .card-login .enlace-recuperar:hover {
@@ -67,6 +84,485 @@
 
 
 
+
+/* InicioAdm */
+
+/* ===== Estilos para el menú principal ===== */
+
+.contenedor-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--verde-claro);
+}
+
+
+.menu-principal {
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    margin: auto 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    min-height: auto;
+}
+
+/* Título de bienvenida */
+.menu-principal h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--crema);
+}
+
+/* Usuario en el cabezal */
+.menu-usuario {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background-color: var(--crema);
+    
+}
+
+.menu-usuario img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--azul-oscuro);
+    background-color: var(--crema);
+
+}
+
+.menu-usuario figure {
+    margin: 0;
+}
+
+.menu-usuario figcaption {
+    font-size: 0.9rem;
+    color: var(--gris-azulado);
+    background-color: var(--crema);
+
+}
+
+/* Botones del menú */
+.menu-principal .btn-menu {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    margin: 0.5rem auto;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    border-radius: 0.3rem;
+    transition: background-color 0.2s ease;
+}
+
+.menu-principal .btn-menu:hover {
+    background-color: #0f2332;
+    cursor: pointer;
+}
+
+
+
+
+/* ===== Clientes ===== */
+
+.ver-clientes {
+    max-width: 800px;
+    margin: 2rem 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.ver-clientes h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Enlace para nuevo cliente */
+.ver-clientes a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ver-clientes a:hover {
+    text-decoration: underline;
+}
+
+/* Botón de alerta */
+.ver-clientes input[type="button"] {
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.ver-clientes input[type="button"]:hover {
+    background-color: #0f2332;
+}
+
+/* Selector de categoría */
+.categoriaDeCliente {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+}
+
+/* Search bar */
+.search-bar {
+    padding: 1rem 0;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--gris-azulado);
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+}
+
+/* Tabla de clientes */
+.ver-clientes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.ver-clientes th,
+.ver-clientes td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: middle;
+}
+
+.ver-clientes img {
+    vertical-align: middle;
+    height: 20px;
+}
+
+/* Botones dentro de la tabla */
+.ver-clientes button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    cursor: pointer;
+}
+
+.ver-clientes button:hover {
+    background-color: #0f2332;
+}
+
+.ver-clientes button.eliminar {
+    color: red;
+    background-color: transparent;
+    border: 1px solid red;
+}
+
+.ver-clientes button.eliminar:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Paginador */
+.paginador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.paginador button {
+    padding: 0.5rem 1rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.paginador button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive para tablas */
+@media (max-width: 600px) {
+    .ver-clientes table,
+    .ver-clientes thead,
+    .ver-clientes tbody,
+    .ver-clientes th,
+    .ver-clientes td,
+    .ver-clientes tr {
+        display: block;
+        width: 100%;
+    }
+
+    .ver-clientes tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .ver-clientes td {
+        padding: 0.75rem;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ver-clientes td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        margin-right: 1rem;
+    }
+}
+
+/* ===== Máquinas ===== */
+
+.ver-maquinas {
+    max-width: 800px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.ver-maquinas h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.ver-maquinas a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ver-maquinas a:hover {
+    text-decoration: underline;
+}
+
+.ver-maquinas select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+}
+
+/* Tabla de máquinas */
+.ver-maquinas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.ver-maquinas th,
+.ver-maquinas td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: middle;
+    text-align: left;
+}
+
+/* Botones de acción */
+.ver-maquinas button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    cursor: pointer;
+}
+
+.ver-maquinas button:hover {
+    background-color: #0f2332;
+}
+
+.ver-maquinas button.eliminar {
+    color: red;
+    background-color: transparent;
+    border: 1px solid red;
+}
+
+.ver-maquinas button.eliminar:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .ver-maquinas table,
+    .ver-maquinas thead,
+    .ver-maquinas tbody,
+    .ver-maquinas th,
+    .ver-maquinas td,
+    .ver-maquinas tr {
+        display: block;
+        width: 100%;
+    }
+
+    .ver-maquinas tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .ver-maquinas td {
+        padding: 0.75rem;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ver-maquinas td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        margin-right: 1rem;
+    }
+}
+
+/* ===== Fichas Técnicas ===== */
+
+.ver-fichas {
+    max-width: 800px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.ver-fichas h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.ver-fichas button {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.ver-fichas button:hover {
+    background-color: #0f2332;
+}
+
+.ver-fichas button.eliminar {
+    color: red;
+    background-color: transparent;
+    border: 1px solid red;
+}
+
+.ver-fichas button.eliminar:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.ver-fichas select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+}
+
+.ver-fichas label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.ver-fichas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.ver-fichas th,
+.ver-fichas td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: middle;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .ver-fichas table,
+    .ver-fichas thead,
+    .ver-fichas tbody,
+    .ver-fichas th,
+    .ver-fichas td,
+    .ver-fichas tr {
+        display: block;
+        width: 100%;
+    }
+
+    .ver-fichas tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .ver-fichas td {
+        padding: 0.75rem;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ver-fichas td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        margin-right: 1rem;
+    }
+}
+
+/* Reutilizamos .paginador de clientes */
 
 
 

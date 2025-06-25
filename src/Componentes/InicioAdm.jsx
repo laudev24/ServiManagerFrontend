@@ -41,26 +41,46 @@ const InicioAdm = () => {
 
 
   return (
-    <div>
-      {/* Esto va en el cabezal: */}
-        <h1>Hola {nombre}!</h1>
-        <Link to="/datosUsuario">
+    <div className="contenedor-menu">
+       <div className="menu-principal">
+          <h1>Hola {nombre}!</h1>
+
+          <Link to="/datosUsuario" className="menu-usuario">
             <figure>
-                <img src="/public/usuarioAzul3.png" />
-                <figcaption>Ver mis datos</figcaption>
+              <img src="/public/usuarioAzul3.png" alt="Usuario" />
+              <figcaption>Ver mis datos</figcaption>
             </figure>
-        </Link>
-        {/* Hasta aqui va en el cabezal */}
+          </Link>
 
-        <input type="button" value="Clientes" className="btnClientes" onClick={verClientes}/> <br />
-        <input type="button" value="Máquinas" className="btnMaquinas" onClick={verMaquinas}/><br />
-        <input type="button" value="Fichas Técnicas" className="btnFichasTecnicas" onClick={verFichas}/> <br />
-        
-        <input type="button" value="Solicitudes" className="btnSolicitudes" onClick={verSolicitudes}/><br />
-        <input type="button" value="Insumos" className="btnInsumos" onClick={verInsumos}/><br />
-        <input type="button" value="Chats" className="btnChats" onClick={verChats}/>
-
+          <input type="button" value="Clientes" className="btn-menu" onClick={verClientes} />
+          <input type="button" value="Máquinas" className="btn-menu" onClick={verMaquinas} />
+          <input type="button" value="Fichas Técnicas" className="btn-menu" onClick={verFichas} />
+          <input type="button" value="Solicitudes" className="btn-menu" onClick={verSolicitudes} />
+          <input type="button" value="Insumos" className="btn-menu" onClick={verInsumos} />
+          <input type="button" value="Chats" className="btn-menu" onClick={verChats} />
+        </div>
     </div>
+
+    // <div>
+    //   {/* Esto va en el cabezal: */}
+    //     <h1>Hola {nombre}!</h1>
+    //     <Link to="/datosUsuario">
+    //         <figure>
+    //             <img src="/public/usuarioAzul3.png" />
+    //             <figcaption>Ver mis datos</figcaption>
+    //         </figure>
+    //     </Link>
+    //     {/* Hasta aqui va en el cabezal */}
+
+    //     <input type="button" value="Clientes" className="btnClientes" onClick={verClientes}/> <br />
+    //     <input type="button" value="Máquinas" className="btnMaquinas" onClick={verMaquinas}/><br />
+    //     <input type="button" value="Fichas Técnicas" className="btnFichasTecnicas" onClick={verFichas}/> <br />
+        
+    //     <input type="button" value="Solicitudes" className="btnSolicitudes" onClick={verSolicitudes}/><br />
+    //     <input type="button" value="Insumos" className="btnInsumos" onClick={verInsumos}/><br />
+    //     <input type="button" value="Chats" className="btnChats" onClick={verChats}/>
+
+    // </div>
   )
 }
 

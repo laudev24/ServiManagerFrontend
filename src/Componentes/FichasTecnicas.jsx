@@ -27,7 +27,13 @@ const FichasTecnicas = () => {
   const [campoMaquinaElegidaId, setCampoMaquinaElegidaId] = useState("")
   const [campoClienteElegidoId, setCampoClienteElegidoId] = useState("")
   
- 
+ const [paginaActual, setPaginaActual] = useState(1);
+  const itemsPorPagina = 10;
+
+  const totalPaginas = Math.ceil(fichas.length / itemsPorPagina);
+  const indiceInicial = (paginaActual - 1) * itemsPorPagina;
+  const fichasPaginadas = fichas.slice(indiceInicial, indiceInicial + itemsPorPagina);
+
 
   useEffect(() => {
     // if(token==="")setToken(localStorage.getItem("token"))
@@ -449,84 +455,172 @@ const FichasTecnicas = () => {
   }
 
   return (
-    <div>
-      <h1>Fichas Técnicas</h1>
-      <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' }})} > 
-        Crear Ficha Técnica
-      </button> <br />
-      <label>Seleccionar Cliente:
-        <select value={campoClienteElegidoId}  onChange={(e) => {
-          setCampoClienteElegidoId(e.target.value);
-          filtrarMaquinas(e.target.value);
-          }}>
-          <option key="" value="">Todos los Clientes</option>
-          {clientes.map(m => <option key={m.id} value={m.id}> {m.nombreEmpresa}</option>)}
-          {clientes.length === 0 && (
-            <option value="">No hay clientes para mostrar</option>
-          )}
-        </select> 
-      </label>
-      <br/>
+    <div className="contenedor-menu">
 
-      <label>Seleccionar Máquina:
-        <select value={campoMaquinaElegidaId} onChange={(e) => {
-          setCampoMaquinaElegidaId(e.target.value);
-          filtrarClientes(e.target.value);
-        }}>
-          <option key="" value="">Todas las Máquinas</option>
-          {maquinas.map(m => <option key={m.id} value={m.id}> {m.numero} - {m.marca} - {m.modelo} </option>)}
-          {maquinas.length === 0 && (
-            <option value="">No hay maquinas para mostrar.</option>
-          )}
-        </select> 
-      </label>
-      <br/>
+<div className="ver-fichas">
+  <h1>Fichas Técnicas</h1>
 
-      <label>Seleccionar Insumo:  
-        <select /*multiple*/ value={insumosElegidos} onChange={handleChange}>
-          <option key="" value="">Todos los Insumos</option>
-          {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
-          {insumos.length === 0 && (
-            <option value="">No hay insumos para mostrar.</option>
-          )}
-        </select>
-      </label>
-      <br />
+  <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' } })}>
+    Crear Ficha Técnica
+  </button>
 
-      <button onClick={filtrarFichas}>Filtrar</button>
+  <label>Seleccionar Cliente: 
+    <select value={campoClienteElegidoId} onChange={(e) => {
+      setCampoClienteElegidoId(e.target.value);
+      filtrarMaquinas(e.target.value);
+    }}>
+      <option value="">Todos los Clientes</option>
+      {clientes.map(m => <option key={m.id} value={m.id}>{m.nombreEmpresa}</option>)}
+      {clientes.length === 0 && <option value="">No hay clientes para mostrar</option>}
+    </select>
+  </label>
 
-      <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
-        <tbody>
-          {fichas.map((ficha) => (
-            <tr key={ficha.id}>
-              <td style={{ padding: "8px" }}>
-                <span style={{ marginLeft: "10px" }}><Link to={`/verFichaTecnica/${ficha.id}`}>{formatearFechaHora(ficha.fechaYHora)}</Link></span>
-              </td>
-              <td style={{ padding: "8px" }}>
-                <span style={{ marginLeft: "10px" }}>{mostrarNombreEmpresa(ficha.clienteId)}</span>
-              </td>
-               <td style={{ padding: "8px" }}>
-                <span style={{ marginLeft: "10px" }}>{mostrarNumeroMaquina(ficha.maquinaId)}</span>
-              </td>
-              
-              <td style={{ padding: "8px" }}>
-                <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
-              </td>
-              <td style={{ padding: "8px" }}>
-                <button onClick={() => handleEliminar(ficha.id)} style={{ color: "red" }}>
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-          {fichas.length === 0 && (
-            <tr key="noResult">
-              <td colSpan={5} style={{ textAlign: "center" }}>No hay resultados</td>
-            </tr>
-          )}
-        </tbody>
-      </table> 
+  <label>Seleccionar Máquina: 
+    <select value={campoMaquinaElegidaId} onChange={(e) => {
+      setCampoMaquinaElegidaId(e.target.value);
+      filtrarClientes(e.target.value);
+    }}>
+      <option value="">Todas las Máquinas</option>
+      {maquinas.map(m => (
+        <option key={m.id} value={m.id}>{m.numero} - {m.marca} - {m.modelo}</option>
+      ))}
+      {maquinas.length === 0 && <option value="">No hay maquinas para mostrar.</option>}
+    </select>
+  </label>
+
+  <label>Seleccionar Insumo: 
+    <select value={insumosElegidos} onChange={handleChange}>
+      <option value="">Todos los Insumos</option>
+      {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
+      {insumos.length === 0 && <option value="">No hay insumos para mostrar.</option>}
+    </select>
+  </label>
+
+  <button onClick={filtrarFichas}>Filtrar</button>
+
+  <table>
+    <tbody>
+      {fichasPaginadas.map((ficha) => (
+        <tr key={ficha.id}>
+          <td data-label="Fecha">
+            <Link to={`/verFichaTecnica/${ficha.id}`}>{formatearFechaHora(ficha.fechaYHora)}</Link>
+          </td>
+          <td data-label="Cliente">{mostrarNombreEmpresa(ficha.clienteId)}</td>
+          <td data-label="Máquina">{mostrarNumeroMaquina(ficha.maquinaId)}</td>
+          <td data-label="Modificar">
+            <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
+          </td>
+          <td data-label="Eliminar">
+            <button className="eliminar" onClick={() => handleEliminar(ficha.id)}>Eliminar</button>
+          </td>
+        </tr>
+      ))}
+      {fichas.length === 0 && (
+        <tr>
+          <td colSpan={5} style={{ textAlign: "center" }}>No hay resultados</td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+
+  {totalPaginas > 1 && (
+    <div className="paginador">
+      <button
+        disabled={paginaActual === 1}
+        onClick={() => setPaginaActual(paginaActual - 1)}
+      >
+        Anterior
+      </button>
+      <span>Página {paginaActual} de {totalPaginas}</span>
+      <button
+        disabled={paginaActual === totalPaginas}
+        onClick={() => setPaginaActual(paginaActual + 1)}
+      >
+        Siguiente
+      </button>
     </div>
+  )}
+</div>
+</div>
+
+    // <div>
+    //   <h1>Fichas Técnicas</h1>
+    //   <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' }})} > 
+    //     Crear Ficha Técnica
+    //   </button> <br />
+    //   <label>Seleccionar Cliente:
+    //     <select value={campoClienteElegidoId}  onChange={(e) => {
+    //       setCampoClienteElegidoId(e.target.value);
+    //       filtrarMaquinas(e.target.value);
+    //       }}>
+    //       <option key="" value="">Todos los Clientes</option>
+    //       {clientes.map(m => <option key={m.id} value={m.id}> {m.nombreEmpresa}</option>)}
+    //       {clientes.length === 0 && (
+    //         <option value="">No hay clientes para mostrar</option>
+    //       )}
+    //     </select> 
+    //   </label>
+    //   <br/>
+
+    //   <label>Seleccionar Máquina:
+    //     <select value={campoMaquinaElegidaId} onChange={(e) => {
+    //       setCampoMaquinaElegidaId(e.target.value);
+    //       filtrarClientes(e.target.value);
+    //     }}>
+    //       <option key="" value="">Todas las Máquinas</option>
+    //       {maquinas.map(m => <option key={m.id} value={m.id}> {m.numero} - {m.marca} - {m.modelo} </option>)}
+    //       {maquinas.length === 0 && (
+    //         <option value="">No hay maquinas para mostrar.</option>
+    //       )}
+    //     </select> 
+    //   </label>
+    //   <br/>
+
+    //   <label>Seleccionar Insumo:  
+    //     <select /*multiple*/ value={insumosElegidos} onChange={handleChange}>
+    //       <option key="" value="">Todos los Insumos</option>
+    //       {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
+    //       {insumos.length === 0 && (
+    //         <option value="">No hay insumos para mostrar.</option>
+    //       )}
+    //     </select>
+    //   </label>
+    //   <br />
+
+    //   <button onClick={filtrarFichas}>Filtrar</button>
+
+    //   <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+    //     <tbody>
+    //       {fichas.map((ficha) => (
+    //         <tr key={ficha.id}>
+    //           <td style={{ padding: "8px" }}>
+    //             <span style={{ marginLeft: "10px" }}><Link to={`/verFichaTecnica/${ficha.id}`}>{formatearFechaHora(ficha.fechaYHora)}</Link></span>
+    //           </td>
+    //           <td style={{ padding: "8px" }}>
+    //             <span style={{ marginLeft: "10px" }}>{mostrarNombreEmpresa(ficha.clienteId)}</span>
+    //           </td>
+    //            <td style={{ padding: "8px" }}>
+    //             <span style={{ marginLeft: "10px" }}>{mostrarNumeroMaquina(ficha.maquinaId)}</span>
+    //           </td>
+              
+    //           <td style={{ padding: "8px" }}>
+    //             <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
+    //           </td>
+    //           <td style={{ padding: "8px" }}>
+    //             <button onClick={() => handleEliminar(ficha.id)} style={{ color: "red" }}>
+    //               Eliminar
+    //             </button>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //       {fichas.length === 0 && (
+    //         <tr key="noResult">
+    //           <td colSpan={5} style={{ textAlign: "center" }}>No hay resultados</td>
+    //         </tr>
+    //       )}
+    //     </tbody>
+    //   </table> 
+    // </div>
   )
 }
 
