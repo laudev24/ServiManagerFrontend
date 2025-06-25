@@ -16,6 +16,7 @@ const VerCliente = () => {
     const [categoria, setCategoria] = useState("")
     const [cliente, setCliente] = useState("")
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([])
+    const [mostrarDatosCliente, setMostrarDatosCliente] = useState(true);
 
 
     const traerCliente = () => {
@@ -157,64 +158,140 @@ const VerCliente = () => {
 
     
     return (
-        <div>
-            <h1>Datos del cliente</h1>
-            <Link to ={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
-            <Link to ={`/asociarMaquinas/${id}`}>Asociar Máquinas</Link>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Nombre de la empresa: </th>
-                        <td>{cliente.nombreEmpresa}</td>
-                    </tr> 
-                        <tr>
-                        <th>Categoría: </th>
-                        <td>{categoria?.nombre}</td>
-                    </tr> 
-                        <tr>
-                        <th>Dirección: </th>
-                        <td>{cliente.direccion}</td>
-                    </tr> 
-                        <tr>
-                        <th>Nombre del contacto: </th>
-                        <td>{cliente.nombreContacto}</td>
-                    </tr> 
-                        <tr>
-                        <th>Teléfono/Celular de contacto: </th>
-                        <td>{cliente.telefono}</td>
-                    </tr>
-                        <tr>
-                        <th>Correo electrónico: </th>
-                        <td>{cliente.email}</td>
-                    </tr>
-                        <tr>
-                        <th>RUT: </th>
-                        <td>{cliente.rut}</td>
-                    </tr>  
-                        <tr>
-                        <th>Fecha de pago: </th>
-                        <td>{cliente.fechaPago}</td>
-                    </tr>  
-                        <tr>
-                        <th>Nombre de usuario: </th>
-                        <td>{cliente.fechaPago}</td>
-                    </tr>  
-                </tbody>
+    <div className="contenedor-menu">
+
+<div className="datos-cliente">
+  <h1>Datos del cliente</h1>
+
+  <Link to={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
+    
+{mostrarDatosCliente && (
+  <table>
+    <tbody>
+      <tr>
+        <th>Nombre de la empresa:</th>
+        <td>{cliente.nombreEmpresa}</td>
+      </tr>
+      <tr>
+        <th>Categoría:</th>
+        <td>{categoria?.nombre}</td>
+      </tr>
+      <tr>
+        <th>Dirección:</th>
+        <td>{cliente.direccion}</td>
+      </tr>
+      <tr>
+        <th>Nombre del contacto:</th>
+        <td>{cliente.nombreContacto}</td>
+      </tr>
+      <tr>
+        <th>Teléfono/Celular:</th>
+        <td>{cliente.telefono}</td>
+      </tr>
+      <tr>
+        <th>Correo electrónico:</th>
+        <td>{cliente.email}</td>
+      </tr>
+      <tr>
+        <th>RUT:</th>
+        <td>{cliente.rut}</td>
+      </tr>
+      <tr>
+        <th>Fecha de pago:</th>
+        <td>{cliente.fechaPago}</td>
+      </tr>
+      <tr>
+        <th>Nombre de usuario:</th>
+        <td>{cliente.fechaPago}</td>
+      </tr>
+    </tbody>
+  </table>
+)}
+<button onClick={() => setMostrarDatosCliente(prev => !prev)} className="btn-toggle">
+    {mostrarDatosCliente ? 'Ocultar datos del cliente' : 'Mostrar datos del cliente'}
+    </button>
+
+  <h2>Máquinas asociadas:</h2>
+  <table>
+    <tbody>
+      {maquinasAsociadas.map((maq) => (
+        <tr key={maq.id}>
+          <td>
+            <Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link>
+          </td>
+          <td>
+            <button className="desasociar" onClick={() => mostrarToast(maq.id)}>
+              Desasociar
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table><br />
+  <Link to={`/asociarMaquinas/${id}`}>Asociar Máquina</Link>
+
+</div>
+</div>
+
+
+        // <div>
+        //     <h1>Datos del cliente</h1>
+        //     <Link to ={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
+        //     <Link to ={`/asociarMaquinas/${id}`}>Asociar Máquinas</Link>
+        //     <table>
+        //         <tbody>
+        //             <tr>
+        //                 <th>Nombre de la empresa: </th>
+        //                 <td>{cliente.nombreEmpresa}</td>
+        //             </tr> 
+        //                 <tr>
+        //                 <th>Categoría: </th>
+        //                 <td>{categoria?.nombre}</td>
+        //             </tr> 
+        //                 <tr>
+        //                 <th>Dirección: </th>
+        //                 <td>{cliente.direccion}</td>
+        //             </tr> 
+        //                 <tr>
+        //                 <th>Nombre del contacto: </th>
+        //                 <td>{cliente.nombreContacto}</td>
+        //             </tr> 
+        //                 <tr>
+        //                 <th>Teléfono/Celular de contacto: </th>
+        //                 <td>{cliente.telefono}</td>
+        //             </tr>
+        //                 <tr>
+        //                 <th>Correo electrónico: </th>
+        //                 <td>{cliente.email}</td>
+        //             </tr>
+        //                 <tr>
+        //                 <th>RUT: </th>
+        //                 <td>{cliente.rut}</td>
+        //             </tr>  
+        //                 <tr>
+        //                 <th>Fecha de pago: </th>
+        //                 <td>{cliente.fechaPago}</td>
+        //             </tr>  
+        //                 <tr>
+        //                 <th>Nombre de usuario: </th>
+        //                 <td>{cliente.fechaPago}</td>
+        //             </tr>  
+        //         </tbody>
             
                 
-            </table>
-            <h2>Máquinas asociadas:</h2>
-            <table>
-                <tbody>
-                    {maquinasAsociadas.map((maq) => (
-                        <tr key={maq.id}>
-                            <td><Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link></td>
-                            <td> <button onClick={() => mostrarToast(maq.id)}  style={{ color: "red" }}>Desasociar </button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        //     </table>
+        //     <h2>Máquinas asociadas:</h2>
+        //     <table>
+        //         <tbody>
+        //             {maquinasAsociadas.map((maq) => (
+        //                 <tr key={maq.id}>
+        //                     <td><Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link></td>
+        //                     <td> <button onClick={() => mostrarToast(maq.id)}  style={{ color: "red" }}>Desasociar </button></td>
+        //                 </tr>
+        //             ))}
+        //         </tbody>
+        //     </table>
+        // </div>
     )
 }
 

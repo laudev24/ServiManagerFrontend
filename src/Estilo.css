@@ -565,5 +565,117 @@
 /* Reutilizamos .paginador de clientes */
 
 
+/* ===== Datos del Cliente ===== */
 
+.datos-cliente {
+    max-width: 800px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.datos-cliente h1,
+.datos-cliente h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.datos-cliente a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.datos-cliente a:hover {
+    text-decoration: underline;
+}
+
+.datos-cliente table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.datos-cliente th,
+.datos-cliente td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: top;
+    text-align: left;
+}
+
+/* Botón desasociar */
+.datos-cliente button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    cursor: pointer;
+}
+
+.datos-cliente button:hover {
+    background-color: #0f2332;
+}
+
+.datos-cliente button.desasociar {
+    color: red;
+    background-color: transparent;
+    border: 1px solid red;
+}
+
+.datos-cliente button.desasociar:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .datos-cliente table,
+    .datos-cliente thead,
+    .datos-cliente tbody,
+    .datos-cliente th,
+    .datos-cliente td,
+    .datos-cliente tr {
+        display: block;
+        width: 100%;
+    }
+
+    .datos-cliente tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .datos-cliente td,
+    .datos-cliente th {
+        padding: 0.75rem;
+        border: none;
+    }
+
+    .datos-cliente td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+}
+
+.datos-cliente .btn-toggle {
+    margin-bottom: 1rem;
+    background-color: var(--gris-azulado);
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.datos-cliente .btn-toggle:hover {
+    background-color: #6d7c7c;
+}
 
