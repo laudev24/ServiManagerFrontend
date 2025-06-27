@@ -11,20 +11,36 @@
     margin: auto;
 }
 
+h1 {
+    font-size: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
+}
+/* h2 {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
+} */
+h2 {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
+}
+button,
+input[type="button"] {
+    font-size: clamp(0.9rem, 1vw + 0.4rem, 1rem);
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.5vw, 1rem);
+}
+
+
 
 /* Fondo principal */
 .contenedor-login {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: var(--verde-claro);
 }
 
 /* Tarjeta de login */
 .card-login {
     width: 100%;
-    margin: auto 2rem;
+    margin: 2rem;
     max-width: 400px;
     padding: 2rem;
     background-color: var(--crema);
@@ -93,7 +109,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: var(--verde-claro);
 }
 
@@ -103,7 +119,7 @@
     width: 100%;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
-    margin: auto 2rem;
+    margin: 2rem;
     padding: 2rem;
     background-color: var(--crema);
     color: var(--azul-oscuro);
@@ -178,7 +194,7 @@
 
 .ver-clientes {
     max-width: 800px;
-    margin: 2rem 2rem;
+    margin: 2rem;
     padding: 2rem;
     background-color: var(--crema);
     color: var(--azul-oscuro);
@@ -678,4 +694,299 @@
 .datos-cliente .btn-toggle:hover {
     background-color: #6d7c7c;
 }
+
+
+
+/* ===== Modificar Cliente ===== */
+
+.formulario-cliente {
+    max-width: 800px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.formulario-cliente textarea {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+.formulario-cliente select[multiple] {
+    height: auto;
+    min-height: 120px;
+}
+
+
+/* .formulario-cliente h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+} */
+.formulario-cliente h1 {
+    font-size: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
+    max-width: 360px;
+    margin: 0 auto 1.5rem auto; /* centrado */
+    text-align: center;
+}
+
+
+.formulario-cliente label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+}
+
+.formulario-cliente input[type="text"],
+.formulario-cliente input[type="email"],
+.formulario-cliente input[type="password"],
+.formulario-cliente select {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+
+
+.formulario-cliente input[type="button"] {
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    display: block;
+    margin-top: 1rem;
+}
+
+.formulario-cliente input[type="button"]:hover {
+    background-color: #0f2332;
+}
+
+.formulario-cliente a {
+    display: inline-block;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: var(--azul-oscuro);
+}
+
+.formulario-cliente a:hover {
+    text-decoration: underline;
+}
+
+.formulario-cliente table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.formulario-cliente td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: top;
+    text-align: left;
+}
+
+
+
+/* ===== Ver maquina ===== */
+
+
+.datos-maquina {
+    max-width: 800px;
+    margin: 2rem ;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.datos-maquina h1,
+.datos-maquina h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.datos-maquina a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.datos-maquina a:hover {
+    text-decoration: underline;
+}
+
+.datos-maquina button {
+    padding: 0.5rem 1rem;
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.datos-maquina button:hover {
+    background-color: #0f2332;
+}
+
+.datos-maquina button.desasociar {
+    color: red;
+    background-color: transparent;
+    border: 1px solid red;
+}
+
+.datos-maquina button.desasociar:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.datos-maquina table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.datos-maquina td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: top;
+}
+
+@media (max-width: 600px) {
+    .datos-maquina table,
+    .datos-maquina thead,
+    .datos-maquina tbody,
+    .datos-maquina th,
+    .datos-maquina td,
+    .datos-maquina tr {
+        display: block;
+        width: 100%;
+    }
+
+    .datos-maquina tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .datos-maquina td {
+        padding: 0.75rem;
+        border: none;
+    }
+
+    .datos-maquina td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* ===== Ver ficha ===== */
+
+
+.ficha-detalle {
+    max-width: 800px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: var(--crema);
+    color: var(--azul-oscuro);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.ficha-detalle h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.ficha-detalle a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ficha-detalle a:hover {
+    text-decoration: underline;
+}
+
+.ficha-detalle table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.ficha-detalle th,
+.ficha-detalle td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: top;
+    text-align: left;
+}
+
+.ficha-detalle td span {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .ficha-detalle table,
+    .ficha-detalle thead,
+    .ficha-detalle tbody,
+    .ficha-detalle th,
+    .ficha-detalle td,
+    .ficha-detalle tr {
+        display: block;
+        width: 100%;
+    }
+
+    .ficha-detalle tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--gris-azulado);
+    }
+
+    .ficha-detalle td,
+    .ficha-detalle th {
+        padding: 0.75rem;
+        border: none;
+    }
+
+    .ficha-detalle td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--gris-azulado);
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+}
+
+
 

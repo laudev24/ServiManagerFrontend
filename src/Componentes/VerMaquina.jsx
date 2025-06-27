@@ -127,43 +127,79 @@ const VerMaquina = () => {
   }
 
   return (
-    <div>  
-      <h1>Datos de la Máquina</h1>
-      <Link to ={`/asociarCliente/${id}`}>Asociar Cliente</Link>
-      <button onClick={mostrarFichas}>Ver fichas</button>
-      <table>
-        <tbody>
-          <tr>
-              <td>Número: </td>
-              <td>{maquina.numero}</td>
-          </tr>
-           <tr>
-              <td>Marca: </td>
-              <td>{maquina.marca}</td>
-          </tr>
-           <tr>
-              <td>Modelo: </td>
-              <td>{maquina.modelo}</td>
-          </tr>
-           <tr>
-              <td>Año: </td>
-              <td>{maquina.año}</td>
-          </tr>
-        </tbody>
+    <div className="contenedor-menu">
 
-      </table>
-      <h2>Cliente/s asociado/s:</h2>
-        <table>
-          <tbody>
-            {clientesAsociados.map((cliente) => (
-              <tr key={cliente.id}>
-                <td key={cliente.id}>{cliente.nombreEmpresa}</td>
-                <td> <button onClick={() => mostrarToast(cliente.id)}  style={{ color: "red" }}>Desasociar </button></td>
-              </tr>
-              ))} 
-          </tbody>
-        </table>
-    </div>
+<div className="datos-maquina">
+  <h1>Datos de la Máquina</h1>
+
+  <Link to={`/asociarCliente/${id}`}>Asociar Cliente</Link>
+  <button onClick={mostrarFichas}>Ver fichas</button>
+
+  <table>
+    <tbody>
+      <tr><td data-label="Número">Número:</td><td>{maquina.numero}</td></tr>
+      <tr><td data-label="Marca">Marca:</td><td>{maquina.marca}</td></tr>
+      <tr><td data-label="Modelo">Modelo:</td><td>{maquina.modelo}</td></tr>
+      <tr><td data-label="Año">Año:</td><td>{maquina.año}</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Cliente/s asociado/s:</h2>
+
+  <table>
+    <tbody>
+      {clientesAsociados.map((cliente) => (
+        <tr key={cliente.id}>
+          <td data-label="Cliente">{cliente.nombreEmpresa}</td>
+          <td data-label="Acción">
+            <button className="desasociar" onClick={() => mostrarToast(cliente.id)}>
+              Desasociar
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+</div>
+
+    // <div>  
+    //   <h1>Datos de la Máquina</h1>
+    //   <Link to ={`/asociarCliente/${id}`}>Asociar Cliente</Link>
+    //   <button onClick={mostrarFichas}>Ver fichas</button>
+    //   <table>
+    //     <tbody>
+    //       <tr>
+    //           <td>Número: </td>
+    //           <td>{maquina.numero}</td>
+    //       </tr>
+    //        <tr>
+    //           <td>Marca: </td>
+    //           <td>{maquina.marca}</td>
+    //       </tr>
+    //        <tr>
+    //           <td>Modelo: </td>
+    //           <td>{maquina.modelo}</td>
+    //       </tr>
+    //        <tr>
+    //           <td>Año: </td>
+    //           <td>{maquina.año}</td>
+    //       </tr>
+    //     </tbody>
+
+    //   </table>
+    //   <h2>Cliente/s asociado/s:</h2>
+    //     <table>
+    //       <tbody>
+    //         {clientesAsociados.map((cliente) => (
+    //           <tr key={cliente.id}>
+    //             <td key={cliente.id}>{cliente.nombreEmpresa}</td>
+    //             <td> <button onClick={() => mostrarToast(cliente.id)}  style={{ color: "red" }}>Desasociar </button></td>
+    //           </tr>
+    //           ))} 
+    //       </tbody>
+    //     </table>
+    // </div>
   )
 }
 

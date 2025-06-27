@@ -251,61 +251,147 @@ const FichasMaquina = () => {
     }
 
     return (
-        <div>
-            <h1>Fichas Técnicas de la Máquina {maquina.numero}</h1>
-            <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasMaquina' ,  id }})} > 
-                Crear Ficha Técnica
-            </button><br />
-            <label>Seleccionar Cliente:
-                <select value={campoClienteElegidoId} onChange={(e) => {
-                    setCampoClienteElegidoId(e.target.value);
-                } }>
-                    <option key="" value="">Todos los Clientes</option>
-                    {clientes.map(m => <option key={m.id} value={m.id}> {m.nombreEmpresa}</option>)}
-                    {clientes.length === 0 && (
-                        <option value="">No hay clientes para mostrar</option>
-                    )}
-                </select>
-            </label><br /><label>Seleccionar Insumo:
-                <select /*multiple*/ value={insumosElegidos} onChange={(e) => { setInsumosElegidos(e.target.value); } }>
-                    <option key="" value="">Todos los Insumos</option>
-                    {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
-                    {insumos.length === 0 && (
-                        <option value="">No hay insumos para mostrar.</option>
-                    )}
-                </select>
-            </label><br /><button onClick={filtrarFichas}>Filtrar</button><table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
-                <tbody>
-                    {fichas.map((ficha) => (
-                        <tr key={ficha.id}>
-                            <td style={{ padding: "8px" }}>
-                                <span style={{ marginLeft: "10px" }}><Link to={`/verFichaTecnica/${ficha.id}`}>{formatearFechaHora(ficha.fechaYHora)}</Link></span>
-                            </td>
-                            <td style={{ padding: "8px" }}>
-                                <span style={{ marginLeft: "10px" }}>{mostrarNombreEmpresa(ficha.clienteId)}</span>
-                            </td>
-                            <td style={{ padding: "8px" }}>
-                                <span style={{ marginLeft: "10px" }}>{maquina.numero}</span>
-                            </td>
+    <div className="contenedor-menu">
 
-                            <td style={{ padding: "8px" }}>
-                                <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
-                            </td>
-                            <td style={{ padding: "8px" }}>
-                                <button onClick={() => handleEliminar(ficha.id)} style={{ color: "red" }}>
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                    {fichas.length === 0 && (
-                        <tr key="noResult">
-                            <td colSpan={5} style={{ textAlign: "center" }}>No hay resultados</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table> 
-        </div>
+<div className="formulario-cliente">
+  <h1>Fichas Técnicas de la Máquina {maquina.numero}</h1>
+
+  <button
+    onClick={() =>
+      navigate('/nuevaFichaTecnica', {
+        state: { from: 'fichasMaquina', id }
+      })
+    }
+  >
+    Crear Ficha Técnica
+  </button>
+
+  <label>
+    Seleccionar Cliente:
+    <select
+      value={campoClienteElegidoId}
+      onChange={(e) => setCampoClienteElegidoId(e.target.value)}
+    >
+      <option value="">Todos los Clientes</option>
+      {clientes.map((m) => (
+        <option key={m.id} value={m.id}>
+          {m.nombreEmpresa}
+        </option>
+      ))}
+      {clientes.length === 0 && <option>No hay clientes para mostrar</option>}
+    </select>
+  </label>
+
+  <label>
+    Seleccionar Insumo:
+    <select
+      value={insumosElegidos}
+      onChange={(e) => setInsumosElegidos(e.target.value)}
+    >
+      <option value="">Todos los Insumos</option>
+      {insumos.map((i) => (
+        <option key={i.id} value={i.id}>
+          {i.nombreInsumo}
+        </option>
+      ))}
+      {insumos.length === 0 && <option>No hay insumos para mostrar</option>}
+    </select>
+  </label>
+
+  <button onClick={filtrarFichas}>Filtrar</button>
+
+  <table>
+    <tbody>
+      {fichas.map((ficha) => (
+        <tr key={ficha.id}>
+          <td data-label="Fecha">
+            <Link to={`/verFichaTecnica/${ficha.id}`}>
+              {formatearFechaHora(ficha.fechaYHora)}
+            </Link>
+          </td>
+          <td data-label="Cliente">
+            {mostrarNombreEmpresa(ficha.clienteId)}
+          </td>
+          <td data-label="Máquina">{maquina.numero}</td>
+          <td data-label="Modificar">
+            <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
+          </td>
+          <td data-label="Eliminar">
+            <button className="eliminar" onClick={() => handleEliminar(ficha.id)}>
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      ))}
+      {fichas.length === 0 && (
+        <tr>
+          <td colSpan={5} style={{ textAlign: 'center' }}>
+            No hay resultados
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+
+        // <div>
+        //     <h1>Fichas Técnicas de la Máquina {maquina.numero}</h1>
+        //     <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasMaquina' ,  id }})} > 
+        //         Crear Ficha Técnica
+        //     </button><br />
+        //     <label>Seleccionar Cliente:
+        //         <select value={campoClienteElegidoId} onChange={(e) => {
+        //             setCampoClienteElegidoId(e.target.value);
+        //         } }>
+        //             <option key="" value="">Todos los Clientes</option>
+        //             {clientes.map(m => <option key={m.id} value={m.id}> {m.nombreEmpresa}</option>)}
+        //             {clientes.length === 0 && (
+        //                 <option value="">No hay clientes para mostrar</option>
+        //             )}
+        //         </select>
+        //     </label><br /><label>Seleccionar Insumo:
+        //         <select /*multiple*/ value={insumosElegidos} onChange={(e) => { setInsumosElegidos(e.target.value); } }>
+        //             <option key="" value="">Todos los Insumos</option>
+        //             {insumos.map(i => <option key={i.id} value={i.id}>{i.nombreInsumo}</option>)}
+        //             {insumos.length === 0 && (
+        //                 <option value="">No hay insumos para mostrar.</option>
+        //             )}
+        //         </select>
+        //     </label><br /><button onClick={filtrarFichas}>Filtrar</button><table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+        //         <tbody>
+        //             {fichas.map((ficha) => (
+        //                 <tr key={ficha.id}>
+        //                     <td style={{ padding: "8px" }}>
+        //                         <span style={{ marginLeft: "10px" }}><Link to={`/verFichaTecnica/${ficha.id}`}>{formatearFechaHora(ficha.fechaYHora)}</Link></span>
+        //                     </td>
+        //                     <td style={{ padding: "8px" }}>
+        //                         <span style={{ marginLeft: "10px" }}>{mostrarNombreEmpresa(ficha.clienteId)}</span>
+        //                     </td>
+        //                     <td style={{ padding: "8px" }}>
+        //                         <span style={{ marginLeft: "10px" }}>{maquina.numero}</span>
+        //                     </td>
+
+        //                     <td style={{ padding: "8px" }}>
+        //                         <button onClick={() => handleModificar(ficha.id)}>Modificar</button>
+        //                     </td>
+        //                     <td style={{ padding: "8px" }}>
+        //                         <button onClick={() => handleEliminar(ficha.id)} style={{ color: "red" }}>
+        //                             Eliminar
+        //                         </button>
+        //                     </td>
+        //                 </tr>
+        //             ))}
+        //             {fichas.length === 0 && (
+        //                 <tr key="noResult">
+        //                     <td colSpan={5} style={{ textAlign: "center" }}>No hay resultados</td>
+        //                 </tr>
+        //             )}
+        //         </tbody>
+        //     </table> 
+        // </div>
     )
 }
 

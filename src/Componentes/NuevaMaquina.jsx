@@ -111,49 +111,106 @@ const NuevaMaquina = () => {
 
 
     return (
-        <div> 
-            <h1>Registro de nueva máquina</h1>
-            <label>Número:
-                <input type="text" className="numero" ref={campoNumero}/>
-            </label><br/>
-            <label>Marca:
-                <input type="text" className="marca" ref={campoMarca}/>
-            </label><br/>
-            <label>Modelo:
-                <input type="text" className="modelo" ref={campoModelo}/>
-            </label><br/>
-            <label>Año:
-                <input type="text" className="anio" ref={campoAnio}/>
-            </label><br/>
-            <label>Tipo de máquina:
-                <input type="text" className="tipoMaquina" ref={campoTipoMaquina}/>
-            </label><br/>
-            {/* <label>Tipo de impresión:
-                <input type="text" className="tipoImpresion" ref={campoTipoImpresion}/>
-            </label><br/> */}
+    <div className="contenedor-menu">
 
-            {/* <select className="tipoMaquina" ref={campoTipoMaquina}>
-                <option value="">Tipo de máquina</option>
-                {tiposMaquina.map((tm) => (
-                    <option key={tm.id}>{tm.nombre}</option>
-                ))}
-                {tiposMaquina.length===0 && <option key="">No hay tipos de máquina para mostrar</option>}
-            </select><br/> */}
+<div className="formulario-cliente">
+  <h1>Registro de nueva máquina</h1>
+
+  <label>
+    Número:
+    <br />
+    <input type="text" ref={campoNumero} />
+  </label>
+
+  <label>
+    Marca:
+    <br />
+    <input type="text" ref={campoMarca} />
+  </label>
+
+  <label>
+    Modelo:
+    <br />
+    <input type="text" ref={campoModelo} />
+  </label>
+
+  <label>
+    Año:
+    <br />
+    <input type="text" ref={campoAnio} />
+  </label>
+
+  <label>
+    Tipo de máquina:
+    <input type="text" ref={campoTipoMaquina} />
+  </label>
+
+  <label>
+    Tipo de impresión:
+    <select className="tipoImpresion" ref={campoTipoImpresion}>
+      <option value="">Tipo de impresión</option>
+      {tiposImpresion.map((ti) => (
+        <option key={ti.id}>{ti.nombre}</option>
+      ))}
+      {tiposImpresion.length === 0 && (
+        <option key="">No hay tipos de impresión para mostrar</option>
+      )}
+    </select>
+  </label>
+
+  <label>
+    Cantidad de contadores:
+    <input type="text" ref={campoCantidadContadores} />
+  </label>
+
+  <input type="button" value="Registrar Máquina" onClick={registrar} />
+</div>
+</div>
+
+
+        // <div> 
+        //     <h1>Registro de nueva máquina</h1>
+        //     <label>Número:
+        //         <input type="text" className="numero" ref={campoNumero}/>
+        //     </label><br/>
+        //     <label>Marca:
+        //         <input type="text" className="marca" ref={campoMarca}/>
+        //     </label><br/>
+        //     <label>Modelo:
+        //         <input type="text" className="modelo" ref={campoModelo}/>
+        //     </label><br/>
+        //     <label>Año:
+        //         <input type="text" className="anio" ref={campoAnio}/>
+        //     </label><br/>
+        //     <label>Tipo de máquina:
+        //         <input type="text" className="tipoMaquina" ref={campoTipoMaquina}/>
+        //     </label><br/>
+        //     {/* <label>Tipo de impresión:
+        //         <input type="text" className="tipoImpresion" ref={campoTipoImpresion}/>
+        //     </label><br/> */}
+
+        //     {/* <select className="tipoMaquina" ref={campoTipoMaquina}>
+        //         <option value="">Tipo de máquina</option>
+        //         {tiposMaquina.map((tm) => (
+        //             <option key={tm.id}>{tm.nombre}</option>
+        //         ))}
+        //         {tiposMaquina.length===0 && <option key="">No hay tipos de máquina para mostrar</option>}
+        //     </select><br/> */}
         
-            <select className="tipoImpresion" ref={campoTipoImpresion}>
-                <option value="">Tipo de impresión</option>
-                {tiposImpresion.map((ti) => (
-                    <option key={ti.id}>{ti.nombre}</option>
-                ))}
-                {tiposImpresion.length===0 && <option key="">No hay tipos de impresión para mostrar</option>}
-            </select><br/>
+        //     <select className="tipoImpresion" ref={campoTipoImpresion}>
+        //         <option value="">Tipo de impresión</option>
+        //         {tiposImpresion.map((ti) => (
+        //             <option key={ti.id}>{ti.nombre}</option>
+        //         ))}
+        //         {tiposImpresion.length===0 && <option key="">No hay tipos de impresión para mostrar</option>}
+        //     </select><br/>
 
-            <label>Cantidad de contadores:
-                <input type="text" className="cantidadContadores" ref={campoCantidadContadores}/>
-            </label><br/>
+        //     <label>Cantidad de contadores:
+        //         <input type="text" className="cantidadContadores" ref={campoCantidadContadores}/>
+        //     </label><br/>
             
-            <input type="button" value="Registrar Máquina" onClick={registrar}/>
-        </div>
+        //     <input type="button" value="Registrar Máquina" onClick={registrar}/>
+        // </div>
     )
 }
 

@@ -95,55 +95,133 @@ const NuevoCliente = () => {
 
 
   return (
-    <div>
-        <h1>Registro de nuevo cliente</h1>
-        <label>Nombre de la empresa:
-        <input type="text" className="nombreEmp" ref={campoNombreEmpresa}/>
-        </label><br/>
-        <select className="categoriaCliente" ref={campoCategoria}>
-            <option value="">Elegir categoría</option>
-            {categorias.map((cat) => (
-                <option key={cat.id}>{cat.nombre}</option>
-            ))}
-            {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
-        </select><br/>
-        <label>Dirección:
-        <input type="text" className="direccion" ref={campoDireccion}/>
-        </label><br/>
-        <label>Nombre del contacto:
-        <input type="text" className="nombreContacto" ref={campoNombreContacto}/>
-        </label><br/>
-        <label>Teléfono/Celular de contacto:
-        <input type="text" className="tel" ref={campoTelefono} />
-        </label><br/>
-        <label>Correo electrónico:
-        <input type="email" className="email" ref={campoEmail}/>
-        </label><br/>
-        <label>RUT:
-        <input type="text" className="rut" ref={campoRut}/>
-        </label><br/>
-        <label>Fecha de pago:
-        <select className="selFechaPago" ref={campoFechaPago}>
-            <option value="">Elegir rango</option>
-            <option value="1 al 10">1 al 10</option>
-            <option value="11 al 20">11 al 20</option>
-            <option value="21 al 30">21 al 30</option>
-        </select>
-        </label><br/>
-        <div id="crearUsuario">
-            <label>Nombre de usuario:
-            <input type="text" className="usu" ref={campoNombreUsuario}/>
-            </label><br/>
-            <label>Contraseña:
-            <input type="password" className="contra" ref={campoContrasenia}/>
-            </label><br/>
-            <label>Repetir contraseña:
-            <input type="password" className="contra2" ref={campoContrasenia2}/>
-            </label><br/>
-        </div>
-        <p>{mensaje}</p>
-        <input type="button" value="Registrar Cliente" onClick={registrar}/>
-    </div>
+    <div className="contenedor-menu">
+
+<div className="formulario-cliente">
+  <h1>Registro de nuevo cliente</h1>
+
+  <label>
+    Nombre de la empresa:
+    <input type="text" ref={campoNombreEmpresa} />
+  </label>
+
+  <label>
+    Categoría:
+    <select ref={campoCategoria}>
+      <option value="">Elegir categoría</option>
+      {categorias.map((cat) => (
+        <option key={cat.id}>{cat.nombre}</option>
+      ))}
+      {categorias.length === 0 && <option key="">No hay categorías para mostrar</option>}
+    </select>
+  </label>
+
+  <label>
+    Dirección:
+    <input type="text" ref={campoDireccion} />
+  </label>
+
+  <label>
+    Nombre del contacto:
+    <input type="text" ref={campoNombreContacto} />
+  </label>
+
+  <label>
+    Teléfono/Celular de contacto:
+    <input type="text" ref={campoTelefono} />
+  </label>
+
+  <label>
+    Correo electrónico:
+    <input type="email" ref={campoEmail} />
+  </label>
+
+  <label>
+    RUT:
+    <input type="text" ref={campoRut} />
+  </label>
+
+  <label>
+    Fecha de pago:
+    <select ref={campoFechaPago}>
+      <option value="">Elegir rango</option>
+      <option value="1 al 10">1 al 10</option>
+      <option value="11 al 20">11 al 20</option>
+      <option value="21 al 30">21 al 30</option>
+    </select>
+  </label>
+
+  <label>
+    Nombre de usuario:
+    <input type="text" ref={campoNombreUsuario} />
+  </label>
+
+  <label>
+    Contraseña:
+    <input type="password" ref={campoContrasenia} />
+  </label>
+
+  <label>
+    Repetir contraseña:
+    <input type="password" ref={campoContrasenia2} />
+  </label>
+
+  {mensaje && <p>{mensaje}</p>}
+
+  <input type="button" value="Registrar Cliente" onClick={registrar} />
+</div>
+</div>
+
+
+    // <div>
+    //     <h1>Registro de nuevo cliente</h1>
+    //     <label>Nombre de la empresa:
+    //     <input type="text" className="nombreEmp" ref={campoNombreEmpresa}/>
+    //     </label><br/>
+    //     <select className="categoriaCliente" ref={campoCategoria}>
+    //         <option value="">Elegir categoría</option>
+    //         {categorias.map((cat) => (
+    //             <option key={cat.id}>{cat.nombre}</option>
+    //         ))}
+    //         {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
+    //     </select><br/>
+    //     <label>Dirección:
+    //     <input type="text" className="direccion" ref={campoDireccion}/>
+    //     </label><br/>
+    //     <label>Nombre del contacto:
+    //     <input type="text" className="nombreContacto" ref={campoNombreContacto}/>
+    //     </label><br/>
+    //     <label>Teléfono/Celular de contacto:
+    //     <input type="text" className="tel" ref={campoTelefono} />
+    //     </label><br/>
+    //     <label>Correo electrónico:
+    //     <input type="email" className="email" ref={campoEmail}/>
+    //     </label><br/>
+    //     <label>RUT:
+    //     <input type="text" className="rut" ref={campoRut}/>
+    //     </label><br/>
+    //     <label>Fecha de pago:
+    //     <select className="selFechaPago" ref={campoFechaPago}>
+    //         <option value="">Elegir rango</option>
+    //         <option value="1 al 10">1 al 10</option>
+    //         <option value="11 al 20">11 al 20</option>
+    //         <option value="21 al 30">21 al 30</option>
+    //     </select>
+    //     </label><br/>
+    //     <div id="crearUsuario">
+    //         <label>Nombre de usuario:
+    //         <input type="text" className="usu" ref={campoNombreUsuario}/>
+    //         </label><br/>
+    //         <label>Contraseña:
+    //         <input type="password" className="contra" ref={campoContrasenia}/>
+    //         </label><br/>
+    //         <label>Repetir contraseña:
+    //         <input type="password" className="contra2" ref={campoContrasenia2}/>
+    //         </label><br/>
+    //     </div>
+    //     <p>{mensaje}</p>
+    //     <input type="button" value="Registrar Cliente" onClick={registrar}/>
+    // </div>
   )
 }
 

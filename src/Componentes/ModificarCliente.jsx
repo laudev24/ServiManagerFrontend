@@ -142,47 +142,150 @@ const ModificarCliente = () => {
   }
 
   return (
-    <div>
-       <h1>Modificar cliente</h1>
-        <label>Nombre de la empresa:
-          <input type="text" className="nombreEmp" onChange={(e) =>setNombreEmpresa(e.target.value)} value={nombreEmpresa || ''}/>
-        </label><br/>
-        <select className="categoriaCliente" onChange={(e) =>setCategoria(e.target.value)} value={categoria || ''}>
-            <option value={categoria?.id || ''}>{categoria?.nombre}</option>
-            {categorias.map((cat) => (
-                <option key={cat?.id} value={cat?.id}>{cat?.nombre}</option>
-            ))}
-            {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
-        </select><br/>
-        <label>Dirección:
-          <input type="text" className="direccion" onChange={(e) =>setDireccion(e.target.value)} value={direccion || ''}/>
-        </label><br/>
-        <label>Nombre del contacto:
-          <input type="text" className="nombreContacto" onChange={(e) =>setNombreContacto(e.target.value)} value={nombreContacto || ''}/>
-        </label><br/>
-        <label>Teléfono/Celular de contacto:
-          <input type="text" className="tel" onChange={(e) =>setTelefono(e.target.value)} value={telefono || ''}/>
-        </label><br/>
-        <label>Correo electrónico:
-          <input type="email" className="email" onChange={(e) =>setEmail(e.target.value)} value={email || ''}/>
-        </label><br/>
-        <label>RUT:
-          <input type="text" className="rut" onChange={(e) =>setRut(e.target.value)} value={rut || ''}/>
-        </label><br/>
-        <label>Fecha de pago:
-          <select className="selFechaPago" onChange={(e) =>setFechaPago(e.target.value)} value={fechaPago || ''}>
-              <option value="">Elegir rango</option>
-              <option value="1 al 10">1 al 10</option>
-              <option value="11 al 20">11 al 20</option>
-              <option value="21 al 30">21 al 30</option>
-          </select>
-        </label><br/>
-        <label>Nombre de usuario:
-          <input type="text" className="usu" onChange={(e) =>setNombre(e.target.value)} value={nombre || ''}/>
-        </label><br/>
-        <Link to="/#">Cambiar contraseña</Link>
-        <input type="button" value="Modificar Cliente" onClick={modificar}/>
-      </div>
+    <div className="contenedor-menu">
+
+<div className="formulario-cliente">
+  <h1>Modificar cliente</h1>
+
+  <label>
+    Nombre de la empresa:
+    <input
+      type="text"
+      onChange={(e) => setNombreEmpresa(e.target.value)}
+      value={nombreEmpresa || ''}
+    />
+  </label>
+
+  <label>
+    Categoría:
+    <select
+      onChange={(e) => setCategoria(e.target.value)}
+      value={categoria || ''}
+    >
+      <option value={categoria?.id || ''}>{categoria?.nombre}</option>
+      {categorias.map((cat) => (
+        <option key={cat?.id} value={cat?.id}>{cat?.nombre}</option>
+      ))}
+      {categorias.length === 0 && <option>No hay categorías para mostrar</option>}
+    </select>
+  </label>
+
+  <label>
+    Dirección:
+    <input
+      type="text"
+      onChange={(e) => setDireccion(e.target.value)}
+      value={direccion || ''}
+    />
+  </label>
+
+  <label>
+    Nombre del contacto:
+    <input
+      type="text"
+      onChange={(e) => setNombreContacto(e.target.value)}
+      value={nombreContacto || ''}
+    />
+  </label>
+
+  <label>
+    Teléfono/Celular de contacto:
+    <input
+      type="text"
+      onChange={(e) => setTelefono(e.target.value)}
+      value={telefono || ''}
+    />
+  </label>
+
+  <label>
+    Correo electrónico:
+    <input
+      type="email"
+      onChange={(e) => setEmail(e.target.value)}
+      value={email || ''}
+    />
+  </label>
+
+  <label>
+    RUT:
+    <input
+      type="text"
+      onChange={(e) => setRut(e.target.value)}
+      value={rut || ''}
+    />
+  </label>
+
+  <label>
+    Fecha de pago:
+    <select
+      onChange={(e) => setFechaPago(e.target.value)}
+      value={fechaPago || ''}
+    >
+      <option value="">Elegir rango</option>
+      <option value="1 al 10">1 al 10</option>
+      <option value="11 al 20">11 al 20</option>
+      <option value="21 al 30">21 al 30</option>
+    </select>
+  </label>
+
+  <label>
+    Nombre de usuario:
+    <input
+      type="text"
+      onChange={(e) => setNombre(e.target.value)}
+      value={nombre || ''}
+    />
+  </label>
+
+  <Link to="/#">Cambiar contraseña</Link>
+
+  <input type="button" value="Modificar Cliente" onClick={modificar} />
+</div>
+</div>
+
+
+
+    // <div>
+    //    <h1>Modificar cliente</h1>
+    //     <label>Nombre de la empresa:
+    //       <input type="text" className="nombreEmp" onChange={(e) =>setNombreEmpresa(e.target.value)} value={nombreEmpresa || ''}/>
+    //     </label><br/>
+    //     <select className="categoriaCliente" onChange={(e) =>setCategoria(e.target.value)} value={categoria || ''}>
+    //         <option value={categoria?.id || ''}>{categoria?.nombre}</option>
+    //         {categorias.map((cat) => (
+    //             <option key={cat?.id} value={cat?.id}>{cat?.nombre}</option>
+    //         ))}
+    //         {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
+    //     </select><br/>
+    //     <label>Dirección:
+    //       <input type="text" className="direccion" onChange={(e) =>setDireccion(e.target.value)} value={direccion || ''}/>
+    //     </label><br/>
+    //     <label>Nombre del contacto:
+    //       <input type="text" className="nombreContacto" onChange={(e) =>setNombreContacto(e.target.value)} value={nombreContacto || ''}/>
+    //     </label><br/>
+    //     <label>Teléfono/Celular de contacto:
+    //       <input type="text" className="tel" onChange={(e) =>setTelefono(e.target.value)} value={telefono || ''}/>
+    //     </label><br/>
+    //     <label>Correo electrónico:
+    //       <input type="email" className="email" onChange={(e) =>setEmail(e.target.value)} value={email || ''}/>
+    //     </label><br/>
+    //     <label>RUT:
+    //       <input type="text" className="rut" onChange={(e) =>setRut(e.target.value)} value={rut || ''}/>
+    //     </label><br/>
+    //     <label>Fecha de pago:
+    //       <select className="selFechaPago" onChange={(e) =>setFechaPago(e.target.value)} value={fechaPago || ''}>
+    //           <option value="">Elegir rango</option>
+    //           <option value="1 al 10">1 al 10</option>
+    //           <option value="11 al 20">11 al 20</option>
+    //           <option value="21 al 30">21 al 30</option>
+    //       </select>
+    //     </label><br/>
+    //     <label>Nombre de usuario:
+    //       <input type="text" className="usu" onChange={(e) =>setNombre(e.target.value)} value={nombre || ''}/>
+    //     </label><br/>
+    //     <Link to="/#">Cambiar contraseña</Link>
+    //     <input type="button" value="Modificar Cliente" onClick={modificar}/>
+    //   </div>
   )
 }
 

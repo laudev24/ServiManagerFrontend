@@ -142,42 +142,102 @@ const AsociarMaquinas = () => {
     }
 
   return (
-    <div>
-        <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
+    <div className="contenedor-menu">
+
+<div className="formulario-cliente">
+  <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
+
+  <select ref={campoIdMaquinaElegida} onChange={mostrarFormulario}>
+    <option value="">Elegir máquina</option>
+    {maquinas.map((maquina) => (
+      <option key={maquina.id} value={maquina.id}>
+        {maquina.numero} - {maquina.marca} - {maquina.modelo}
+      </option>
+    ))}
+    {maquinas.length === 0 && (
+      <option key="">No hay máquinas para mostrar.</option>
+    )}
+  </select>
+
+  <label>
+    Cargo fijo:
+    <input type="text" ref={campoCargoFijo} />
+  </label>
+
+  {maquinaElegida?.tipoImpresion === 'Color' && (
+    <label>
+      Costo por Copia Color:
+      <input type="text" ref={campoCostoColor} />
+    </label>
+  )}
+
+  {maquinaElegida?.tipoImpresion === 'B&N' && (
+    <label>
+      Costo por Copia B&N:
+      <input type="text" ref={campoCostoBYN} />
+    </label>
+  )}
+
+  <input type="button" value="Asociar Máquina" onClick={asociar} />
+
+  <h2>Máquinas asociadas:</h2>
+
+  <table>
+    <tbody>
+      {maquinasAsociadas.map((maquina) => (
+        <tr key={maquina.id}>
+          <td>
+            {maquina.numero} - {maquina.marca} - {maquina.modelo}
+          </td>
+        </tr>
+      ))}
+      {maquinasAsociadas.length === 0 && (
+        <tr>
+          <td>No hay máquinas asociadas a este cliente.</td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+    // <div>
+    //     <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
       
-        <select className="maquinas" ref={campoIdMaquinaElegida} onChange={mostrarFormulario} >
-            <option value="">Elegir máquina</option>
-            {maquinas.map((maquina) => (
-                <option key={maquina.id} value={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</option>
-            ))}
-            {maquinas.length===0 && <option key="">No hay máquinas para mostrar.</option>}
-        </select><br />
-        <label>Cargo fijo:
-            <input type="text" className='cargoFijo' ref={campoCargoFijo}/>
-        </label><br />
-        {maquinaElegida?.tipoImpresion == 'Color' && 
-        <label>Costo por Copia Color:
-            <input type="text" className='costoColor' ref={campoCostoColor}/>
-        </label>}
-        {maquinaElegida?.tipoImpresion == 'B&N' && 
-        <label>Costo por Copia B&N:
-            <input type="text" className='costoBYN' ref={campoCostoBYN}/>
-        </label>} 
-        <input type="button" value="Asociar Máquina" onClick={asociar}/><br />
-        <h2>Máquinas asociadas:</h2>
-        <table>
-            <tbody>
+    //     <select className="maquinas" ref={campoIdMaquinaElegida} onChange={mostrarFormulario} >
+    //         <option value="">Elegir máquina</option>
+    //         {maquinas.map((maquina) => (
+    //             <option key={maquina.id} value={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</option>
+    //         ))}
+    //         {maquinas.length===0 && <option key="">No hay máquinas para mostrar.</option>}
+    //     </select><br />
+    //     <label>Cargo fijo:
+    //         <input type="text" className='cargoFijo' ref={campoCargoFijo}/>
+    //     </label><br />
+    //     {maquinaElegida?.tipoImpresion == 'Color' && 
+    //     <label>Costo por Copia Color:
+    //         <input type="text" className='costoColor' ref={campoCostoColor}/>
+    //     </label>}
+    //     {maquinaElegida?.tipoImpresion == 'B&N' && 
+    //     <label>Costo por Copia B&N:
+    //         <input type="text" className='costoBYN' ref={campoCostoBYN}/>
+    //     </label>} 
+    //     <input type="button" value="Asociar Máquina" onClick={asociar}/><br />
+    //     <h2>Máquinas asociadas:</h2>
+    //     <table>
+    //         <tbody>
                 
-                {maquinasAsociadas.map((maquina) => (
-                    <tr> 
-                        <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
-                    </tr>
-                ))}
-                {maquinasAsociadas.length===0 && <tr><td key="">No hay máquinas asociadas a este cliente.</td></tr>}
+    //             {maquinasAsociadas.map((maquina) => (
+    //                 <tr> 
+    //                     <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
+    //                 </tr>
+    //             ))}
+    //             {maquinasAsociadas.length===0 && <tr><td key="">No hay máquinas asociadas a este cliente.</td></tr>}
                 
-            </tbody>
-        </table>
-    </div>
+    //         </tbody>
+    //     </table>
+    // </div>
   )
 }
 
