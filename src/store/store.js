@@ -1,4 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import { combineReducers } from 'redux';
+
 import clientesReducer from "../features/clientesSlice";
 import maquinasReducer from "../features/maquinasSlice";
 import fichasTecnicasReducer from "../features/fichasTecnicasSlice";
@@ -8,18 +12,29 @@ import chatsReducer from "../features/chatsSlice";
 import categoriasReducer from "../features/categoriasSlice";
 import usuarioReducer from "../features/usuarioSlice";
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const rootReducer = combineReducers({
+    clientesSlice : clientesReducer,
+    maquinasSlice : maquinasReducer,
+    fichasTecnicasSlice : fichasTecnicasReducer,
+    solicitudesSlice : solicitudesReducer,
+    insumosSlice : insumosReducer,
+    chatsSlice : chatsReducer,
+    categoriasSlice : categoriasReducer,
+    usuarioSlice : usuarioReducer
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store);
 
 
 
-export const store= configureStore ({
-    reducer : {
-        clientesSlice : clientesReducer,
-        maquinasSlice : maquinasReducer,
-        fichasTecnicasSlice : fichasTecnicasReducer,
-        solicitudesSlice : solicitudesReducer,
-        insumosSlice : insumosReducer,
-        chatsSlice : chatsReducer,
-        categoriasSlice : categoriasReducer,
-        usuarioSlice : usuarioReducer
-    }
-})

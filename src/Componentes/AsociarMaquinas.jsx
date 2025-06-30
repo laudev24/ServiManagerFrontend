@@ -7,7 +7,7 @@ import { guardarMaquinas } from '../features/maquinasSlice';
 const AsociarMaquinas = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const tokenSelector = useSelector(state => state.usuarioSlice.token)
     // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
     
@@ -31,10 +31,10 @@ const AsociarMaquinas = () => {
     useEffect(() => {
         // if(token==="")setToken(localStorage.getItem("token"))
         //     else setToken(tokenSelector)
-        if(maquinas.length===0)cargarMaquinas()
-        if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
-        if(clientes.length===0)traerClientes()
-    }, [])
+        if(!maquinas.length)cargarMaquinas()
+        if(!maquinasAsociadas.length)traerMaquinasDelCliente()
+        if(!clientes.length)traerClientes()
+    }, [maquinas, clientes]);
 
     const cargarMaquinas = () => {
         fetch("https://localhost:5201/api/maquina", {
@@ -96,7 +96,6 @@ const AsociarMaquinas = () => {
                 return r.json()
                 }) 
             .then(datos => {
-                setClientesFiltrados(datos)
                 dispatch(guardarClientes(datos))
             })
             .catch(error => {

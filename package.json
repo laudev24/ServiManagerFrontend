@@ -19,6 +19,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.30.1",
     "react-toastify": "^11.0.5",
+    "redux-persist": "^6.0.0",
     "workbox-window": "^7.3.0"
   },
   "devDependencies": {

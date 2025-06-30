@@ -37,16 +37,14 @@ const Clientes = () => {
    
 
     useEffect(() => {
-        // console.log("TokenSelector: ",tokenSelector)
-        // console.log("TokenPrueba: ",tokenPrueba)
-        // if(tokenSelector)setToken(tokenPrueba)
-        //     else setToken(tokenSelector)
-        // console.log("Token guardado: ", token)
-        console.log("ListaClientes: ", listaClientes)
-        console.log("Token: ", token)
-        if(listaClientes.length===0)traerClientes()
-        if(categorias.length===0)traerCategorias()
-    }, [])
+      // console.log("ListaClientes: ", listaClientes)
+      if (!listaClientes.length) {
+        traerClientes();
+      } else {
+        setClientesFiltrados(listaClientes);
+      }
+      if(!categorias.length)traerCategorias()
+    }, [listaClientes, categorias])
 
   
     
@@ -115,9 +113,9 @@ const Clientes = () => {
 
     const filtrarPorCategoria = (c) => {
         const idCategoria = Number(c)
-        console.log("ID de categoria: ", idCategoria)
+        // console.log("ID de categoria: ", idCategoria)
         if(c != ""){
-            fetch(`https://localhost:5201/api/cliente/por-categoria?id=${idCategoria}`, {
+            fetch(`https://localhost:5201/api/cliente/por-categoria?categoria=${idCategoria}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -133,8 +131,8 @@ const Clientes = () => {
             .then(datos => {
                 setClientesFiltrados(datos)
                 // ordenarClientes()
-                console.log("Clientes que llegan del fetch: ",datos)
-                console.log("Clientes por categoria: ",clientesFiltrados)
+                // console.log("Clientes que llegan del fetch: ",datos)
+                // console.log("Clientes por categoria: ",clientesFiltrados)
                 // dispatch(guardarClientes(datos))
             })
             .catch(error => {
@@ -142,7 +140,7 @@ const Clientes = () => {
             })
         }
         else{
-            if(listaClientes.length)traerClientes()
+            if(!listaClientes.length)traerClientes()
                 else setClientesFiltrados(listaClientes)
             // ordenarClientes()
         }
@@ -214,7 +212,7 @@ const Clientes = () => {
     className="categoriaDeCliente"
     onChange={(e) => filtrarPorCategoria(e.target.value)}
   >
-    <option value="">Elegir categoría</option>
+    <option value="">Todas las categorías</option>
     {categorias.map((categoria) => (
       <option key={categoria.id} value={categoria.id}>
         {categoria.nombre}

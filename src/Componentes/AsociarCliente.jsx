@@ -25,10 +25,10 @@ const AsociarCliente = () => {
     useEffect(() => {
         // if(token==="")setToken(localStorage.getItem("token"))
         //     else setToken(tokenSelector)
-        if(clientes.length===0)cargarClientes
+        if(!clientes.length)cargarClientes()
         cargarClientesAsociados()
 
-    }, [])
+    }, [clientes])
 
     const cargarClientes = () => {
         fetch("https://localhost:5201/api/cliente", {

@@ -1,32 +1,60 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from './store/store'
 import { ToastContainer } from 'react-toastify';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { store, persistor } from './store/store';
 import './Estilo.css'
-import Login from './Componentes/Login'
-import NoEncontrado from './Componentes/NoEncontrado'
-import InicioAdm from './Componentes/InicioAdm'
-import Clientes from './Componentes/Clientes'
-import NuevoCliente from './Componentes/NuevoCliente'
-import Chat from './Componentes/Chat'
-import Chats from './Componentes/Chats'
-import DatosUsuario from './Componentes/DatosUsuario'
-import FichasTecnicas from './Componentes/FichasTecnicas'
-import Insumos from './Componentes/Insumos'
-import Maquinas from './Componentes/Maquinas'
-import Mensaje from './Componentes/Mensaje'
-import Solicitudes from './Componentes/Solicitudes'
-import NuevaMaquina from  './Componentes/NuevaMaquina'
-import ModificarMaquina from './Componentes/ModificarMaquina'
-import ModificarCliente from './Componentes/ModificarCliente'
-import ModificarFicha from './Componentes/ModificarFicha'
-import VerCliente from './Componentes/VerCliente'
-import VerMaquina from './Componentes/VerMaquina'
-import VerFichaTecnica from './Componentes/VerFichaTecnica'
-import AsociarMaquinas from './Componentes/AsociarMaquinas';
-import AsociarCliente from './Componentes/AsociarCliente';
-import NuevaFichaTecnica from './Componentes/NuevaFichaTecnica';
-import FichasMaquina from './Componentes/FichasMaquina';
+
+
+const Login = lazy(() => import('./Componentes/Login'));
+const NoEncontrado = lazy(() => import('./Componentes/NoEncontrado'));
+const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
+const Clientes = lazy(() => import('./Componentes/Clientes'));
+const NuevoCliente = lazy(() => import('./Componentes/NuevoCliente'));
+const Chat = lazy(() => import('./Componentes/Chat'));
+const Chats = lazy(() => import('./Componentes/Chats'));
+const DatosUsuario = lazy(() => import('./Componentes/DatosUsuario'));
+const FichasTecnicas = lazy(() => import('./Componentes/FichasTecnicas'));
+const Insumos = lazy(() => import('./Componentes/Insumos'));
+const Maquinas = lazy(() => import('./Componentes/Maquinas'));
+const Mensaje = lazy(() => import('./Componentes/Mensaje'));
+const Solicitudes = lazy(() => import('./Componentes/Solicitudes'));
+const NuevaMaquina = lazy(() => import('./Componentes/NuevaMaquina'));
+const ModificarMaquina = lazy(() => import('./Componentes/ModificarMaquina'));
+const ModificarCliente = lazy(() => import('./Componentes/ModificarCliente'));
+const ModificarFicha = lazy(() => import('./Componentes/ModificarFicha'));
+const VerCliente = lazy(() => import('./Componentes/VerCliente'));
+const VerMaquina = lazy(() => import('./Componentes/VerMaquina'));
+const VerFichaTecnica = lazy(() => import('./Componentes/VerFichaTecnica'));
+const AsociarMaquinas = lazy(() => import('./Componentes/AsociarMaquinas'));
+const AsociarCliente = lazy(() => import('./Componentes/AsociarCliente'));
+const NuevaFichaTecnica = lazy(() => import('./Componentes/NuevaFichaTecnica'));
+const FichasMaquina = lazy(() => import('./Componentes/FichasMaquina'));
+// import Login from './Componentes/Login'
+// import NoEncontrado from './Componentes/NoEncontrado'
+// import InicioAdm from './Componentes/InicioAdm'
+// import Clientes from './Componentes/Clientes'
+// import NuevoCliente from './Componentes/NuevoCliente'
+// import Chat from './Componentes/Chat'
+// import Chats from './Componentes/Chats'
+// import DatosUsuario from './Componentes/DatosUsuario'
+// import FichasTecnicas from './Componentes/FichasTecnicas'
+// import Insumos from './Componentes/Insumos'
+// import Maquinas from './Componentes/Maquinas'
+// import Mensaje from './Componentes/Mensaje'
+// import Solicitudes from './Componentes/Solicitudes'
+// import NuevaMaquina from  './Componentes/NuevaMaquina'
+// import ModificarMaquina from './Componentes/ModificarMaquina'
+// import ModificarCliente from './Componentes/ModificarCliente'
+// import ModificarFicha from './Componentes/ModificarFicha'
+// import VerCliente from './Componentes/VerCliente'
+// import VerMaquina from './Componentes/VerMaquina'
+// import VerFichaTecnica from './Componentes/VerFichaTecnica'
+// import AsociarMaquinas from './Componentes/AsociarMaquinas';
+// import AsociarCliente from './Componentes/AsociarCliente';
+// import NuevaFichaTecnica from './Componentes/NuevaFichaTecnica';
+// import FichasMaquina from './Componentes/FichasMaquina';
 
 
 
@@ -35,8 +63,10 @@ function App() {
 
   return (
     <Provider store={store}>
+       <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-        <Routes>
+        <Suspense fallback={<div>Cargando página...</div>}>
+          <Routes>
             <Route path = "/" element={<Login/>}/>
             <Route path = "/inicioAdm" element={<InicioAdm/>}/>
             <Route path = "/clientes" element={<Clientes/>}/>
@@ -62,7 +92,8 @@ function App() {
             <Route path = "/fichasMaquina/:id" element={<FichasMaquina/>}/>
 
             <Route path="*" element={<NoEncontrado/>}/>
-        </Routes>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <ToastContainer
         position="top-right"
@@ -72,6 +103,7 @@ function App() {
         rtl={false}
         />
       <ToastContainer />
+      </PersistGate>
     </Provider>
     
   )

@@ -7,10 +7,9 @@ import { toast } from 'react-toastify';
 const FichasMaquina = () => {
     const { id } = useParams();
     let navigate = useNavigate()
-    const tokenSelector = useSelector(state => state.usuarioSlice.token)
+    // const tokenSelector = useSelector(state => state.usuarioSlice.token)
     // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
-
     
     const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
     const [fichas, setFichas] = useState([])
@@ -18,8 +17,6 @@ const FichasMaquina = () => {
     const [clientes, setClientes] = useState([])
     const [maquina, setMaquina] = useState("")
     const [insumos, setInsumos] = useState([])
-    
-    
     
     useEffect(() => {
         // if(token==="")setToken(localStorage.getItem("token"))
