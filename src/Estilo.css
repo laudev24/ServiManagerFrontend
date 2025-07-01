@@ -8,7 +8,9 @@
 
 *{
     background-color: var(--crema);
-    margin: auto;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -37,10 +39,83 @@ input[type="button"] {
     background-color: var(--verde-claro);
 }
 
+/* ===== Layout general ===== */
+
+.container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--verde-claro);
+    color: var(--azul-oscuro);
+    font-family: sans-serif;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.contenido-central {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+header,
+footer {
+    background-color: var(--verde-claro);
+    padding: 1rem;
+    text-align: center;
+}
+
+header nav{
+    background-color: var(--verde-claro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    display: block;
+    background-color: var(--verde-claro);
+    height: 40px;
+    cursor: pointer;
+    margin: 0;
+}
+
+main {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+footer a {
+    background-color: var(--verde-claro);
+    text-decoration: none;
+    color: var(--azul-oscuro);
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    header nav,
+    footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+}
+/* ===== Estilos para el login ===== */
+
 /* Tarjeta de login */
 .card-login {
     width: 100%;
     margin: 2rem;
+    /* height: 100vh; */
     max-width: 400px;
     padding: 2rem;
     background-color: var(--crema);

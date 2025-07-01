@@ -6,9 +6,12 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './store/store';
 import './Estilo.css'
 
+import Estructura from './Componentes/Estructura';
+import Login from './Componentes/Login'
+import NoEncontrado from './Componentes/NoEncontrado'
 
-const Login = lazy(() => import('./Componentes/Login'));
-const NoEncontrado = lazy(() => import('./Componentes/NoEncontrado'));
+// const Login = lazy(() => import('./Componentes/Login'));
+// const NoEncontrado = lazy(() => import('./Componentes/NoEncontrado'));
 const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
 const Clientes = lazy(() => import('./Componentes/Clientes'));
 const NuevoCliente = lazy(() => import('./Componentes/NuevoCliente'));
@@ -31,8 +34,6 @@ const AsociarMaquinas = lazy(() => import('./Componentes/AsociarMaquinas'));
 const AsociarCliente = lazy(() => import('./Componentes/AsociarCliente'));
 const NuevaFichaTecnica = lazy(() => import('./Componentes/NuevaFichaTecnica'));
 const FichasMaquina = lazy(() => import('./Componentes/FichasMaquina'));
-// import Login from './Componentes/Login'
-// import NoEncontrado from './Componentes/NoEncontrado'
 // import InicioAdm from './Componentes/InicioAdm'
 // import Clientes from './Componentes/Clientes'
 // import NuevoCliente from './Componentes/NuevoCliente'
@@ -67,32 +68,39 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<div>Cargando página...</div>}>
           <Routes>
-            <Route path = "/" element={<Login/>}/>
-            <Route path = "/inicioAdm" element={<InicioAdm/>}/>
-            <Route path = "/clientes" element={<Clientes/>}/>
-            <Route path = "/verCliente/:id" element={<VerCliente/>}/>
-            <Route path = "/verMaquina/:id" element={<VerMaquina/>}/>
-            <Route path = "/verFichaTecnica/:id" element={<VerFichaTecnica/>}/>
-            <Route path = "/nuevoCliente" element={<NuevoCliente/>}/>
-            <Route path = "/nuevaMaquina" element={<NuevaMaquina/>}/>
-            <Route path = "/nuevaFichaTecnica" element={<NuevaFichaTecnica/>}/>
-            <Route path = "/chat" element={<Chat/>}/>
-            <Route path = "/chats" element={<Chats/>}/>
-            <Route path = "/datosUsuario" element={<DatosUsuario/>}/>
-            <Route path = "/fichasTecnicas" element={<FichasTecnicas/>}/>
-            <Route path = "/insumos" element={<Insumos/>}/>
-            <Route path = "/maquinas" element={<Maquinas/>}/>
-            <Route path = "/modificarMaquina/:id" element={<ModificarMaquina/>}/>
-            <Route path = "/modificarCliente/:id" element={<ModificarCliente/>}/>
-            <Route path = "/modificarFicha/:id" element={<ModificarFicha/>}/>
-            <Route path = "/mensaje" element={<Mensaje/>}/>
-            <Route path = "/solicitudes" element={<Solicitudes/>}/>
-            <Route path = "/asociarMaquinas/:id" element={<AsociarMaquinas/>}/>
-            <Route path = "/asociarCliente/:id" element={<AsociarCliente/>}/>
-            <Route path = "/fichasMaquina/:id" element={<FichasMaquina/>}/>
+            {/* Ruta pública (Login) */}
+            <Route path="/" element={<Login />} />
 
-            <Route path="*" element={<NoEncontrado/>}/>
+            {/* Rutas protegidas con layout */}
+            <Route path="/" element={<Estructura />}>
+              <Route path="inicioAdm" element={<InicioAdm />} />
+              <Route path="clientes" element={<Clientes />} />
+              <Route path="verCliente/:id" element={<VerCliente />} />
+              <Route path="verMaquina/:id" element={<VerMaquina />} />
+              <Route path="verFichaTecnica/:id" element={<VerFichaTecnica />} />
+              <Route path="nuevoCliente" element={<NuevoCliente />} />
+              <Route path="nuevaMaquina" element={<NuevaMaquina />} />
+              <Route path="nuevaFichaTecnica" element={<NuevaFichaTecnica />} />
+              <Route path="chat" element={<Chat />} />
+              <Route path="chats" element={<Chats />} />
+              <Route path="datosUsuario" element={<DatosUsuario />} />
+              <Route path="fichasTecnicas" element={<FichasTecnicas />} />
+              <Route path="insumos" element={<Insumos />} />
+              <Route path="maquinas" element={<Maquinas />} />
+              <Route path="modificarMaquina/:id" element={<ModificarMaquina />} />
+              <Route path="modificarCliente/:id" element={<ModificarCliente />} />
+              <Route path="modificarFicha/:id" element={<ModificarFicha />} />
+              <Route path="mensaje" element={<Mensaje />} />
+              <Route path="solicitudes" element={<Solicitudes />} />
+              <Route path="asociarMaquinas/:id" element={<AsociarMaquinas />} />
+              <Route path="asociarCliente/:id" element={<AsociarCliente />} />
+              <Route path="fichasMaquina/:id" element={<FichasMaquina />} />
+            </Route>
+
+            {/* 404 */}
+            <Route path="*" element={<NoEncontrado />} />
           </Routes>
+
         </Suspense>
       </BrowserRouter>
       <ToastContainer
