@@ -6,6 +6,7 @@ const Estructura = () => {
     const volverAtras = () => {
         window.history.back();
     }
+
   return (
 
     <div className="container-fluid">
@@ -24,7 +25,7 @@ const Estructura = () => {
         </main>
 
         <footer>
-            <NavLink to="/">Logout</NavLink>
+            <NavLink to="/" state={{ fromLogout: true }}>Logout</NavLink>
         </footer>
         </div>
     </div>

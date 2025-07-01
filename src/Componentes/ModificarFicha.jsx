@@ -32,8 +32,9 @@ const ModificarFicha = () => {
     // const ficha = fichas.find(m => m.id === Number(id))
     
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
+
         if(ficha==="")traerFicha()
 
     }, [])

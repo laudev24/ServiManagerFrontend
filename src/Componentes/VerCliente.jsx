@@ -41,8 +41,9 @@ const VerCliente = () => {
         })
     }
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
+       
         if(cliente==="")traerCliente()
         if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
         if(categorias.length===0)traerCategorias()

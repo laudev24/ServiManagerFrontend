@@ -29,8 +29,9 @@ const ModificarCliente = () => {
   const [nombre, setNombre] = useState("")
 
   useEffect(() => {
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //   else setToken(tokenSelector)
+     if(!localStorage.getItem("token"))
+      navigate("/")
+   
     if(categorias.length===0)cargarCategorias()
     if(cliente==="")traerCliente()
   }, [])

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRef, useState  } from "react";
 import { useDispatch } from "react-redux";
 import { guardarNombre, guardarToken } from "../features/usuarioSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
 
@@ -11,6 +12,21 @@ const Login = () => {
   const campoPassword = useRef(null);
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const location = useLocation();
+  const fromLogout = location.state?.fromLogout;
+
+  useEffect(() => {
+   if(fromLogout && localStorage.getItem("token")){
+      localStorage.removeItem("token");
+      localStorage.removeItem("nombre");
+    }
+    setIsDisabled(true);
+    campoUsuario.current.value = "";  
+    campoPassword.current.value = "";
+    campoUsuario.current.focus();
+    console.log("Desde Logout:", fromLogout);
+  }, [fromLogout])
+  
 
   const enableBtnLogin = () => {
     if(campoPassword.current.value != "" && campoUsuario.current.value != ""){

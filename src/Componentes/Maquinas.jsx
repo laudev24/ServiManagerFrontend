@@ -29,10 +29,11 @@ const Maquinas = () => {
 
   
 
-  // Pedir al backend el listado de maquinas 
+  
   useEffect(() => {
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //   else setToken(tokenSelector)
+     if(!localStorage.getItem("token"))
+      navigate("/")
+  
     if(listaMaquinas.length===0)cargarMaquinas()
       else setMaquinasFiltradas(listaMaquinas)
   }, [])

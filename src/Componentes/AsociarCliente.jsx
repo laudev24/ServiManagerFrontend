@@ -23,8 +23,9 @@ const AsociarCliente = () => {
 
 
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
+       
         if(!clientes.length)cargarClientes()
         cargarClientesAsociados()
 

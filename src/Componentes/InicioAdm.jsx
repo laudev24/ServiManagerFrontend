@@ -8,8 +8,11 @@ const InicioAdm = () => {
   const [nombre, setNombre] = useState("")
   
   useEffect(() => {
+    if(!localStorage.getItem("token"))
+      navigate("/")
     if(nombre==="")setNombre(localStorage.getItem("nombre"))
       else setNombre(nombreSelector)
+
   }, [])
   
 

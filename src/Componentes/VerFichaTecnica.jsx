@@ -15,9 +15,9 @@ const VerFichaTecnica = () => {
     const ficha = fichas.find(m => m.id === Number(id))
     
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
-        
+       if(!localStorage.getItem("token"))
+      navigate("/")
+   
         if(fichas.length==0){
             fetch("https://localhost:5201/api/fichaTecnica", {
             method: 'GET',

@@ -15,8 +15,8 @@ const VerMaquina = () => {
   const [clientesAsociados, setClientesAsociados] = useState([])
 
   useEffect(() => {
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //   else setToken(tokenSelector)
+     if(!localStorage.getItem("token"))
+      navigate("/")
     
     fetch(`https://localhost:5201/api/maquina/${id}`, {
             method: 'GET',

@@ -37,6 +37,8 @@ const Clientes = () => {
    
 
     useEffect(() => {
+       if(!localStorage.getItem("token"))
+      navigate("/")
       // console.log("ListaClientes: ", listaClientes)
       if (!listaClientes.length) {
         traerClientes();

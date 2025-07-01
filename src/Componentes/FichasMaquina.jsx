@@ -19,8 +19,8 @@ const FichasMaquina = () => {
     const [insumos, setInsumos] = useState([])
     
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
         cargarFichas()
         cargarInsumos()
         cargarClientes()

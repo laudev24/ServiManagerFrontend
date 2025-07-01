@@ -25,8 +25,9 @@ const ModificarMaquina = () => {
 
   useEffect(() => {
     if(maquina==="")traerMaquina()
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //   else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
+
   }, [])
 
   const traerMaquina = () => {

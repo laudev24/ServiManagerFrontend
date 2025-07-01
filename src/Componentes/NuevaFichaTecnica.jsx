@@ -31,8 +31,9 @@ const NuevaFichaTecnica = () => {
 
 
   useEffect(() => {
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //   else setToken(tokenSelector)
+     if(!localStorage.getItem("token"))
+      navigate("/")
+
     if(clientes.length===0)traerClientes()
     if(insumos.length===0)traerInsumos()
     traerMaquinas()

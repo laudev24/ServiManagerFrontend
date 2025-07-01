@@ -24,10 +24,11 @@ const NuevaMaquina = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     
-    // useEffect(() => {
-    // if(token==="")setToken(localStorage.getItem("token"))
-    //         else setToken(tokenSelector)
-    // }, [])
+    useEffect(() => {
+       if(!localStorage.getItem("token"))
+      navigate("/")
+  
+    }, [])
     
 
     // useEffect(() => {

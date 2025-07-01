@@ -29,8 +29,9 @@ const AsociarMaquinas = () => {
     }
 
     useEffect(() => {
-        // if(token==="")setToken(localStorage.getItem("token"))
-        //     else setToken(tokenSelector)
+       if(!localStorage.getItem("token"))
+      navigate("/")
+    
         if(!maquinas.length)cargarMaquinas()
         if(!maquinasAsociadas.length)traerMaquinasDelCliente()
         if(!clientes.length)traerClientes()
