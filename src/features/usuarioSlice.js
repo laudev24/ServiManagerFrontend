@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     token : "",
-    nombre : ""
+    nombre : "",
+    esAdministrador : false
 }
 export const usuarioSlice = createSlice({
     name: "usuario",
@@ -14,9 +15,13 @@ export const usuarioSlice = createSlice({
         guardarNombre:(state, action) =>
         {
             state.nombre=action.payload
+        },
+         guardarTipoUsuario:(state, action) =>
+        {
+            state.esAdministrador=action.payload
         }
     }
 
 })
-export const {guardarToken, guardarNombre} = usuarioSlice.actions;
+export const {guardarToken, guardarNombre, guardarTipoUsuario} = usuarioSlice.actions;
 export default usuarioSlice.reducer;

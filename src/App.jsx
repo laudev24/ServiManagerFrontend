@@ -13,6 +13,7 @@ import NoEncontrado from './Componentes/NoEncontrado'
 // const Login = lazy(() => import('./Componentes/Login'));
 // const NoEncontrado = lazy(() => import('./Componentes/NoEncontrado'));
 const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
+const Inicio = lazy(() => import('./Componentes/Inicio'));
 const Clientes = lazy(() => import('./Componentes/Clientes'));
 const NuevoCliente = lazy(() => import('./Componentes/NuevoCliente'));
 const Chat = lazy(() => import('./Componentes/Chat'));
@@ -74,6 +75,7 @@ function App() {
             {/* Rutas protegidas con layout */}
             <Route path="/" element={<Estructura />}>
               <Route path="inicioAdm" element={<InicioAdm />} />
+              <Route path="inicio" element={<Inicio />} />
               <Route path="clientes" element={<Clientes />} />
               <Route path="verCliente/:id" element={<VerCliente />} />
               <Route path="verMaquina/:id" element={<VerMaquina />} />

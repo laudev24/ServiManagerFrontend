@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { useRef, useState  } from "react";
 import { useDispatch } from "react-redux";
-import { guardarNombre, guardarToken } from "../features/usuarioSlice";
+import { guardarNombre, guardarToken, guardarTipoUsuario } from "../features/usuarioSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -50,9 +51,10 @@ const Login = () => {
       .then(r =>{
         if(!r.ok){
           throw new Error("Error en la respuesta del servidor");
+
         }
         else if(r.status===200){
-          navigate("/inicioAdm")
+          
         }
         return r.json()
       })
@@ -60,11 +62,20 @@ const Login = () => {
         console.log(datos)
         localStorage.setItem("token", datos.token)
         localStorage.setItem("nombre", datos.nombre)
+        localStorage.setItem("esAdministrador", datos.esAdministrador)
         dispatch(guardarToken(datos.token));
         dispatch(guardarNombre(datos.nombre));
+        dispatch(guardarTipoUsuario(datos.esAdministrador));
+        if(datos.esAdministrador === false){
+          navigate("/inicio");
+        }
+        else if(datos.esAdministrador === true){
+          navigate("/inicioAdm")
+        }
       })
       .catch((error) => {
-        console.error("Error al crear ficha:", error.message); 
+        toast.error("Usuario o contraseña incorrectos. Por favor, intente nuevamente.");
+        console.error("Error al hacer login:", error.message); 
       });
 
   }

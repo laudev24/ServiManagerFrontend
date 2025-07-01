@@ -3,7 +3,16 @@ import { Outlet, Link, NavLink } from 'react-router-dom'
 
 const Estructura = () => {
 
+    const irAInicio = () => {
+        if(localStorage.getItem("esAdministrador") === "true"){
+            window.location.href = "/InicioAdm";
+        }
+        else {
+            window.location.href = "/Inicio";
+        }
+    }
     const volverAtras = () => {
+        
         window.history.back();
     }
 
@@ -14,7 +23,7 @@ const Estructura = () => {
         <header>
             <nav>
             <NavLink to="/InicioAdm" className="icon-link">
-                <img src="/Home.png" alt="Volver a inicio" />
+                <img src="/Home.png" alt="Volver a inicio" onClick={irAInicio}/>
             </NavLink>
             <img src="/Back.png" alt="Volver atrás" onClick={volverAtras} />
             </nav>

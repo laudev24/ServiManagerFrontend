@@ -10,6 +10,8 @@ const InicioAdm = () => {
   useEffect(() => {
     if(!localStorage.getItem("token"))
       navigate("/")
+    if(localStorage.getItem("esAdministrador") === "false")
+      navigate("/inicio")
     if(nombre==="")setNombre(localStorage.getItem("nombre"))
       else setNombre(nombreSelector)
 
