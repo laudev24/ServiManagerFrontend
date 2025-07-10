@@ -34,6 +34,8 @@ const ModificarFicha = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
 
         if(ficha==="")traerFicha()
 

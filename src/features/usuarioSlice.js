@@ -18,7 +18,7 @@ export const usuarioSlice = createSlice({
         },
          guardarTipoUsuario:(state, action) =>
         {
-            state.esAdministrador=action.payload
+            state.esAdmin=action.payload
         }
     }
 

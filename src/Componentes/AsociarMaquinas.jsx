@@ -31,6 +31,8 @@ const AsociarMaquinas = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+       if(localStorage.getItem("esAdmin") === "false")
+      navigate("/Inicio")
     
         if(!maquinas.length)cargarMaquinas()
         if(!maquinasAsociadas.length)traerMaquinasDelCliente()
@@ -106,7 +108,7 @@ const AsociarMaquinas = () => {
 
     const asociar = () => {
         const idMaquina = Number(campoIdMaquinaElegida.current.value);
-
+        const maquinaElegida = maquinas.find(m => m.id === idMaquina);
         const arrendamiento = {
             clienteId : Number(id),
             maquinaId : idMaquina,
@@ -132,20 +134,22 @@ const AsociarMaquinas = () => {
             console.log(response)
             if(response.status===201){
                 toast("Máquina asociada con exito")
-
+                // Actualizar la lista de máquinas asociadas
+                traerMaquinasDelCliente()
             }
         })
         .catch((error) => {
             console.error("Error al asociar máquina: ", error.message);
             toast("Error al asociar máquina.");
         });
+
     }
 
   return (
     <div className="contenedor-menu">
 
 <div className="formulario-cliente">
-  <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
+  <h1>Asociar Máquina al Cliente {cliente.nombreEmpresa}</h1>
 
   <select ref={campoIdMaquinaElegida} onChange={mostrarFormulario}>
     <option value="">Elegir máquina</option>
@@ -201,43 +205,6 @@ const AsociarMaquinas = () => {
 </div>
 </div>
 
-
-    // <div>
-    //     <h1>Asociar Máquinas al Cliente {cliente.nombreEmpresa}</h1>
-      
-    //     <select className="maquinas" ref={campoIdMaquinaElegida} onChange={mostrarFormulario} >
-    //         <option value="">Elegir máquina</option>
-    //         {maquinas.map((maquina) => (
-    //             <option key={maquina.id} value={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</option>
-    //         ))}
-    //         {maquinas.length===0 && <option key="">No hay máquinas para mostrar.</option>}
-    //     </select><br />
-    //     <label>Cargo fijo:
-    //         <input type="text" className='cargoFijo' ref={campoCargoFijo}/>
-    //     </label><br />
-    //     {maquinaElegida?.tipoImpresion == 'Color' && 
-    //     <label>Costo por Copia Color:
-    //         <input type="text" className='costoColor' ref={campoCostoColor}/>
-    //     </label>}
-    //     {maquinaElegida?.tipoImpresion == 'B&N' && 
-    //     <label>Costo por Copia B&N:
-    //         <input type="text" className='costoBYN' ref={campoCostoBYN}/>
-    //     </label>} 
-    //     <input type="button" value="Asociar Máquina" onClick={asociar}/><br />
-    //     <h2>Máquinas asociadas:</h2>
-    //     <table>
-    //         <tbody>
-                
-    //             {maquinasAsociadas.map((maquina) => (
-    //                 <tr> 
-    //                     <td key={maquina.id}>{maquina.numero} - {maquina.marca} - {maquina.modelo}</td>
-    //                 </tr>
-    //             ))}
-    //             {maquinasAsociadas.length===0 && <tr><td key="">No hay máquinas asociadas a este cliente.</td></tr>}
-                
-    //         </tbody>
-    //     </table>
-    // </div>
   )
 }
 

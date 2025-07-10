@@ -5,6 +5,7 @@ import { guardarNombre, guardarToken, guardarTipoUsuario } from "../features/usu
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { guardarClienteId } from '../features/clienteSlice';
 
 const Login = () => {
 
@@ -48,37 +49,71 @@ const Login = () => {
           'Content-type': 'application/json; charset=UTF-8',
         },
       })
-      .then(r =>{
-        if(!r.ok){
-          throw new Error("Error en la respuesta del servidor");
+      .then(async r =>{
+         const contentType = r.headers.get("content-type");
 
+      // Si la respuesta es JSON
+      if (contentType && contentType.includes("application/json")) {
+        const data = await r.json();
+        if (!r.ok) {
+          toast.error(data.message || data.error || "Error en la respuesta del servidor");
+          throw new Error(data.message || data.error || "Error en la respuesta del servidor");
         }
-        else if(r.status===200){
-          
+        return data;
+      } else {
+        // Si es texto plano
+        const text = await r.text();
+        if (!r.ok) {
+          toast.error(text || "Error en la respuesta del servidor");
+          throw new Error(text || "Error en la respuesta del servidor");
         }
-        return r.json()
-      })
+        throw new Error("Respuesta inesperada del servidor");
+      }
+    })
+       
       .then((datos) => {
         console.log(datos)
         localStorage.setItem("token", datos.token)
         localStorage.setItem("nombre", datos.nombre)
-        localStorage.setItem("esAdministrador", datos.esAdministrador)
+        localStorage.setItem("esAdmin", datos.esAdmin)
         dispatch(guardarToken(datos.token));
         dispatch(guardarNombre(datos.nombre));
-        dispatch(guardarTipoUsuario(datos.esAdministrador));
-        if(datos.esAdministrador === false){
+        dispatch(guardarTipoUsuario(datos.esAdmin));
+        if(datos.esAdmin === false){
+          buscarCliente(datos.token);
           navigate("/inicio");
         }
-        else if(datos.esAdministrador === true){
+        else if(datos.esAdmin === true){
           navigate("/inicioAdm")
         }
       })
-      .catch((error) => {
-        toast.error("Usuario o contraseña incorrectos. Por favor, intente nuevamente.");
-        console.error("Error al hacer login:", error.message); 
-      });
-
   }
+
+  const buscarCliente = (token) => {
+    const nombre = campoUsuario.current.value;
+    fetch(`https://localhost:5201/api/cliente/usuario?nombre=${nombre}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(r =>{
+      if(!r.ok){
+        throw new Error("Error en la respuesta del servidor");
+      }
+      return r.json()
+    }) 
+    .then(datos => {
+      
+      dispatch(guardarClienteId(datos.id));
+    })
+    .catch(error => {
+      console.error("Error al obtener el cliente:", error);
+    })
+  }
+
+
   return (
     <div className="contenedor-login">
       <div className="card-login">
@@ -118,19 +153,7 @@ const Login = () => {
         </Link>
       </div>
     </div>
-    // <div id="login">
-      
-    //     <h1>Bienvenido a ServiManager.</h1>
-    //     <h2>Ingresá tu usuario y tu contraseña</h2>
-    //     <label>Usuario:
-    //     <input type="text" ref={campoUsuario} className="txtUsuario" onChange={enableBtnLogin}/>
-    //     </label><br/>
-    //     <label>Contraseña:
-    //     <input type="password" ref={campoPassword} className="txtPass" onChange={enableBtnLogin}/>
-    //     </label><br/>
-    //     <input type="button" value='Login' disabled={isDisabled}  onClick={hacerLogin}/>
-    //     <Link to="/">¿Olvidaste tu contraseña?</Link> 
-    // </div>
+
   )
 }
 

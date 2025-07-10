@@ -27,6 +27,9 @@ const NuevaMaquina = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+       if(localStorage.getItem("esAdmin") === "false"){
+        navigate("/inicio")
+       }
   
     }, [])
     
@@ -76,13 +79,15 @@ const NuevaMaquina = () => {
     
     const registrar = () => {
         const maquinaNueva = {
+            id: 0,
             numero: campoNumero.current.value,
             marca: campoMarca.current.value,
             modelo: campoModelo.current.value,
             año: campoAnio.current.value,
-            tiposImpresion: campoTipoImpresion.current.value,
-            tiposMaquina: campoTipoMaquina.current.value,
-            cantidadContadores: campoCantidadContadores.current.value,
+            activa: true,
+            tiposImpresion: campoTipoImpresion.current.value || 0,
+            tipo: campoTipoMaquina.current.value,
+            cantidadContadores: Number(campoCantidadContadores.current.value),
         };
 
         console.log("Datos a enviar:", maquinaNueva);
@@ -96,6 +101,33 @@ const NuevaMaquina = () => {
 
         },
         })
+        .then(async r =>{
+                 const contentType = r.headers.get("content-type");
+        
+              // Si la respuesta es JSON
+              if (contentType && contentType.includes("application/json")) {
+                const data = await r.json();
+                if (!r.ok) {
+                  const message = data.message || data.error || "Error en la respuesta del servidor";
+                  const inner = data.innerException?.message;
+                  const fullMessage = inner ? `${message} | ${inner}` : message;
+
+                  toast.error(fullMessage);
+                  throw new Error(fullMessage);
+                  toast.error(data.message || data.error || "Error en la respuesta del servidor");
+                  throw new Error(data.message || data.error || "Error en la respuesta del servidor");
+                }
+                return data;
+              } else {
+                // Si es texto plano
+                const text = await r.text();
+                if (!r.ok) {
+                  toast.error(text || "Error en la respuesta del servidor");
+                  throw new Error(text || "Error en la respuesta del servidor");
+                }
+                throw new Error("Respuesta inesperada del servidor");
+              }
+            })
         .then((response) => {
             response.json()
             console.log(response)
@@ -104,10 +136,10 @@ const NuevaMaquina = () => {
                 navigate("/maquinas")
             }
         })
-        .catch((error) => {
-            console.error("Error al crear máquina: ", error.message); // usa correctamente "error"
-            toast("Error al crear máquina.");
-        });
+        // .catch((error) => {
+        //     console.error("Error al crear máquina: ", error.message); // usa correctamente "error"
+        //     toast("Error al crear máquina.");
+        // });
     }
 
 

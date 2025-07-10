@@ -29,6 +29,8 @@ const NuevoCliente = () => {
 
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
      
     }, [])
     
@@ -46,7 +48,8 @@ const NuevoCliente = () => {
         direccion: campoDireccion.current.value,
         telefono: campoTelefono.current.value,
         categoria: Number(campoCategoria.current.value),
-        nombreContacto: campoNombreContacto.current.value
+        nombreContacto: campoNombreContacto.current.value,
+        esAdministrador: false
       };
 
 

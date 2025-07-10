@@ -17,6 +17,8 @@ const VerMaquina = () => {
   useEffect(() => {
      if(!localStorage.getItem("token"))
       navigate("/")
+    if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
     
     fetch(`https://localhost:5201/api/maquina/${id}`, {
             method: 'GET',

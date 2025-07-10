@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { guardarClientes } from '../features/clientesSlice';
 
@@ -10,7 +10,7 @@ const AsociarCliente = () => {
      const tokenSelector = useSelector(state => state.usuarioSlice.token)
     // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
-
+    let navigate = useNavigate();
         
     const clientes = useSelector(state => state.clientesSlice.clientes);
     const [clientesAsociados, setClientesAsociados] = useState([])
@@ -25,6 +25,8 @@ const AsociarCliente = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
        
         if(!clientes.length)cargarClientes()
         cargarClientesAsociados()

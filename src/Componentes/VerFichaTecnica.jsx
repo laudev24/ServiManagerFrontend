@@ -17,6 +17,8 @@ const VerFichaTecnica = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
    
         if(fichas.length==0){
             fetch("https://localhost:5201/api/fichaTecnica", {

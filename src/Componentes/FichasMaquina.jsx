@@ -21,6 +21,8 @@ const FichasMaquina = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
         cargarFichas()
         cargarInsumos()
         cargarClientes()

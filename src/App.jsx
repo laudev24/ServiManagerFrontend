@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -9,9 +9,8 @@ import './Estilo.css'
 import Estructura from './Componentes/Estructura';
 import Login from './Componentes/Login'
 import NoEncontrado from './Componentes/NoEncontrado'
+import { reiniciarDatos } from './ReiniciarDatos';
 
-// const Login = lazy(() => import('./Componentes/Login'));
-// const NoEncontrado = lazy(() => import('./Componentes/NoEncontrado'));
 const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
 const Inicio = lazy(() => import('./Componentes/Inicio'));
 const Clientes = lazy(() => import('./Componentes/Clientes'));
@@ -35,33 +34,19 @@ const AsociarMaquinas = lazy(() => import('./Componentes/AsociarMaquinas'));
 const AsociarCliente = lazy(() => import('./Componentes/AsociarCliente'));
 const NuevaFichaTecnica = lazy(() => import('./Componentes/NuevaFichaTecnica'));
 const FichasMaquina = lazy(() => import('./Componentes/FichasMaquina'));
-// import InicioAdm from './Componentes/InicioAdm'
-// import Clientes from './Componentes/Clientes'
-// import NuevoCliente from './Componentes/NuevoCliente'
-// import Chat from './Componentes/Chat'
-// import Chats from './Componentes/Chats'
-// import DatosUsuario from './Componentes/DatosUsuario'
-// import FichasTecnicas from './Componentes/FichasTecnicas'
-// import Insumos from './Componentes/Insumos'
-// import Maquinas from './Componentes/Maquinas'
-// import Mensaje from './Componentes/Mensaje'
-// import Solicitudes from './Componentes/Solicitudes'
-// import NuevaMaquina from  './Componentes/NuevaMaquina'
-// import ModificarMaquina from './Componentes/ModificarMaquina'
-// import ModificarCliente from './Componentes/ModificarCliente'
-// import ModificarFicha from './Componentes/ModificarFicha'
-// import VerCliente from './Componentes/VerCliente'
-// import VerMaquina from './Componentes/VerMaquina'
-// import VerFichaTecnica from './Componentes/VerFichaTecnica'
-// import AsociarMaquinas from './Componentes/AsociarMaquinas';
-// import AsociarCliente from './Componentes/AsociarCliente';
-// import NuevaFichaTecnica from './Componentes/NuevaFichaTecnica';
-// import FichasMaquina from './Componentes/FichasMaquina';
+const NuevaSolicitud = lazy(() => import('./Componentes/NuevaSolicitud'));
+const EnviarContador = lazy(() => import('./Componentes/EnviarContador'));
+
 
 
 
 
 function App() {
+
+ 
+  useEffect(() => {
+    reiniciarDatos();
+  }, []);
 
   return (
     <Provider store={store}>
@@ -83,6 +68,7 @@ function App() {
               <Route path="nuevoCliente" element={<NuevoCliente />} />
               <Route path="nuevaMaquina" element={<NuevaMaquina />} />
               <Route path="nuevaFichaTecnica" element={<NuevaFichaTecnica />} />
+              <Route path="nuevaSolicitud" element={<NuevaSolicitud />} />
               <Route path="chat" element={<Chat />} />
               <Route path="chats" element={<Chats />} />
               <Route path="datosUsuario" element={<DatosUsuario />} />
@@ -97,9 +83,9 @@ function App() {
               <Route path="asociarMaquinas/:id" element={<AsociarMaquinas />} />
               <Route path="asociarCliente/:id" element={<AsociarCliente />} />
               <Route path="fichasMaquina/:id" element={<FichasMaquina />} />
+              <Route path="enviarContador" element={<EnviarContador />} />
             </Route>
 
-            {/* 404 */}
             <Route path="*" element={<NoEncontrado />} />
           </Routes>
 

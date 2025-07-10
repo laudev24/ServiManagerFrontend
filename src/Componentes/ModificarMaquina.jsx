@@ -27,6 +27,8 @@ const ModificarMaquina = () => {
     if(maquina==="")traerMaquina()
        if(!localStorage.getItem("token"))
       navigate("/")
+    if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
 
   }, [])
 

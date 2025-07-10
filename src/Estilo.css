@@ -27,6 +27,9 @@ input[type="button"] {
     font-size: clamp(0.9rem, 1vw + 0.4rem, 1rem);
     padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.5vw, 1rem);
 }
+input[type="number"] {
+    color: black
+}
 
 
 
@@ -82,13 +85,13 @@ header nav{
 
 header img:first-of-type{
     display: block;
-    justify-self: start;
+    /* justify-self: start; */
     background-color: var(--verde-claro);
     height: 40px;
     cursor: pointer;
     margin: 0;
 }
-
+footer 
 header img:first-of-type:hover {
     transform: scale(1.05);
 }
@@ -1075,5 +1078,51 @@ footer a:hover {
     }
 }
 
+/* ===== Estilos para la cámara y el uploader de imágenes ===== */
+.camara-container,
+.image-uploader-container {
+  border: 2px solid transparent;
+  padding: 1rem;
+  transition: border 0.3s, background-color 0.3s;
+  max-width: 400px;
+}
+
+.camara-container.activo,
+.image-uploader-container.activo {
+  border: 2px solid var(--azul-oscuro);
+  background-color: rgba(0, 128, 0, 0.1); /* Verde clarito */
+  
+}
+
+.camara-container button,
+.image-uploader-container button {
+  background-color: var(--azul-oscuro);
+  color: white;
+  font-weight: bold;
+  margin: 0.5rem auto;
+}
+.camara-container p{
+    font-size: 0.6rem;
+    color: var(--gris-azulado);
+    /* margin: 0 4rem 0.5rem 0; */
+}
+.camara-container h3 {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.camara-container video{
+    width: 100%;
+    max-width: 400px;
+    border: '1px solid gray'
+}
+
+.prev {
+    max-width: 50%;
+    border: 1px solid var(--verde-claro);
+    display: block;
+    margin-top: 1rem ;
+    margin-left: 1rem;
+}
 
 

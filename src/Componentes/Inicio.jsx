@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 const Inicio = () => {
 
@@ -11,9 +12,12 @@ const Inicio = () => {
     useEffect(() => {
         if(!localStorage.getItem("token"))
         navigate("/")
-        if(localStorage.getItem("esAdministrador") === "true")
-        navigate("/InicioAdm")
-        if(nombre==="")setNombre(localStorage.getItem("nombre"))
+    console.log("esAdmin", localStorage.getItem("esAdmin"))
+        if(localStorage.getItem("esAdmin") === "true") {
+            console.log("Entra")
+            navigate("/inicioAdm")
+        }
+            if(nombre==="")setNombre(localStorage.getItem("nombre"))
         else setNombre(nombreSelector)
 
     }, [])
@@ -24,26 +28,32 @@ const Inicio = () => {
     }
 
     const solicitarServicio = () => {
-        // navigate("/solicitudes")
+        navigate("/nuevaSolicitud")
     }
 
     const enviarContador = () => {
-        // navigate("/contador")
+        navigate("/enviarContador")
     }
 
 
   return (
     <div className="contenedor-menu">
        <div className="menu-principal">
-        <h1>Bienvenido a ServiManager, {nombre}</h1>
-        <input type="button" value="Chat" className="btn-menu" onClick={verChats} />
-        <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
-        <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
+            <h1>Bienvenido a ServiManager, {nombre}</h1>
+            <Link to="/datosUsuario" className="menu-usuario">
+                <figure>
+                    <img src="/usuarioAzul3.png" alt="Usuario" />
+                    <figcaption>Ver mis datos</figcaption>
+                </figure>
+            </Link>
+            <input type="button" value="Chat" className="btn-menu" onClick={verChats} />
+            <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
+            <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
         
 
 
 
-    </div>
+        </div>
     </div>
   )
 }

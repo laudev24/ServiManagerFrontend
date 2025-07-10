@@ -33,6 +33,8 @@ const NuevaFichaTecnica = () => {
   useEffect(() => {
      if(!localStorage.getItem("token"))
       navigate("/")
+    if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
 
     if(clientes.length===0)traerClientes()
     if(insumos.length===0)traerInsumos()
@@ -179,105 +181,69 @@ const NuevaFichaTecnica = () => {
 
   return (
     <div className="contenedor-menu">
+      <div className="formulario-cliente">
+        <h1>Crear Ficha Técnica</h1>
 
-<div className="formulario-cliente">
-  <h1>Crear Ficha Técnica</h1>
+        <select className="cliente" ref={campoIdClienteElegido}>
+          <option value="">Elegir empresa</option>
+          {clientes.map((cliente) => (
+            <option key={cliente.id} value={cliente.id}>
+              {cliente.nombreEmpresa}
+            </option>
+          ))}
+          {clientes.length === 0 && <option key="">No hay clientes para mostrar</option>}
+        </select>
 
-  <select className="cliente" ref={campoIdClienteElegido}>
-    <option value="">Elegir empresa</option>
-    {clientes.map((cliente) => (
-      <option key={cliente.id} value={cliente.id}>
-        {cliente.nombreEmpresa}
-      </option>
-    ))}
-    {clientes.length === 0 && <option key="">No hay clientes para mostrar</option>}
-  </select>
+        {from === "fichasMaquina" && (
+          <p><em>Máquina número:</em> {maquina.numero}</p>
+        )}
 
-  {from === "fichasMaquina" && (
-    <p><em>Máquina número:</em> {maquina.numero}</p>
-  )}
+        {from === "fichasTecnicas" && (
+          <>
+            <select className="maquina" ref={campoIdMaquinaElegida}>
+              <option value="">Elegir máquina</option>
+              {maquinas.map((maquina) => (
+                <option key={maquina.id} value={maquina.id}>{maquina.numero}</option>
+              ))}
+              {maquinas.length === 0 && <option key="">No hay máquinas para mostrar</option>}
+            </select>
+          </>
+        )}
 
-  {from === "fichasTecnicas" && (
-    <>
-      <select className="maquina" ref={campoIdMaquinaElegida}>
-        <option value="">Elegir máquina</option>
-        {maquinas.map((maquina) => (
-          <option key={maquina.id} value={maquina.id}>{maquina.numero}</option>
-        ))}
-        {maquinas.length === 0 && <option key="">No hay máquinas para mostrar</option>}
-      </select>
-    </>
-  )}
+        <label>
+          Contador B&N:
+          <input type="text" ref={campoContadorBYN} />
+        </label>
 
-  <label>
-    Contador B&N:
-    <input type="text" ref={campoContadorBYN} />
-  </label>
+        <label>
+          Contador Color:
+          <input type="text" ref={campoContadorColor} />
+        </label>
 
-  <label>
-    Contador Color:
-    <input type="text" ref={campoContadorColor} />
-  </label>
+        <label>
+          Elegir insumos:
+          <select
+            className="insumos"
+            value={insumoElegido}
+            onChange={(e) => setInsumoElegido(e.target.value)}
+          >
+            <option value="">Elegir insumos:</option>
+            {insumos.map((i) => (
+              <option key={i.id} value={i.id}>{i.nombreInsumo}</option>
+            ))}
+            {insumos.length === 0 && <option key="">No hay insumos para mostrar</option>}
+          </select>
+        </label>
 
-  <label>
-    Elegir insumos:
-    <select
-      className="insumos"
-      value={insumoElegido}
-      onChange={(e) => setInsumoElegido(e.target.value)}
-    >
-      <option value="">Elegir insumos:</option>
-      {insumos.map((i) => (
-        <option key={i.id} value={i.id}>{i.nombreInsumo}</option>
-      ))}
-      {insumos.length === 0 && <option key="">No hay insumos para mostrar</option>}
-    </select>
-  </label>
+        <label>
+          Descripción:
+          <textarea ref={campoDescripcion} />
+        </label>
 
-  <label>
-    Descripción:
-    <textarea ref={campoDescripcion} />
-  </label>
+        <input type="button" value="Crear Ficha" onClick={ingresarFicha} />
+      </div>
+    </div>
 
-  <input type="button" value="Crear Ficha" onClick={ingresarFicha} />
-</div>
-</div>
-
-    // <div>
-    //   <h1>Crear Ficha Técnica</h1>
-    //   <select className="cliente" ref={campoIdClienteElegido}>
-    //     <option value="">Elegir empresa</option>
-    //     {clientes.map((cliente) => (
-    //         <option key={cliente.id} value={cliente.id}>{cliente.nombreEmpresa}</option>
-    //     ))}
-    //     {clientes.length===0 && <option key="">No hay clientes para mostrar</option>}
-    //   </select><br/>
-    //   {from === "fichasMaquina" && <p><em>Máquina número: </em>{maquina.numero}</p>}
-    //   {from === "fichasTecnicas" && <><select className="maquina" ref={campoIdMaquinaElegida}>
-    //     <option value="">Elegir máquina</option>
-    //     {maquinas.map((maquina) => (
-    //       <option key={maquina.id} value={maquina.id}>{maquina.numero}</option>
-    //     ))}
-    //     {maquinas.length===0 && <option key="">No hay clientes para mostrar</option>}
-    //   </select><br/></>}
-    //   <label>Contador B&N: 
-    //     <input type="text" ref={campoContadorBYN}/>
-    //   </label><br />
-    //    <label>Contador Color: 
-    //     <input type="text" ref={campoContadorColor}/>
-    //   </label><br />
-    //   <select /*multiple*/ className="insumos" value={insumoElegido} onChange={(e) => setInsumoElegido(e.target.value)}>
-    //     <option value="">Elegir insumos: </option>
-    //     {insumos.map((i) => (
-    //       <option key={i.id} value={i.id}>{i.nombreInsumo}</option>
-    //     ))}
-    //     {insumos.length===0 && <option key="">No hay insumos para mostrar</option>}
-    //   </select><br/>
-    //   <label>Descripcion: 
-    //     <textarea ref={campoDescripcion}/>
-    //   </label><br />
-    //   <input type="button" value="Crear Ficha" onClick={ingresarFicha}/>
-    // </div>
   )
 }
 

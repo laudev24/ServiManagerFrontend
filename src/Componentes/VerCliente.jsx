@@ -43,6 +43,8 @@ const VerCliente = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+      navigate("/inicio")
        
         if(cliente==="")traerCliente()
         if(maquinasAsociadas.length===0)traerMaquinasDelCliente()

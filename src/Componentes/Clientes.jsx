@@ -39,6 +39,8 @@ const Clientes = () => {
     useEffect(() => {
        if(!localStorage.getItem("token"))
       navigate("/")
+        if(localStorage.getItem("esAdmin") === "false")
+          navigate("/inicio")
       // console.log("ListaClientes: ", listaClientes)
       if (!listaClientes.length) {
         traerClientes();
