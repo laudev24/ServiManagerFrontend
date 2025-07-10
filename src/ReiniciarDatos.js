@@ -2,7 +2,7 @@
 
 export const reiniciarDatos = () => {
   window.addEventListener('beforeunload', () => {
-    const keysToPreserve = ['nombre', 'contraseña', 'token', 'esAdmin'];
+    const keysToPreserve = ['nombre', 'contraseña', 'token', 'esAdmin', 'clienteId'];
     const preservedData = {};
 
     // Guardamos los datos importantes

@@ -4,7 +4,6 @@ import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
 
 import clientesReducer from "../features/clientesSlice";
-import clienteReducer from "../features/clienteSlice";
 import maquinasReducer from "../features/maquinasSlice";
 import fichasTecnicasReducer from "../features/fichasTecnicasSlice";
 import solicitudesReducer from "../features/solicitudesSlice";
@@ -21,7 +20,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     clientesSlice : clientesReducer,
-    clienteSlice : clienteReducer,
     maquinasSlice : maquinasReducer,
     fichasTecnicasSlice : fichasTecnicasReducer,
     solicitudesSlice : solicitudesReducer,

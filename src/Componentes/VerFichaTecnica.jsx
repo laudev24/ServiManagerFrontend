@@ -105,42 +105,6 @@ const VerFichaTecnica = () => {
 </div>
 </div>
 
-    // <div>
-    //     <h1>Ficha Técnica nro. {id}</h1>
-    //     <Link to ={`/modificarFicha/${id}`}>Modificar ficha</Link><br />
-    //     <table>
-    //         <tbody>
-    //             <tr>
-    //                 <th>Nombre de la empresa: </th>
-    //                 <td>{ficha.cliente.nombreEmpresa}</td>
-    //             </tr> 
-    //                 <tr>
-    //                 <th>Máquina número: </th>
-    //                 <td>{ficha.maquina.numero}</td>
-    //             </tr>
-    //             <tr>
-    //                 <th>Fecha: </th>
-    //                 <td>{formatearFechaHora(ficha.fechaYHora)}</td>
-    //             </tr> 
-    //             <tr>
-    //                 <th>Contador BYN: </th>
-    //                 <td>{ficha.maquina.contadorBYN}</td>
-    //             </tr> 
-    //                 <tr>
-    //                 <th>Contador Color: </th>
-    //                 <td>{ficha.maquina.contadorColor}</td>
-    //             </tr> 
-    //             <tr>
-    //                 <th>Insumos: </th>
-    //                 <td>{ficha.insumos.map((i) => (<span>- {i.nombre} -</span>))}</td>
-    //             </tr>
-    //             <tr>
-    //                 <th>Descripción: </th>
-    //                 <td>{ficha.descripcion}</td>
-    //             </tr>
-    //         </tbody>
-    //     </table>
-    // </div>
   )
 }
 

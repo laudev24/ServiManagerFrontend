@@ -36,6 +36,7 @@ const NuevaFichaTecnica = lazy(() => import('./Componentes/NuevaFichaTecnica'));
 const FichasMaquina = lazy(() => import('./Componentes/FichasMaquina'));
 const NuevaSolicitud = lazy(() => import('./Componentes/NuevaSolicitud'));
 const EnviarContador = lazy(() => import('./Componentes/EnviarContador'));
+const ContadoresEnviados = lazy(() => import('./Componentes/ContadoresEnviados'));
 
 
 
@@ -84,6 +85,7 @@ function App() {
               <Route path="asociarCliente/:id" element={<AsociarCliente />} />
               <Route path="fichasMaquina/:id" element={<FichasMaquina />} />
               <Route path="enviarContador" element={<EnviarContador />} />
+              <Route path="contadoresEnviados" element={<ContadoresEnviados />} />
             </Route>
 
             <Route path="*" element={<NoEncontrado />} />

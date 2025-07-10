@@ -5,7 +5,6 @@ import { guardarNombre, guardarToken, guardarTipoUsuario } from "../features/usu
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { guardarClienteId } from '../features/clienteSlice';
 
 const Login = () => {
 
@@ -105,8 +104,7 @@ const Login = () => {
       return r.json()
     }) 
     .then(datos => {
-      
-      dispatch(guardarClienteId(datos.id));
+      localStorage.setItem("clienteId", datos.id);
     })
     .catch(error => {
       console.error("Error al obtener el cliente:", error);

@@ -35,6 +35,10 @@ const Inicio = () => {
         navigate("/enviarContador")
     }
 
+    const verContadores = () => {
+        navigate("/contadoresEnviados")
+    }
+
 
   return (
     <div className="contenedor-menu">
@@ -49,6 +53,8 @@ const Inicio = () => {
             <input type="button" value="Chat" className="btn-menu" onClick={verChats} />
             <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
             <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
+            <input type="button" value="Contadores Enviados" className="btn-menu" onClick={verContadores} />
+
         
 
 

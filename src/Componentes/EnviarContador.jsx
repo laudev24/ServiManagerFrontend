@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Camara from './Camara'
 import GaleriaFotos from './GaleriaFotos'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
 
 const EnviarContador = () => {
 
     let navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const [showCamera1, setShowCamera1] = React.useState(false);
     const [showCamera2, setShowCamera2] = React.useState(false);
@@ -24,7 +22,6 @@ const EnviarContador = () => {
     const numeroBYN = useRef(null);
     const numeroColor = useRef(null);
 
-    const clienteId = useSelector(state => state.clienteSlice.clienteId);
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -33,33 +30,33 @@ const EnviarContador = () => {
      if (localStorage.getItem("esAdmin") === "true")
         navigate("/InicioAdm");
      setModoActivo(''); 
-        traerMaquinasDelCliente();
+        if(clienteId === -1)traerClienteId();
+        else traerMaquinasDelCliente();
+
     }, [])
 
-       const traerMaquinasDelCliente = () => {
-        console.log("Traer maquinas del cliente con ID:", clienteId);
-        if (!clienteId) 
-            traerClienteId();
-     fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${clienteId}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
+    const traerMaquinasDelCliente = () => {
+        if (clienteId !== -1) {
+            fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${clienteId}`, {
+                method: 'GET',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(r =>{
+            if(!r.ok){
+                throw new Error("Error en la respuesta del servidor");
             }
-        })
-        .then(r =>{
-        if(!r.ok){
-            throw new Error("Error en la respuesta del servidor");
+            return r.json()
+            }) 
+            .then(datos => {
+                setMaquinasAsociadas(datos)
+            })
+            .catch(error => {
+            console.error("Error al obtener las maquinas:", error);
+            })
         }
-        return r.json()
-        }) 
-        .then(datos => {
-            setMaquinasAsociadas(datos)
-        })
-        .catch(error => {
-        console.error("Error al obtener las maquinas:", error);
-        })
-
     }
 
     const traerClienteId = () => {
@@ -78,8 +75,8 @@ const EnviarContador = () => {
             return r.json()
         }) 
         .then(datos => {
-            
-            dispatch(guardarClienteId(datos.id));
+            localStorage.setItem("clienteId", datos.id);
+            traerMaquinasDelCliente()
         })
         .catch(error => {
             console.error("Error al obtener el cliente:", error);
@@ -189,31 +186,7 @@ const EnviarContador = () => {
             })
         }
         else if(maquina.tipoImpresion === 1){
-            for (let [key, value] of formData.entries()) {
-    if (value instanceof File && value.type === "application/json") {
-        const reader = new FileReader();
-        reader.onload = () => {
-            console.log(`📤 POSTMAN KEY: ${key}`);
-            console.log(`🧾 TYPE: JSON (application/json)`);
-            console.log(`📦 VALUE:\n${reader.result}`);
-            console.log('---------------------------');
-        };
-        reader.readAsText(value);
-    } else if (value instanceof File) {
-        console.log(`📤 POSTMAN KEY: ${key}`);
-        console.log(`🖼️ TYPE: ${value.type}`);
-        console.log(`📎 FILENAME: ${value.name}`);
-        console.log('---------------------------');
-    } else {
-        console.log(`📤 POSTMAN KEY: ${key}`);
-        console.log(`📝 VALUE: ${value}`);
-        console.log('---------------------------');
-    }
-}
-
-            for (let pair of formData.entries()) {
-                console.log(`${pair[0]}:`, pair[1]);
-            }
+            
             fetch(`https://localhost:5201/api/envioContador`, {
                 method: 'POST',
                 body: formData,
