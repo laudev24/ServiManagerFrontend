@@ -289,77 +289,13 @@ const Clientes = () => {
       >
         Siguiente
       </button>
+      
     </div>
   )}
 </div>
  </div>
 
 
-
-
-
-    // <div className='verClientes'>
-    //     <h1>Clientes</h1>
-    //     <Link to="/nuevoCliente">Crear nuevo cliente</Link> <br />
-    //     <input type="button" value="Con Alertas" onClick={conAlerta}/> <br />
-    //     <select className="categoriaDeCliente" onChange={(e) =>filtrarPorCategoria(e.target.value)}>
-    //         <option value="">Elegir categoría</option>
-    //         {categorias.map((categoria) => (
-    //             <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
-    //         ))}
-    //         {categorias.length===0 && <option key="">No hay categorías para mostrar</option>}
-    //     </select>
-    //     {/* Lo siguiente es un search bar */}
-    //     <div style={{ padding: '1rem' }}>
-    //         <input
-    //             type="text"
-    //             placeholder="Buscar cliente..."
-    //             value={search}
-    //             onChange={(e) => {
-    //                 setSearch(e.target.value); 
-    //                 searchBar(e.target.value);
-    //             }}
-    //             style={{
-    //             padding: '0.5rem',
-    //             fontSize: '1rem',
-    //             borderRadius: '4px',
-    //             border: '1px solid #ccc'
-    //             }}
-    //         />
-         
-    //     </div>
-
-    //     {/* Listado de clientes, cada uno con su link a modificar y boton eliminar  */}
-    //     <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
-    //         <tbody>
-    //             {clientesFiltrados.map((cliente) => (
-    //             <tr key={cliente.id}>
-    //                 <td style={{ padding: "8px" }}>
-    //                     {/* Iconos condicionales */}
-    //                     {cliente.tieneMensajes && <span title="Tiene mensajes"><img src='../proyectoInicial/images/mensaje.png' /> </span>}
-    //                     {cliente.tienePagosPendientes && (
-    //                         <span title="Pagos pendientes" style={{ marginLeft: "5px" }}>
-    //                         <img src='../proyectoInicial/images/pago.png' />
-    //                         </span>
-    //                     )}
-    //                     {/* Nombre */}
-    //                     <span style={{ marginLeft: "10px" }}><Link to={`/verCliente/${cliente.id}`}>{cliente.nombreEmpresa}</Link></span>
-    //                 </td>
-    //                 <td style={{ padding: "8px" }}>
-    //                 <button onClick={() => handleModificar(cliente.id)}>
-    //                     Modificar</button>
-    //                 </td>
-    //                 <td style={{ padding: "8px" }}>
-    //                 <button onClick={() => handleEliminar(cliente.id)} style={{ color: "red" }}>
-    //                     Eliminar
-    //                 </button>
-    //                 </td>
-    //             </tr>
-    //             ))}
-    //             {clientesFiltrados.length === 0 && <tr><td>No hay resultados</td></tr>}
-    //         </tbody>
-    //     </table>
-    // </div>
   )
 }
 

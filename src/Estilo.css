@@ -8,6 +8,9 @@
 
 *{
     background-color: var(--crema);
+    width: 100%;
+    /* height: 100%; */
+
     margin: auto;
     padding: 0;
     box-sizing: border-box;
@@ -31,7 +34,23 @@ input[type="number"] {
     color: black
 }
 
+main {
+    margin: 0 
+}
 
+a{
+    margin:0;
+    text-decoration: underline;
+}
+
+Link{
+    text-decoration: underline;
+}
+
+header a{
+    background-color: var(--verde-claro);
+
+}
 
 /* Fondo principal */
 .contenedor-login {
@@ -46,6 +65,8 @@ input[type="number"] {
 
 .container-fluid {
     min-height: 100vh;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
     background-color: var(--verde-claro);
@@ -57,17 +78,17 @@ input[type="number"] {
 
 .contenido-central {
     width: 100%;
+    height: 100%;
     max-width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* margin: 0 auto; */
+    margin: 0;
     
 }
 
 
 
-header,
 footer {
     background-color: var(--verde-claro);
     width: 100%;
@@ -76,8 +97,10 @@ footer {
     display: flex;
 }
 
-header nav{
+header, header nav{
     background-color: var(--verde-claro);
+    width: 100%;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,11 +111,14 @@ header img:first-of-type{
     /* justify-self: start; */
     background-color: var(--verde-claro);
     height: 40px;
+    width: 40px;
     cursor: pointer;
     margin: 0;
 }
-footer 
-header img:first-of-type:hover {
+
+
+footer, 
+header img:hover {
     transform: scale(1.05);
 }
 
@@ -114,15 +140,13 @@ footer a:hover {
 }
 
 @media (max-width: 600px) {
-    header nav,
+    /* header nav, */
     footer {
         flex-direction: column;
         gap: 1rem;
     }
 
-    main {
-        padding: 1rem;
-    }
+    
 }
 /* ===== Estilos para el login ===== */
 
@@ -305,10 +329,11 @@ footer a:hover {
     color: var(--azul-oscuro);
     text-decoration: none;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 .ver-clientes a:hover {
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 /* Botón de alerta */
@@ -499,6 +524,8 @@ footer a:hover {
     margin-top: 1rem;
 }
 
+
+
 .ver-maquinas th,
 .ver-maquinas td {
     padding: 0.75rem;
@@ -534,14 +561,19 @@ footer a:hover {
 /* Responsive */
 @media (max-width: 600px) {
     .ver-maquinas table,
-    .ver-maquinas thead,
     .ver-maquinas tbody,
-    .ver-maquinas th,
     .ver-maquinas td,
     .ver-maquinas tr {
         display: block;
         width: 100%;
     }
+
+@media (max-width: 600px) {
+    .ver-maquinas th {
+    display: none;
+  }
+}
+
 
     .ver-maquinas tr {
         margin-bottom: 1rem;
@@ -693,12 +725,12 @@ footer a:hover {
     display: inline-block;
     margin-bottom: 1rem;
     color: var(--azul-oscuro);
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
 }
 
 .datos-cliente a:hover {
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 .datos-cliente table {
@@ -745,11 +777,15 @@ footer a:hover {
     .datos-cliente thead,
     .datos-cliente tbody,
     .datos-cliente th,
-    .datos-cliente td,
+    /* .datos-cliente td, */
     .datos-cliente tr {
         display: block;
         width: 100%;
     }
+}
+
+    
+
 
     .datos-cliente tr {
         margin-bottom: 1rem;
@@ -1173,4 +1209,10 @@ footer a:hover {
         margin-bottom: 0.25rem;
         color: var(--gris-azulado);
     }
+}
+
+.ultimos-botones button{
+    display: block;
+    width: 100%;
+    margin: 5px 
 }

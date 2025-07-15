@@ -132,7 +132,7 @@ const VerMaquina = () => {
     <div className="contenedor-menu">
 
 <div className="datos-maquina">
-  <h1>Datos de la Máquina</h1>
+  <h1>Datos de la Máquina {maquina.numero}</h1>
 
   <Link to={`/asociarCliente/${id}`}>Asociar Cliente</Link>
   <button onClick={mostrarFichas}>Ver fichas</button>

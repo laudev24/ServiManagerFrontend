@@ -21,7 +21,7 @@ const EnviarContador = () => {
 
     const numeroBYN = useRef(null);
     const numeroColor = useRef(null);
-
+    const clienteId = localStorage.getItem("clienteId")
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -120,8 +120,8 @@ const EnviarContador = () => {
        
         const contadorByn = {  
             "id": 0,
-            "clienteId": clienteId,
-            "maquinaId": maquinaId,
+            "clienteId": Number(clienteId),
+            "maquinaId": Number(maquinaId),
             "fechaYHora": null,
             "confirmado": true,
             "contador": 0,
@@ -178,6 +178,8 @@ const EnviarContador = () => {
                     toast.error("Error en la respuesta del servidor");
                     throw new Error("Error en la respuesta del servidor", r);
                 }
+                else if(r.ok)
+                    navigate("/contadoresEnviados")
                 return r.json();
             })
             .catch(error => {
@@ -199,6 +201,9 @@ const EnviarContador = () => {
                     console.error("Error en la respuesta del servidor:", r.statusText);
                     toast.error("Error en la respuesta del servidor");
                     throw new Error("Error en la respuesta del servidor", r);
+                }
+                else if(r.ok){
+                    navigate("/contadoresEnviados")
                 }
                 return r.json();
             })

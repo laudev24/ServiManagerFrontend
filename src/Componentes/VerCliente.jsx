@@ -147,6 +147,7 @@ const VerCliente = () => {
             if (r.status === 204) {
                 toast(`Máquina ${maq.numero} desasociada.`);
                 console.log(r.status)
+                traerMaquinasDelCliente()
                 
             } else {
                 console.log(r.status)
@@ -167,7 +168,9 @@ const VerCliente = () => {
   <h1>Datos del cliente</h1>
 
   <Link to={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
-    
+    <button onClick={() => setMostrarDatosCliente(prev => !prev)} className="btn-toggle">
+    {mostrarDatosCliente ? 'Ocultar datos del cliente' : 'Mostrar datos del cliente'}
+    </button>
 {mostrarDatosCliente && (
   <table>
     <tbody>
@@ -210,9 +213,7 @@ const VerCliente = () => {
     </tbody>
   </table>
 )}
-<button onClick={() => setMostrarDatosCliente(prev => !prev)} className="btn-toggle">
-    {mostrarDatosCliente ? 'Ocultar datos del cliente' : 'Mostrar datos del cliente'}
-    </button>
+
 
   <h2>Máquinas asociadas:</h2>
   <table>
@@ -231,70 +232,16 @@ const VerCliente = () => {
       ))}
     </tbody>
   </table><br />
-  <Link to={`/asociarMaquinas/${id}`}>Asociar Máquina</Link>
-
+  <Link to={`/asociarMaquinas/${id}`}>Asociar Máquina</Link><br />
+  <div className='ultimos-botones'>
+  <button>Chat</button>
+  <button>Contadores recibidos</button>
+  <button>Información Contadores</button>
+  <button>Pagos</button>
 </div>
 </div>
+</div>
 
-
-        // <div>
-        //     <h1>Datos del cliente</h1>
-        //     <Link to ={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
-        //     <Link to ={`/asociarMaquinas/${id}`}>Asociar Máquinas</Link>
-        //     <table>
-        //         <tbody>
-        //             <tr>
-        //                 <th>Nombre de la empresa: </th>
-        //                 <td>{cliente.nombreEmpresa}</td>
-        //             </tr> 
-        //                 <tr>
-        //                 <th>Categoría: </th>
-        //                 <td>{categoria?.nombre}</td>
-        //             </tr> 
-        //                 <tr>
-        //                 <th>Dirección: </th>
-        //                 <td>{cliente.direccion}</td>
-        //             </tr> 
-        //                 <tr>
-        //                 <th>Nombre del contacto: </th>
-        //                 <td>{cliente.nombreContacto}</td>
-        //             </tr> 
-        //                 <tr>
-        //                 <th>Teléfono/Celular de contacto: </th>
-        //                 <td>{cliente.telefono}</td>
-        //             </tr>
-        //                 <tr>
-        //                 <th>Correo electrónico: </th>
-        //                 <td>{cliente.email}</td>
-        //             </tr>
-        //                 <tr>
-        //                 <th>RUT: </th>
-        //                 <td>{cliente.rut}</td>
-        //             </tr>  
-        //                 <tr>
-        //                 <th>Fecha de pago: </th>
-        //                 <td>{cliente.fechaPago}</td>
-        //             </tr>  
-        //                 <tr>
-        //                 <th>Nombre de usuario: </th>
-        //                 <td>{cliente.fechaPago}</td>
-        //             </tr>  
-        //         </tbody>
-            
-                
-        //     </table>
-        //     <h2>Máquinas asociadas:</h2>
-        //     <table>
-        //         <tbody>
-        //             {maquinasAsociadas.map((maq) => (
-        //                 <tr key={maq.id}>
-        //                     <td><Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link></td>
-        //                     <td> <button onClick={() => mostrarToast(maq.id)}  style={{ color: "red" }}>Desasociar </button></td>
-        //                 </tr>
-        //             ))}
-        //         </tbody>
-        //     </table>
-        // </div>
     )
 }
 

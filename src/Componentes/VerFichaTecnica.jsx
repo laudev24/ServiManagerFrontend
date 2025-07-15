@@ -82,11 +82,11 @@ const VerFichaTecnica = () => {
       </tr>
       <tr>
         <th>Contador BYN:</th>
-        <td data-label="BYN">{ficha.maquina.contadorBYN}</td>
+        <td data-label="BYN">{ficha.contadorBYN}</td>
       </tr>
       <tr>
         <th>Contador Color:</th>
-        <td data-label="Color">{ficha.maquina.contadorColor}</td>
+        <td data-label="Color">{ficha.contadorColor}</td>
       </tr>
       <tr>
         <th>Insumos:</th>
