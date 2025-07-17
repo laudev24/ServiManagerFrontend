@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { guardarCategorias } from '../features/categoriasSlice'
 import { toast } from 'react-toastify'
 
 const VerCliente = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
+    let navigate = useNavigate()
 
     const tokenSelector = useSelector(state => state.usuarioSlice.token)
     // const [token, setToken] = useState("")
@@ -160,6 +161,10 @@ const VerCliente = () => {
         });
     }
 
+    const irAContadoresRecibidos = () => {
+      navigate("/contadoresRecibidos")
+    }
+
     
     return (
     <div className="contenedor-menu">
@@ -235,7 +240,7 @@ const VerCliente = () => {
   <Link to={`/asociarMaquinas/${id}`}>Asociar Máquina</Link><br />
   <div className='ultimos-botones'>
   <button>Chat</button>
-  <button>Contadores recibidos</button>
+  <button onClick={irAContadoresRecibidos}>Contadores recibidos</button>
   <button>Información Contadores</button>
   <button>Pagos</button>
 </div>

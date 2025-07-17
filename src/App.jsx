@@ -10,6 +10,8 @@ import Estructura from './Componentes/Estructura';
 import Login from './Componentes/Login'
 import NoEncontrado from './Componentes/NoEncontrado'
 import { reiniciarDatos } from './ReiniciarDatos';
+import RequireAuthAdm from './RequireAuthAdm';
+import RequireAuthCli from './RequireAuthCli';
 
 const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
 const Inicio = lazy(() => import('./Componentes/Inicio'));
@@ -37,7 +39,7 @@ const FichasMaquina = lazy(() => import('./Componentes/FichasMaquina'));
 const NuevaSolicitud = lazy(() => import('./Componentes/NuevaSolicitud'));
 const EnviarContador = lazy(() => import('./Componentes/EnviarContador'));
 const ContadoresEnviados = lazy(() => import('./Componentes/ContadoresEnviados'));
-
+const ContadoresRecibidos = lazy(() => import('./Componentes/ContadoresRecibidos'))
 
 
 
@@ -60,32 +62,33 @@ function App() {
 
             {/* Rutas protegidas con layout */}
             <Route path="/" element={<Estructura />}>
-              <Route path="inicioAdm" element={<InicioAdm />} />
-              <Route path="inicio" element={<Inicio />} />
-              <Route path="clientes" element={<Clientes />} />
-              <Route path="verCliente/:id" element={<VerCliente />} />
-              <Route path="verMaquina/:id" element={<VerMaquina />} />
-              <Route path="verFichaTecnica/:id" element={<VerFichaTecnica />} />
-              <Route path="nuevoCliente" element={<NuevoCliente />} />
-              <Route path="nuevaMaquina" element={<NuevaMaquina />} />
-              <Route path="nuevaFichaTecnica" element={<NuevaFichaTecnica />} />
-              <Route path="nuevaSolicitud" element={<NuevaSolicitud />} />
+              <Route path="inicioAdm" element={<RequireAuthAdm><InicioAdm /></RequireAuthAdm>} />
+              <Route path="inicio" element={<RequireAuthCli><Inicio /></RequireAuthCli>} />
+              <Route path="clientes" element={<RequireAuthAdm><Clientes /></RequireAuthAdm>} />
+              <Route path="verCliente/:id" element={<RequireAuthAdm><VerCliente /></RequireAuthAdm>} />
+              <Route path="verMaquina/:id" element={<RequireAuthAdm><VerMaquina /></RequireAuthAdm>} />
+              <Route path="verFichaTecnica/:id" element={<RequireAuthAdm><VerFichaTecnica /></RequireAuthAdm>} />
+              <Route path="nuevoCliente" element={<RequireAuthAdm><NuevoCliente /></RequireAuthAdm>} />
+              <Route path="nuevaMaquina" element={<RequireAuthAdm><NuevaMaquina /></RequireAuthAdm>} />
+              <Route path="nuevaFichaTecnica" element={<RequireAuthAdm><NuevaFichaTecnica /></RequireAuthAdm>} />
+              <Route path="nuevaSolicitud" element={<RequireAuthCli><NuevaSolicitud /></RequireAuthCli>} />
               <Route path="chat" element={<Chat />} />
               <Route path="chats" element={<Chats />} />
               <Route path="datosUsuario" element={<DatosUsuario />} />
-              <Route path="fichasTecnicas" element={<FichasTecnicas />} />
-              <Route path="insumos" element={<Insumos />} />
-              <Route path="maquinas" element={<Maquinas />} />
-              <Route path="modificarMaquina/:id" element={<ModificarMaquina />} />
-              <Route path="modificarCliente/:id" element={<ModificarCliente />} />
-              <Route path="modificarFicha/:id" element={<ModificarFicha />} />
+              <Route path="fichasTecnicas" element={<RequireAuthAdm><FichasTecnicas /></RequireAuthAdm>} />
+              <Route path="insumos" element={<RequireAuthAdm><Insumos /></RequireAuthAdm>} />
+              <Route path="maquinas" element={<RequireAuthAdm><Maquinas /></RequireAuthAdm>} />
+              <Route path="modificarMaquina/:id" element={<RequireAuthAdm><ModificarMaquina /></RequireAuthAdm>} />
+              <Route path="modificarCliente/:id" element={<RequireAuthAdm><ModificarCliente /></RequireAuthAdm>} />
+              <Route path="modificarFicha/:id" element={<RequireAuthAdm><ModificarFicha /></RequireAuthAdm>} />
               <Route path="mensaje" element={<Mensaje />} />
               <Route path="solicitudes" element={<Solicitudes />} />
-              <Route path="asociarMaquinas/:id" element={<AsociarMaquinas />} />
-              <Route path="asociarCliente/:id" element={<AsociarCliente />} />
-              <Route path="fichasMaquina/:id" element={<FichasMaquina />} />
-              <Route path="enviarContador" element={<EnviarContador />} />
-              <Route path="contadoresEnviados" element={<ContadoresEnviados />} />
+              <Route path="asociarMaquinas/:id" element={<RequireAuthAdm><AsociarMaquinas /></RequireAuthAdm>} />
+              <Route path="asociarCliente/:id" element={<RequireAuthAdm><AsociarCliente /></RequireAuthAdm>} />
+              <Route path="fichasMaquina/:id" element={<RequireAuthAdm><FichasMaquina /></RequireAuthAdm>} />
+              <Route path="enviarContador" element={<RequireAuthCli><EnviarContador /></RequireAuthCli>} />
+              <Route path="contadoresEnviados" element={<RequireAuthCli><ContadoresEnviados /></RequireAuthCli>} />
+              <Route path="contadoresRecibidos" element={<RequireAuthAdm><ContadoresRecibidos/></RequireAuthAdm>} />
             </Route>
 
             <Route path="*" element={<NoEncontrado />} />

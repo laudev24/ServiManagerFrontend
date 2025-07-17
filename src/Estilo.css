@@ -7,6 +7,7 @@
 }
 
 *{
+    /* background-color: var(--verde-claro); */
     background-color: var(--crema);
     width: 100%;
     /* height: 100%; */
@@ -805,7 +806,7 @@ footer a:hover {
         display: block;
         margin-bottom: 0.25rem;
     }
-}
+
 
 .datos-cliente .btn-toggle {
     margin-bottom: 1rem;
@@ -1215,4 +1216,104 @@ footer a:hover {
     display: block;
     width: 100%;
     margin: 5px 
+}
+
+
+/*========== Contadores recibidos ===================*/
+
+
+.bloque-contador {
+    border: 1px solid var(--gris-azulado);
+    background-color: var(--beige);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.envio-contador h2 {
+    font-size: 1.2rem;
+    color: var(--azul-oscuro);
+    margin-bottom: 0.25rem;
+}
+
+.envio-contador h3 {
+    font-size: 1rem;
+    color: var(--gris-azulado);
+    margin-bottom: 0.25rem;
+}
+
+.contador-p {
+    color: var(--gris-azulado);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.grid-contador {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.imagen-contador {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border: 1px solid var(--verde-claro);
+    border-radius: 4px;
+    display: block;
+    margin: auto;
+}
+
+.input-col label {
+    display: block;
+    font-weight: bold;
+    color: var(--azul-oscuro);
+}
+
+.input-col input {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: var(--beige);
+    border: 1px solid var(--gris-azulado);
+    border-radius: 4px;
+    color: var(--azul-oscuro);
+}
+
+.btn-col {
+    width: 100%;
+}
+
+.btn-reenviar,
+.btn-confirmar {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
+
+.btn-reenviar {
+    background-color: #d39e00; /* amarillo Bootstrap warning */
+}
+
+.btn-reenviar:hover {
+    background-color: #b68600;
+}
+
+.btn-confirmar {
+    background-color: var(--azul-oscuro);
+}
+
+.btn-confirmar:hover {
+    background-color: #0f2332;
+}
+
+@media (max-width: 768px) {
+    .grid-contador {
+        grid-template-columns: 1fr;
+    }
 }
