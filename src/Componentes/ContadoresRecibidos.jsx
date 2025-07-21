@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ContadorRecibido from './ContadorRecibido';
+import { useNavigate } from 'react-router-dom';
 
 const ContadoresRecibidos = () => {
   const [contadores, setContadores] = useState([]);
@@ -7,6 +8,8 @@ const ContadoresRecibidos = () => {
   const [maquinas, setMaquinas] = useState([]);
   const mensajesRef = useRef({});
   const token = localStorage.getItem("token");
+  let navigate = useNavigate();
+
 
   useEffect(() => {
     traerClientes();
@@ -63,6 +66,14 @@ const ContadoresRecibidos = () => {
   const handleMensajeChange = useCallback((envioId, texto) => {
     mensajesRef.current[envioId] = texto;
   }, []);
+
+
+const handleConfirmar = useCallback((envioId) => {
+  // podés guardar algo en localStorage, Redux, o pasar vía estado
+  
+  navigate('/registroContador');
+}, []);
+
 
   return (
     <div className="contenedor-menu">

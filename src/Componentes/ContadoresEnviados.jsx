@@ -6,6 +6,7 @@ const ContadoresEnviados = () => {
     const token = localStorage.getItem("token");
     const clienteId = localStorage.getItem("clienteId");
    const [contadoresEnviados, setContadoresEnviados] = useState([])
+const [loading, setLoading] = useState(true);
 
     let navigate = useNavigate();
 
@@ -40,13 +41,42 @@ const ContadoresEnviados = () => {
           }
         })
         .then(datos => {
-            setContadoresEnviados(datos)
+
+            agruparContadores(datos)
           console.log("Contadores enviados:", datos);
         })
         .catch(error => {
           console.error("Error al obtener los contadores enviados:", error);
         });
     }
+
+    const agruparContadores = (contadores) => {
+  const agrupados = {};
+
+  contadores.forEach((contador) => {
+    const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
+
+    if (!agrupados[key]) {
+      agrupados[key] = {
+        maquina: contador.maquina,
+        fechaYHora: contador.fechaYHora,
+        imagen: contador.imagen,
+        mensajes: [],
+      };
+    }
+
+    if (contador.mensaje && contador.mensaje.trim() !== "") {
+      agrupados[key].mensajes.push({
+        tipoImpresion: contador.tipoImpresion,
+        mensaje: contador.mensaje,
+      });
+    }
+  });
+  const cont = Object.values(agrupados)
+  setContadoresEnviados(cont)
+  setLoading(false);
+ 
+};
 
      const formatearFechaHora = (fechaISO) => {
         const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
@@ -63,44 +93,58 @@ const ContadoresEnviados = () => {
    <div className="contenedor-menu">
   <div className="formulario-cliente">
     <h1>Contadores enviados</h1>
+    {loading ? (
+  <p>Cargando datos...</p>
+) : (
+<table>
+  <thead>
+    <tr>
+      <th>Máquina</th>
+      <th>Fecha</th>
+      <th>Imagen</th>
+      <th>Mensajes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {contadoresEnviados.map((grupo, index) => (
+      <tr key={index}>
+        <td>
+          {grupo.maquina.numero} - {grupo.maquina.marca} - {grupo.maquina.modelo}
+        </td>
+        <td>{formatearFechaHora(grupo.fechaYHora)}</td>
+        <td>
+          <img
+           loading="lazy"
+            src={`data:image/jpeg;base64,${grupo.imagen}`}
+            alt="Imagen enviada"
+            className="imagen-contador"
+          />
+        </td>
+        <td>
+          {grupo.mensajes.length > 0 ? (
+            <ul style={{ margin: 0, paddingLeft: '1rem' }}>
+              {grupo.mensajes.map((msg, idx) => (
+                <li key={idx}>
+                  <strong>{msg.tipoImpresion === 1 ? "B/N" : "Color"}:</strong> {msg.mensaje}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <em>Sin mensajes</em>
+          )}
+        </td>
+      </tr>
+    ))}
 
-    <table>
-      <thead>
-        <tr>
-          <th>Máquina</th>
-          <th>Tipo de Impresión</th>
-          <th>Fecha</th>
-          <th>Imagen</th>
-          <th>Mensaje</th>
-        </tr>
-      </thead>
-      <tbody>
-        {contadoresEnviados.map((contador) => (
-          <tr key={contador.id}>
-            <td>
-              {contador.maquina.numero} - {contador.maquina.marca} - {contador.maquina.modelo}
-            </td>
-            <td>{contador.tipoImpresion}</td>
-            <td>{formatearFechaHora(contador.fechaYHora)}</td>
-            <td>
-              <img
-                src={`data:image/jpeg;base64,${contador.imagen}`}
-                alt="Imagen enviada"
-                className="imagen-contador"
-              />
-            </td>
-            <td>{contador.mensaje}</td>
-          </tr>
-        ))}
-        {contadoresEnviados.length === 0 && (
-          <tr>
-            <td colSpan="5" style={{ textAlign: "center" }}>
-              No hay resultados
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
+    {contadoresEnviados.length === 0 && (
+      <tr>
+        <td colSpan="4" style={{ textAlign: "center" }}>
+          No hay resultados
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>)}
   </div>
 </div>
 

@@ -13,22 +13,21 @@ const EnviarContador = () => {
     const [showCamera2, setShowCamera2] = React.useState(false);
     const [galeria1, setGaleria1] = useState(false);
     const [galeria2, setGaleria2] = useState(false);
-    const [fotoMon, setFotoMon] = useState(null);
-    const [fotoCol, setFotoCol] = useState(null);
+    const [foto, setFoto] = useState(null);
     const [modoActivo, setModoActivo] = useState(null); // 'camara' o 'galeria'
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
     const [tipoContador, setTipoContador] = useState(1);
 
-    const numeroBYN = useRef(null);
-    const numeroColor = useRef(null);
+    const numeroBYN = useRef(null)
+    const numeroColor = useRef(null)
     const clienteId = localStorage.getItem("clienteId")
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-     if (!localStorage.getItem("token")) 
-        navigate("/");
-     if (localStorage.getItem("esAdmin") === "true")
-        navigate("/InicioAdm");
+    //  if (!localStorage.getItem("token")) 
+    //     navigate("/");
+    //  if (localStorage.getItem("esAdmin") === "true")
+    //     navigate("/InicioAdm");
      setModoActivo(''); 
         if(clienteId === -1)traerClienteId();
         else traerMaquinasDelCliente();
@@ -96,25 +95,16 @@ const EnviarContador = () => {
     
 
     const handlePhotoData = (photoData) => {
-        console.log("Foto a enviar photodata:", photoData);
-        //Primero voy a mandar el envio y luego hago el fetch de la foto para ponerlo en los otros componentes
-        // if(photoData) dispatch(guardarFotos(photoData)); // Guardo la foto porque la tengo que mostrar en el chat del cliente y en "verContadores" del administrador
-        setFotoMon(photoData) // Actualizo el estado de la foto para mostrarla en el componente
-        
-        return( <img src={fotoMon} alt="Foto a enviar" /> )
+        console.log("Foto a enviar b/n :", photoData);
+        setFoto(photoData) 
+        return( <img src={foto} alt="Foto a enviar" /> )
     };
 
-      const handlePhotoData2 = (photoData) => {
-        console.log("Foto a enviar photodata:", photoData);
-        //Primero voy a mandar el envio y luego hago el fetch de la foto para ponerlo en los otros componentes
-        // if(photoData) dispatch(guardarFotos(photoData)); // Guardo la foto porque la tengo que mostrar en el chat del cliente y en "verContadores" del administrador
-        setFotoCol(photoData) // Actualizo el estado de la foto para mostrarla en el componente
-        return( <img src={fotoCol} alt="Foto a enviar" /> )
-    };
+   
 
     const enviarContador = () => {
         const valorBYN = numeroBYN.current.value;
-
+        
         const maquinaId = Number(document.querySelector('select').value); // Obtengo el ID de la máquina seleccionada
         const maquina = maquinasAsociadas.find(maq => maq.id === maquinaId);
        
@@ -128,39 +118,28 @@ const EnviarContador = () => {
             "tipoImpresion": 1,
             "mensaje": valorBYN
         }
-         
-        if ( maquina.tipoImpresion === 0){
-            if(!fotoCol || !fotoMon){
-                toast("Debe tomar una foto o seleccionar una de la galería para enviar el contador");
-                return;
-            } 
-        }
-         if(!fotoMon){
-            toast("Debe tomar una foto o seleccionar una de la galería para enviar el contador");
-            return;
-        }
-            console.log(token)
+      
+        console.log(token)
 
         const formData = new FormData();
 
         formData.append("EnviosContadores[0].EnvioContador", new Blob([JSON.stringify(contadorByn)], { type: "application/json" }));
-        formData.append("EnviosContadores[0].Imagen", fotoMon);
+        formData.append("EnviosContadores[0].Imagen", foto);
         
        if(maquina.tipoImpresion === 0){
             const valorColor = numeroColor.current.value;
             const contadorColor = {  
                 "id": 0,
-                "clienteId": clienteId,
-                "maquinaId": maquinaId,
-                "fechaYHora": "",
+                "clienteId": Number(clienteId),
+                "maquinaId": Number(maquinaId),
+                "fechaYHora": null,
                 "confirmado": true,
                 "contador": 0,
                 "tipoImpresion": 0,
-                "imagen": "",
                 "mensaje": valorColor
             }
             formData.append("EnviosContadores[1].EnvioContador", new Blob([JSON.stringify(contadorColor)], { type: "application/json" }));
-            formData.append("EnviosContadores[1].Imagen", fotoCol);
+            formData.append("EnviosContadores[1].Imagen", foto || null);
             console.log("Datos a enviar:", formData);
             for (let pair of formData.entries()) {
                 console.log(`${pair[0]}:`, pair[1]);
@@ -231,24 +210,23 @@ const EnviarContador = () => {
                     ))}
                 </select>
             </label>
+            <div>
+                <div>
+                    <button onClick={() => [setShowCamera1(!showCamera1), setModoActivo('camara')]}>
+                        {showCamera1 ? 'Cerrar Cámara' : 'Abrir Cámara'}
+                    </button>
+                    {showCamera1 && <Camara activo={modoActivo === 'camara'} onPhotoTaken={handlePhotoData} onData={(data) => handlePhotoData(data)} />}
+                </div>
+                <div>
+                    <button onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>
+                        {galeria1 ? 'Cerrar Galería de Fotos' : 'Abrir Galería de Fotos'}
+                    </button>
+                    {galeria1 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData} onFotoElegida={(data) => handlePhotoData(data)}/>}
+                </div>
+            </div>
             <label>
                 Contador B&N:
-                <div>
-                    <div>
-                        <button onClick={() => [setShowCamera1(!showCamera1), setModoActivo('camara')]}>
-                            {showCamera1 ? 'Cerrar Cámara' : 'Abrir Cámara'}
-                        </button>
-                        {showCamera1 && <Camara activo={modoActivo === 'camara'} onPhotoTaken={handlePhotoData} onData={(data) => handlePhotoData(data)} />}
-                    </div>
-                    <div>
-                        <button onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>
-                            {galeria1 ? 'Cerrar Galería de Fotos' : 'Abrir Galería de Fotos'}
-                        </button>
-                        {galeria1 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData} onFotoElegida={(data) => handlePhotoData(data)}/>}
-                    </div>
-                   
-
-                </div>
+                
                 <input type="number" placeholder="Valor del contador" ref={numeroBYN}/>
             </label>
             
@@ -256,20 +234,7 @@ const EnviarContador = () => {
                 
             <label>
                 Contador Color:
-                <div>
-                    <button onClick={() => [setShowCamera2(!showCamera2), setModoActivo('camara')]}>
-                        {showCamera2 ? 'Cerrar Cámara' : 'Abrir Cámara'}
-                    </button>
-                    {showCamera2 && <Camara activo={modoActivo === 'camara'} onPhotoTaken={handlePhotoData2} />}
-                </div>
-                <div>
-                    <button onClick={() => [setGaleria2(!galeria2), setModoActivo('galeria')]}>
-                        {galeria2 ? 'Cerrar Galería de Fotos' : 'Abrir Galería de Fotos'}
-                    </button>
-                    {galeria2 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData2} />}
-                </div>
                 <input type="number" placeholder="Valor del contador" ref={numeroColor}/>
-                
             </label>
             )}
             <input type="button" value="Enviar" className="btn-menu" onClick={enviarContador}/>

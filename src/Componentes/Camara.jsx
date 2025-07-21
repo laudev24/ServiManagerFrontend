@@ -45,6 +45,11 @@ const Camara = ({activo , onData }) => {
             canvas.toBlob((blob) => {
             if (blob) {
                 const file = new File([blob], "foto.jpg", { type: "image/jpeg" });
+                if (!file) {
+                    alert("Primero toma una foto.");
+                }else{
+                onData(file)
+                }
                 setFotoFile(file);
                 console.log("📸 Foto capturada como File", file);
 
@@ -57,41 +62,17 @@ const Camara = ({activo , onData }) => {
         }    
     };
     // 3. Enviar la Foto 
-    const uploadPhoto = async () => {
-        if (!fotoFile) {
-            alert("Primero toma una foto.");
-            return;
-        }
-        console.log("Foto a enviar:", fotoFile);
-        onData(fotoFile); // Enviar el archivo de foto al componente padre
-        // Eliminar el prefijo "data:image/jpeg;base64," para enviar solo el string Base64
-        // const base64Image = photoData.split(',')[1];
-        // onData(base64Image); // Se envia al componente padre para manejar la foto capturada
+    // const uploadPhoto = async () => {
+    //     if (!fotoFile) {
+    //         alert("Primero toma una foto.");
+    //         return;
+    //     }
+    //     console.log("Foto a enviar:", fotoFile);
+    //     onData(fotoFile); // Enviar el archivo de foto al componente padre
+        
 
-        // try {
-        //     const response = await fetch('YOUR_DOTNET_API_ENDPOINT/api/photos/upload', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${yourAuthToken}` // Si tienes autenticación
-        //         },
-        //         body: JSON.stringify({ imageData: base64Image, fileName: `photo_${Date.now()}.jpeg` })
-        //     });
-
-        //     if (response.ok) {
-        //         const result = await response.json();
-        //         alert('Foto subida con éxito: ' + result.message);
-        //         // Aquí podrías reiniciar el estado, mostrar la foto en una galería, etc.
-        //         setPhotoData(null); // Limpiar la foto capturada
-        //     } else {
-        //         const errorData = await response.json();
-        //         alert('Error al subir la foto: ' + (errorData.message || response.statusText));
-        //     }
-        // } catch (error) {
-        //     console.error("Error al subir la foto:", error);
-        //     alert("Error de red o comunicación con el servidor.");
-        // }
-    };
+       
+    // };
 
     return (
         <div className={`camara-container ${activo ? 'activo' : ''}`}>
@@ -102,8 +83,8 @@ const Camara = ({activo , onData }) => {
                     <h3>Previsualización</h3>
                     <img src={URL.createObjectURL(fotoFile)} alt="Previsualización" className='prev' />
                     <br />
-                    <p >Si querés enviar esta foto hacé click en Confirmar. De lo contrario, tomá otra foto.</p>
-                    <button onClick={uploadPhoto}>Confirmar</button>
+                    {/* <p >Si querés enviar esta foto hacé click en Confirmar. De lo contrario, tomá otra foto.</p>
+                    <button onClick={uploadPhoto}>Confirmar</button> */}
                 </>
             )}
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas> {/* Canvas oculto para la captura */}

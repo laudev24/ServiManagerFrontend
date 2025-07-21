@@ -57,10 +57,8 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<div>Cargando página...</div>}>
           <Routes>
-            {/* Ruta pública (Login) */}
             <Route path="/" element={<Login />} />
 
-            {/* Rutas protegidas con layout */}
             <Route path="/" element={<Estructura />}>
               <Route path="inicioAdm" element={<RequireAuthAdm><InicioAdm /></RequireAuthAdm>} />
               <Route path="inicio" element={<RequireAuthCli><Inicio /></RequireAuthCli>} />

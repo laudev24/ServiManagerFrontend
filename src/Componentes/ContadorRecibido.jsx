@@ -21,7 +21,7 @@ const ContadorRecibido = memo(({ envio, buscarCliente, buscarMaquina, onMensajeC
           <label>
             Ingresar valor:
             <input
-              type="text"
+              type="number"
               className="form-control"
               placeholder="Escribe el valor"
               defaultValue={envio.mensaje || ''}
