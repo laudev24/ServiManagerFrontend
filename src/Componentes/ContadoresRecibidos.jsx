@@ -72,7 +72,7 @@ const agruparEnvios = (contadores) => {
   contadores.forEach((contador) => {
     contador.enviosContadores.forEach((envio) => {
       
-      const clave = `${envio.maquinaId}-${formatearFechaHora(envio.fechaYHora)}`;
+      const clave = `${envio.maquinaId}-${envio.clienteId}-${formatearFechaHora(envio.fechaYHora)}`;
 
       const grupoExistente = agrupados.find(g => g.clave === clave);
 
@@ -122,10 +122,9 @@ const agruparEnvios = (contadores) => {
   }, []);
 
 
-const handleConfirmar = useCallback((envioId) => {
-  // podés guardar algo en localStorage, Redux, o pasar vía estado
 
-  navigate('/registroContador');
+const handleConfirmar = useCallback((dataGrupo) => {
+  navigate('/informacionContadores', { state: dataGrupo });
 }, []);
 
 
@@ -138,7 +137,9 @@ const handleConfirmar = useCallback((envioId) => {
     <article key={i} className="bloque-contador">
       <ContadorRecibido
         grupo={grupo}
-        onMensajeChange={handleMensajeChange}
+        // onMensajeChange={handleMensajeChange}
+        // mensajes={mensajesRef.current} 
+        onConfirmar={handleConfirmar}
       />
     </article>
   ))

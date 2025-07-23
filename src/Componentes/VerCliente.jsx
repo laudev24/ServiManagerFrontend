@@ -165,6 +165,10 @@ const VerCliente = () => {
       navigate("/contadoresRecibidos")
     }
 
+    const irAInformacionContadores = () => {
+      navigate("/informacionContadores")
+    }
+
     
     return (
     <div className="contenedor-menu">
@@ -241,7 +245,7 @@ const VerCliente = () => {
   <div className='ultimos-botones'>
   <button>Chat</button>
   <button onClick={irAContadoresRecibidos}>Contadores recibidos</button>
-  <button>Información Contadores</button>
+  <button onClick={irAInformacionContadores}>Información Contadores</button>
   <button>Pagos</button>
 </div>
 </div>

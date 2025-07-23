@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
-const ContadorRecibido = memo(({ grupo, onMensajeChange }) => {
+const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   const {
     clienteNombre,
     maquinaNombre,
@@ -9,6 +9,55 @@ const ContadorRecibido = memo(({ grupo, onMensajeChange }) => {
     envios,
     clienteId,
   } = grupo;
+  const [mensajes, setMensajes] = useState({});
+
+
+  useEffect(() => {
+  const inicial = {};
+  envios.forEach(envio => {
+    inicial[envio.id] = envio.mensaje || ''; // mensaje precargado si lo hay
+  });
+  setMensajes(inicial);
+}, [envios]);
+
+
+
+  const handleInputChange = (id, value) => {
+    setMensajes(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+   const handleConfirmar = () => {
+    const mensajesGrupo = envios.map(envio => {
+      const inputValor = mensajes[envio.id];
+      const mensaje = inputValor != null ? String(inputValor).trim() : '';
+      return {
+        envioId: envio.id,
+        mensaje,
+        tipoImpresion: envio.tipoImpresion
+      };
+    })
+    .filter(m => m.mensaje);
+    // (envio => ({
+
+    //   envioId: envio.id,
+    //   mensaje: String(mensajes[envio.id]).trim(),
+    //   tipoImpresion: envio.tipoImpresion
+    // }))
+    
+
+    const dataParaEnviar = {
+      clienteNombre,
+      maquinaNombre,
+      fechaFormateada,
+      imagen,
+      mensajes: mensajesGrupo
+    };
+
+    onConfirmar(dataParaEnviar); 
+  };
 
   return (
     <div className="envio-contador">
@@ -35,8 +84,8 @@ const ContadorRecibido = memo(({ grupo, onMensajeChange }) => {
                   type="number"
                   className="form-control"
                   placeholder="Escribe el valor"
-                  defaultValue={envio.mensaje || ''}
-                  onChange={(e) => onMensajeChange(envio.id, e.target.value)}
+                  value={mensajes[envio.id] ?? ''}
+                  onChange={(e) => handleInputChange(envio.id, e.target.value)}
                 />
               </label>
             </div>
@@ -50,9 +99,14 @@ const ContadorRecibido = memo(({ grupo, onMensajeChange }) => {
         </div>
 
         <div className="btn-col">
-          <button className="btn-confirmar" onClick={() => console.log('Confirmar')}>
+          <button className="btn-confirmar" onClick={handleConfirmar}>
             Confirmar
           </button>
+        </div>
+        <div className="btn-col">
+            <button className='btn-eliminar' onClick={() => console.log('Eliminar')}>
+                Eliminar
+            </button>
         </div>
       </div>
     </div>

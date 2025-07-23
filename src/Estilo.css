@@ -1287,7 +1287,8 @@ footer a:hover {
 }
 
 .btn-reenviar,
-.btn-confirmar {
+.btn-confirmar,
+.btn-eliminar {
     width: 100%;
     padding: 0.6rem 1rem;
     font-weight: bold;
@@ -1297,11 +1298,11 @@ footer a:hover {
 }
 
 .btn-reenviar {
-    background-color: #d39e00; /* amarillo Bootstrap warning */
+    background-color: var(--gris-azulado); /* amarillo Bootstrap warning */
 }
 
 .btn-reenviar:hover {
-    background-color: #b68600;
+    background-color: #717d7d;
 }
 
 .btn-confirmar {
@@ -1312,8 +1313,55 @@ footer a:hover {
     background-color: #0f2332;
 }
 
+.btn-eliminar {
+    background-color: darkred;
+}
+
+.btn-eliminar:hover {
+    background-color: rgb(97, 2, 2);
+}
+
+
 @media (max-width: 768px) {
     .grid-contador {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+.tabla-resumen {
+    margin: 2rem 0;
+}
+
+.tabla-resumen h3 {
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+}
+
+.tabla-resumen table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--beige);
+    border: 1px solid var(--gris-azulado);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tabla-resumen td {
+    padding: 0.75rem;
+    border: 1px solid var(--gris-azulado);
+    vertical-align: top;
+    font-size: 1rem;
+    color: var(--azul-oscuro);
+}
+
+.input-descuento {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    background-color: var(--crema);
+    border: 1px solid var(--gris-azulado);
+    border-radius: 4px;
 }
