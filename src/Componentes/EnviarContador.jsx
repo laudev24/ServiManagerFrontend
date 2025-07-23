@@ -119,7 +119,7 @@ const EnviarContador = () => {
             "mensaje": valorBYN
         }
       
-        console.log(token)
+        // console.log(token)
 
         const formData = new FormData();
 
@@ -221,7 +221,7 @@ const EnviarContador = () => {
                     <button onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>
                         {galeria1 ? 'Cerrar Galería de Fotos' : 'Abrir Galería de Fotos'}
                     </button>
-                    {galeria1 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData} onFotoElegida={(data) => handlePhotoData(data)}/>}
+                    {galeria1 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData} onData={(data) => handlePhotoData(data)}/>}
                 </div>
             </div>
             <label>

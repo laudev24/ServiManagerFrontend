@@ -117,9 +117,9 @@ const agruparEnvios = (contadores) => {
     }
 
 
-  const handleMensajeChange = useCallback((envioId, texto) => {
-    mensajesRef.current[envioId] = texto;
-  }, []);
+  // const handleMensajeChange = useCallback((envioId, texto) => {
+  //   mensajesRef.current[envioId] = texto;
+  // }, []);
 
 
 

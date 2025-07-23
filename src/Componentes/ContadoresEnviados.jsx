@@ -102,7 +102,7 @@ const [loading, setLoading] = useState(true);
       <th>Máquina</th>
       <th>Fecha</th>
       <th>Imagen</th>
-      <th>Mensajes</th>
+      <th>Valor del contador</th>
     </tr>
   </thead>
   <tbody>
@@ -130,7 +130,7 @@ const [loading, setLoading] = useState(true);
               ))}
             </ul>
           ) : (
-            <em>Sin mensajes</em>
+            <em>Sin valores ingresados</em>
           )}
         </td>
       </tr>

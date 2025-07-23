@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-const ImageUploader = ({activo, onFotoElegida}) => {
+const ImageUploader = ({activo, onData}) => {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null); // Para mostrar la vista previa
   const [imageFile, setImageFile] = useState(null); // Para almacenar el archivo a enviar
@@ -16,6 +16,7 @@ const ImageUploader = ({activo, onFotoElegida}) => {
         setSelectedImage(reader.result);
       };
       reader.readAsDataURL(file); // Lee el archivo como Data URL para la vista previa
+      onData(file); // Llama a la función onData con el archivo seleccionado
     } else {
       setSelectedImage(null);
       setImageFile(null);
@@ -26,45 +27,7 @@ const ImageUploader = ({activo, onFotoElegida}) => {
     fileInputRef.current.click(); // Simula un clic en el input de archivo oculto
   };
 
-  const sendImageToBackend = async () => {
-    if (!imageFile) {
-      alert('Por favor, selecciona una imagen primero.');
-      return;
-    }
-    else{
-    console.log(imageFile)
-    onFotoElegida(imageFile)
-    }
-    const formData = new FormData();
-    // 'image' es el nombre del campo que tu backend esperará
-    formData.append('image', imageFile, imageFile.name);
 
-    // try {
-    //   // Reemplaza '/api/uploadimage' con la URL de tu endpoint de .NET
-    //   const response = await fetch('/api/uploadimage', {
-    //     method: 'POST',
-    //     body: formData,
-    //     // No establezcas 'Content-Type' manualmente cuando usas FormData,
-    //     // el navegador lo hace automáticamente y le asigna el boundary correcto.
-    //   });
-
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log('Imagen subida exitosamente:', data);
-    //     alert('Imagen subida exitosamente!');
-    //     // Opcional: Reinicia el estado después de subir
-    //     setSelectedImage(null);
-    //     setImageFile(null);
-    //   } else {
-    //     const errorData = await response.json();
-    //     console.error('Error al subir la imagen:', errorData);
-    //     alert('Error al subir la imagen.');
-    //   }
-    // } catch (error) {
-    //   console.error('Error de red al subir la imagen:', error);
-    //   alert('Error de conexión al servidor.');
-    // }
-  };
 
   return (
     <div className={`image-uploader-container ${activo ? 'activo' : ''}`}>
@@ -86,10 +49,6 @@ const ImageUploader = ({activo, onFotoElegida}) => {
             alt="Vista previa de la imagen seleccionada"
             style={{ maxWidth: '300px', maxHeight: '300px', marginTop: '10px' }}
           />
-          <br/>
-          <button onClick={sendImageToBackend} style={{ marginTop: '10px' }}>
-            Enviar Foto al Servidor
-          </button>
         </div>
       )}
     </div>
