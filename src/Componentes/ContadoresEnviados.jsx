@@ -41,9 +41,9 @@ const [loading, setLoading] = useState(true);
           }
         })
         .then(datos => {
-
-            agruparContadores(datos)
-          console.log("Contadores enviados:", datos);
+          const datosAgrupados = agruparContadores(datos);
+          setContadoresEnviados(datosAgrupados);
+          setLoading(false);
         })
         .catch(error => {
           console.error("Error al obtener los contadores enviados:", error);
@@ -51,32 +51,27 @@ const [loading, setLoading] = useState(true);
     }
 
     const agruparContadores = (contadores) => {
-  const agrupados = {};
-
-  contadores.forEach((contador) => {
-    const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
-
-    if (!agrupados[key]) {
-      agrupados[key] = {
-        maquina: contador.maquina,
-        fechaYHora: contador.fechaYHora,
-        imagen: contador.imagen,
-        mensajes: [],
-      };
-    }
-
-    if (contador.mensaje && contador.mensaje.trim() !== "") {
-      agrupados[key].mensajes.push({
-        tipoImpresion: contador.tipoImpresion,
-        mensaje: contador.mensaje,
+      const agrupados = {};
+      contadores.forEach((contador) => {
+        const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
+        if (!agrupados[key]) {
+          agrupados[key] = {
+            maquina: contador.maquina,
+            fechaYHora: formatearFechaHora(contador.fechaYHora),
+            imagen: contador.imagen,
+            mensajes: [],
+          };
+        }
+        if (contador.mensaje?.trim()) {
+          agrupados[key].mensajes.push({
+            tipoImpresion: contador.tipoImpresion,
+            mensaje: contador.mensaje,
+          });
+        }
       });
-    }
-  });
-  const cont = Object.values(agrupados)
-  setContadoresEnviados(cont)
-  setLoading(false);
- 
-};
+      return Object.values(agrupados);
+    };
+
 
      const formatearFechaHora = (fechaISO) => {
         const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
@@ -111,13 +106,14 @@ const [loading, setLoading] = useState(true);
         <td>
           {grupo.maquina.numero} - {grupo.maquina.marca} - {grupo.maquina.modelo}
         </td>
-        <td>{formatearFechaHora(grupo.fechaYHora)}</td>
+        <td>{grupo.fechaYHora}</td>
         <td>
           <img
-           loading="lazy"
+            loading="lazy"
             src={`data:image/jpeg;base64,${grupo.imagen}`}
             alt="Imagen enviada"
             className="imagen-contador"
+            style={{ maxWidth: '100px', height: 'auto' }}
           />
         </td>
         <td>

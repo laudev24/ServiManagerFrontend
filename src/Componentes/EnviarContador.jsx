@@ -154,7 +154,7 @@ const EnviarContador = () => {
             .then(r => {
                 if(!r.ok){
                     console.error("Error en la respuesta del servidor:", r.statusText);
-                    toast.error("Error en la respuesta del servidor");
+                    // toast.error("Error en la respuesta del servidor");
                     throw new Error("Error en la respuesta del servidor", r);
                 }
                 else if(r.ok)
