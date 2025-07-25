@@ -14,9 +14,13 @@ const EnviarContador = () => {
     const [galeria1, setGaleria1] = useState(false);
     const [galeria2, setGaleria2] = useState(false);
     const [foto, setFoto] = useState(null);
+    const [fotoFile, setFotoFile] = useState(null);
+    const [fotoUrl, setFotoUrl] = useState("");
+    const [submitting, setSubmitting] = useState(false);
     const [modoActivo, setModoActivo] = useState(null); // 'camara' o 'galeria'
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
     const [tipoContador, setTipoContador] = useState(1);
+    const [maquinaIdSel, setMaquinaIdSel] = useState(null);
 
     const numeroBYN = useRef(null)
     const numeroColor = useRef(null)
@@ -24,10 +28,7 @@ const EnviarContador = () => {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-    //  if (!localStorage.getItem("token")) 
-    //     navigate("/");
-    //  if (localStorage.getItem("esAdmin") === "true")
-    //     navigate("/InicioAdm");
+  
      setModoActivo(''); 
         if(clienteId === -1)traerClienteId();
         else traerMaquinasDelCliente();
@@ -83,8 +84,8 @@ const EnviarContador = () => {
     }
 
     const setContador = () => {
-        const maquinaId = Number(document.querySelector('select').value); // Obtengo el ID
-        const maquina = maquinasAsociadas.find(maq => maq.id === maquinaId);
+        // const maquinaIdSel = Number(document.querySelector('select').value); // Obtengo el ID
+        const maquina = maquinasAsociadas.find(maq => maq.id === Number(maquinaIdSel));
         if (maquina.tipoImpresion === 0) {
             setTipoContador(0); // Tipo de contador: 0 para color
         } else {    
@@ -94,20 +95,43 @@ const EnviarContador = () => {
         
     
 
-    const handlePhotoData = (photoData) => {
-        console.log("Foto a enviar b/n :", photoData);
-        setFoto(photoData) 
-        return( <img src={foto} alt="Foto a enviar" /> )
-    };
+    // const handlePhotoData = (photoData) => {
+    //     console.log("Foto a enviar b/n :", photoData);
+    //     setFoto(photoData) 
+    //     return( <img src={foto} alt="Foto a enviar" /> )
+    // };
+    const handlePhotoData = useCallback((file) => {
+        setFotoFile(file);
+        const url = URL.createObjectURL(file);
+        setFotoUrl(prev => { 
+            prev && URL.revokeObjectURL(prev); 
+            return url });
+    }, []);
 
    
+// const enviarContador = useCallback(async () => {
+//   if (!fotoFile) return toast.error("Añade foto");
+//   setSubmitting(true);
+//   const form = new FormData();
+//   form.append("EnvioContador", JSON.stringify(...));
+//   form.append("Imagen", fotoFile);
+//   try {
+//     const res = await fetch(...);
+//     if (!res.ok) throw new Error();
+//     navigate("/contadoresEnviados");
+//   } catch(err) {
+//     toast.error(err.message);
+//   } finally {
+//     setSubmitting(false);
+//   }
+// }, [fotoFile, numeroBYN, numeroColor, maquinaIdSel]);
 
-    const enviarContador = () => {
+
+    const enviarContador = useCallback(async () => {
+
         const valorBYN = numeroBYN.current.value;
-        
         const maquinaId = Number(document.querySelector('select').value); // Obtengo el ID de la máquina seleccionada
         const maquina = maquinasAsociadas.find(maq => maq.id === maquinaId);
-       
         const contadorByn = {  
             "id": 0,
             "clienteId": Number(clienteId),
@@ -119,12 +143,11 @@ const EnviarContador = () => {
             "mensaje": valorBYN
         }
       
-        // console.log(token)
-
+        if(fotoFile) setSubmitting(true);
         const formData = new FormData();
 
         formData.append("EnviosContadores[0].EnvioContador", new Blob([JSON.stringify(contadorByn)], { type: "application/json" }));
-        formData.append("EnviosContadores[0].Imagen", foto);
+        formData.append("EnviosContadores[0].Imagen", fotoFile || null);
         
        if(maquina.tipoImpresion === 0){
             const valorColor = numeroColor.current.value;
@@ -139,7 +162,7 @@ const EnviarContador = () => {
                 "mensaje": valorColor
             }
             formData.append("EnviosContadores[1].EnvioContador", new Blob([JSON.stringify(contadorColor)], { type: "application/json" }));
-            formData.append("EnviosContadores[1].Imagen", foto || null);
+            formData.append("EnviosContadores[1].Imagen", fotoFile || null);
             console.log("Datos a enviar:", formData);
             for (let pair of formData.entries()) {
                 console.log(`${pair[0]}:`, pair[1]);
@@ -153,7 +176,7 @@ const EnviarContador = () => {
             })
             .then(r => {
                 if(!r.ok){
-                    console.error("Error en la respuesta del servidor:", r.statusText);
+                    // console.error("Error en la respuesta del servidor:", r.statusText);
                     // toast.error("Error en la respuesta del servidor");
                     throw new Error("Error en la respuesta del servidor", r);
                 }
@@ -165,6 +188,7 @@ const EnviarContador = () => {
                 console.error("Error al enviar el contador:", error);
                 toast(error.message || "Error al enviar el contador");
             })
+            .finally(setSubmitting(false));
         }
         else if(maquina.tipoImpresion === 1){
             
@@ -177,8 +201,8 @@ const EnviarContador = () => {
             })
             .then(r => {
                 if(!r.ok){
-                    console.error("Error en la respuesta del servidor:", r.statusText);
-                    toast.error("Error en la respuesta del servidor");
+                    // console.error("Error en la respuesta del servidor:", r.statusText);
+                    // toast.error("Error en la respuesta del servidor");
                     throw new Error("Error en la respuesta del servidor", r);
                 }
                 else if(r.ok){
@@ -190,10 +214,11 @@ const EnviarContador = () => {
                 console.error(error);
                 toast(error.message || "Error al enviar el contador");
             })
+            .finally(setSubmitting(false));
         }
         
 
-    }
+    }, [fotoFile, numeroBYN, numeroColor, maquinaIdSel])
 
     
   return (
@@ -202,7 +227,8 @@ const EnviarContador = () => {
             <h1>Enviar Contador</h1>
             <label>
                 Selecciona la máquina:
-                <select onChange={setContador} defaultValue="">
+                <select value={maquinaIdSel} onChange={e => [setMaquinaIdSel(+e.target.value), setContador()]}>
+                {/* <select onChange={setContador} defaultValue=""> */}
                     {maquinasAsociadas.map((maq) => (
                     <option key={maq.id} value={maq.id}>
                         {maq.numero} - {maq.marca} - {maq.modelo}
@@ -226,7 +252,6 @@ const EnviarContador = () => {
             </div>
             <label>
                 Contador B&N:
-                
                 <input type="number" placeholder="Valor del contador" ref={numeroBYN}/>
             </label>
             
@@ -237,7 +262,8 @@ const EnviarContador = () => {
                 <input type="number" placeholder="Valor del contador" ref={numeroColor}/>
             </label>
             )}
-            <input type="button" value="Enviar" className="btn-menu" onClick={enviarContador}/>
+            <button disabled={submitting} onClick={enviarContador}>Enviar</button>
+            {submitting && <p>Enviando...</p>}
         </div>
     </div>
   )

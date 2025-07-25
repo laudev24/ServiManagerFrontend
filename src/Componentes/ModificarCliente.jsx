@@ -29,10 +29,10 @@ const ModificarCliente = () => {
   const [nombre, setNombre] = useState("")
 
   useEffect(() => {
-     if(!localStorage.getItem("token"))
-      navigate("/")
-    if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
+    //  if(!localStorage.getItem("token"))
+    //   navigate("/")
+    // if(localStorage.getItem("esAdmin") === "false")
+    //   navigate("/inicio")
    
     if(categorias.length===0)cargarCategorias()
     if(cliente==="")traerCliente()

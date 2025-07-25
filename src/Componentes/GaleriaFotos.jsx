@@ -4,6 +4,9 @@ const ImageUploader = ({activo, onData}) => {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null); // Para mostrar la vista previa
   const [imageFile, setImageFile] = useState(null); // Para almacenar el archivo a enviar
+  const [fotoFile, setFotoFile] = useState(null);
+const [fotoUrl, setFotoUrl] = useState("");
+const [submitting, setSubmitting] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0]; // Solo queremos el primer archivo (una sola foto)

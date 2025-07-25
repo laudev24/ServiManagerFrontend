@@ -84,6 +84,23 @@ const [loading, setLoading] = useState(true);
         return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
     }
 
+    const Row = React.memo(({ grupo }) => (
+  <tr>
+    <td>{grupo.maquina.numero} - {grupo.maquina.marca}</td>
+    <td>{grupo.fechaYHora}</td>
+    <td>
+      <img src={`data:image/jpeg;base64,${grupo.imagen}`} loading="lazy" width={100} alt="img" />
+    </td>
+    <td>
+      {grupo.mensajes.map((msg, idx) => (
+        <div key={idx}>
+          <strong>{msg.tipoImpresion === 1 ? "B/N" : "Color"}:</strong> {msg.mensaje}
+        </div>
+      ))}
+    </td>
+  </tr>
+))
+
   return (
    <div className="contenedor-menu">
   <div className="formulario-cliente">
@@ -101,6 +118,11 @@ const [loading, setLoading] = useState(true);
     </tr>
   </thead>
   <tbody>
+  {contadoresEnviados.map((grupo, i) => (
+    <Row key={i} grupo={grupo} />
+  ))}
+{/* </tbody> */}
+  {/* <tbody>
     {contadoresEnviados.map((grupo, index) => (
       <tr key={index}>
         <td>
@@ -130,7 +152,7 @@ const [loading, setLoading] = useState(true);
           )}
         </td>
       </tr>
-    ))}
+    ))} */}
 
     {contadoresEnviados.length === 0 && (
       <tr>
