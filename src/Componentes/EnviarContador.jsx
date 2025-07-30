@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Camara from './Camara'
 import GaleriaFotos from './GaleriaFotos'
 import { useDispatch } from 'react-redux'
@@ -241,7 +241,7 @@ const EnviarContador = () => {
                     <button onClick={() => [setShowCamera1(!showCamera1), setModoActivo('camara')]}>
                         {showCamera1 ? 'Cerrar Cámara' : 'Abrir Cámara'}
                     </button>
-                    {showCamera1 && <Camara activo={modoActivo === 'camara'} onPhotoTaken={handlePhotoData} onData={(data) => handlePhotoData(data)} />}
+                    {showCamera1 && <Camara activo={modoActivo === 'camara'} /*onPhotoTaken={handlePhotoData}*/ onData={(data) => handlePhotoData(data)} />}
                 </div>
                 <div>
                     <button onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>

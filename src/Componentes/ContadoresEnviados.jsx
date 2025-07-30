@@ -11,10 +11,7 @@ const [loading, setLoading] = useState(true);
     let navigate = useNavigate();
 
     useEffect(() => {
-      if (!localStorage.getItem("token")) 
-        navigate("/")
-     if (localStorage.getItem("esAdmin") === "true")
-        navigate("/InicioAdm")
+  
      traerContadoresEnviados()
     }, [])
 
@@ -54,11 +51,15 @@ const [loading, setLoading] = useState(true);
       const agrupados = {};
       contadores.forEach((contador) => {
         const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
+        console.log(contador.imagen)
+        const blob = new Blob([Uint8Array.from(atob(contador.imagen), c => c.charCodeAt(0))], { type: 'image/jpeg' });
+        const url = URL.createObjectURL(blob);
+
         if (!agrupados[key]) {
           agrupados[key] = {
             maquina: contador.maquina,
             fechaYHora: formatearFechaHora(contador.fechaYHora),
-            imagen: contador.imagen,
+            imagen: url,
             mensajes: [],
           };
         }
@@ -71,6 +72,8 @@ const [loading, setLoading] = useState(true);
       });
       return Object.values(agrupados);
     };
+
+  
 
 
      const formatearFechaHora = (fechaISO) => {
@@ -89,7 +92,7 @@ const [loading, setLoading] = useState(true);
     <td>{grupo.maquina.numero} - {grupo.maquina.marca}</td>
     <td>{grupo.fechaYHora}</td>
     <td>
-      <img src={`data:image/jpeg;base64,${grupo.imagen}`} loading="lazy" width={100} alt="img" />
+      <img src={grupo.imagen} loading="lazy" width={100} alt="img" />
     </td>
     <td>
       {grupo.mensajes.map((msg, idx) => (
@@ -121,38 +124,7 @@ const [loading, setLoading] = useState(true);
   {contadoresEnviados.map((grupo, i) => (
     <Row key={i} grupo={grupo} />
   ))}
-{/* </tbody> */}
-  {/* <tbody>
-    {contadoresEnviados.map((grupo, index) => (
-      <tr key={index}>
-        <td>
-          {grupo.maquina.numero} - {grupo.maquina.marca} - {grupo.maquina.modelo}
-        </td>
-        <td>{grupo.fechaYHora}</td>
-        <td>
-          <img
-            loading="lazy"
-            src={`data:image/jpeg;base64,${grupo.imagen}`}
-            alt="Imagen enviada"
-            className="imagen-contador"
-            style={{ maxWidth: '100px', height: 'auto' }}
-          />
-        </td>
-        <td>
-          {grupo.mensajes.length > 0 ? (
-            <ul style={{ margin: 0, paddingLeft: '1rem' }}>
-              {grupo.mensajes.map((msg, idx) => (
-                <li key={idx}>
-                  <strong>{msg.tipoImpresion === 1 ? "B/N" : "Color"}:</strong> {msg.mensaje}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <em>Sin valores ingresados</em>
-          )}
-        </td>
-      </tr>
-    ))} */}
+
 
     {contadoresEnviados.length === 0 && (
       <tr>
