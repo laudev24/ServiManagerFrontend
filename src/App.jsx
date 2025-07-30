@@ -41,7 +41,7 @@ const EnviarContador = lazy(() => import('./Componentes/EnviarContador'));
 const ContadoresEnviados = lazy(() => import('./Componentes/ContadoresEnviados'));
 const ContadoresRecibidos = lazy(() => import('./Componentes/ContadoresRecibidos'))
 const InformacionContadores = lazy(() => import('./Componentes/InformacionContadores'))
-
+const Pagos = lazy(() => import('./Componentes/Pagos'));
 
 
 
@@ -89,6 +89,8 @@ function App() {
               <Route path="contadoresEnviados" element={<RequireAuthCli><ContadoresEnviados /></RequireAuthCli>} />
               <Route path="contadoresRecibidos" element={<RequireAuthAdm><ContadoresRecibidos/></RequireAuthAdm>} />
               <Route path="informacionContadores" element={<RequireAuthAdm><InformacionContadores/></RequireAuthAdm>} />
+              <Route path="pagos" element={<RequireAuthAdm><Pagos/></RequireAuthAdm>} />
+
             </Route>
 
             <Route path="*" element={<NoEncontrado />} />
