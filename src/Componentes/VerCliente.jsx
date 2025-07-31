@@ -170,7 +170,7 @@ const VerCliente = () => {
     }
 
     const irAPagos = () => {
-      navigate("/pagos")
+      navigate(`/pagos/${cliente.id}`);
     }
 
     

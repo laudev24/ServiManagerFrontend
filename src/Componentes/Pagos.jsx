@@ -32,6 +32,7 @@ const PagosCliente = () => {
   };
 
   useEffect(() => {
+    console.log(id);
     cargarPagos();
   }, [id]);
 
@@ -47,7 +48,7 @@ const PagosCliente = () => {
       return;
     }
 
-    // Enviamos el monto como parte del pago, si lo manejás así en backend
+    
     const pagoConMonto = { ...pago, monto: montoIngresado };
 
     fetch(`https://localhost:5201/api/pago/${pago.id}`, {

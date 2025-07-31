@@ -17,6 +17,7 @@ const InicioAdm = lazy(() => import('./Componentes/InicioAdm'));
 const Inicio = lazy(() => import('./Componentes/Inicio'));
 const Clientes = lazy(() => import('./Componentes/Clientes'));
 const NuevoCliente = lazy(() => import('./Componentes/NuevoCliente'));
+const NuevoInsumo = lazy(() => import('./Componentes/NuevoInsumo'));
 const Chat = lazy(() => import('./Componentes/Chat'));
 const Chats = lazy(() => import('./Componentes/Chats'));
 const DatosUsuarioAdm = lazy(() => import('./Componentes/DatosUsuarioAdm'));
@@ -71,6 +72,7 @@ function App() {
               <Route path="nuevaMaquina" element={<RequireAuthAdm><NuevaMaquina /></RequireAuthAdm>} />
               <Route path="nuevaFichaTecnica" element={<RequireAuthAdm><NuevaFichaTecnica /></RequireAuthAdm>} />
               <Route path="nuevaSolicitud" element={<RequireAuthCli><NuevaSolicitud /></RequireAuthCli>} />
+              <Route path="nuevoInsumo" element={<RequireAuthAdm><NuevoInsumo /></RequireAuthAdm>} />
               <Route path="chat" element={<Chat />} />
               <Route path="chats" element={<Chats />} />
               <Route path="datosUsuarioAdm" element={<RequireAuthAdm><DatosUsuarioAdm /></RequireAuthAdm>} />
@@ -89,7 +91,7 @@ function App() {
               <Route path="contadoresEnviados" element={<RequireAuthCli><ContadoresEnviados /></RequireAuthCli>} />
               <Route path="contadoresRecibidos" element={<RequireAuthAdm><ContadoresRecibidos/></RequireAuthAdm>} />
               <Route path="informacionContadores" element={<RequireAuthAdm><InformacionContadores/></RequireAuthAdm>} />
-              <Route path="pagos" element={<RequireAuthAdm><Pagos/></RequireAuthAdm>} />
+              <Route path="pagos/:id" element={<RequireAuthAdm><Pagos/></RequireAuthAdm>} />
 
             </Route>
 
