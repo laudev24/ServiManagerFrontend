@@ -10,22 +10,16 @@ const Inicio = () => {
     const nombreSelector = localStorage.getItem("nombre")
 
     useEffect(() => {
-        if(!localStorage.getItem("token"))
-        navigate("/")
-    console.log("esAdmin", localStorage.getItem("esAdmin"))
-        if(localStorage.getItem("esAdmin") === "true") {
-            console.log("Entra")
-            navigate("/inicioAdm")
-        }
-            if(nombre==="")setNombre(localStorage.getItem("nombre"))
+   
+        if(nombre==="")setNombre(localStorage.getItem("nombre"))
         else setNombre(nombreSelector)
 
     }, [])
 
 
-    const verChats = () => {
-        navigate("/chat")
-    }
+    // const verChats = () => {
+    //     navigate("/chat")
+    // }
 
     const solicitarServicio = () => {
         navigate("/nuevaSolicitud")
@@ -39,6 +33,10 @@ const Inicio = () => {
         navigate("/contadoresEnviados")
     }
 
+    const verServicios = () => {
+        navigate("/solicitudes")
+    }
+
 
   return (
     <div className="contenedor-menu">
@@ -50,8 +48,10 @@ const Inicio = () => {
                     <figcaption>Ver mis datos</figcaption>
                 </figure>
             </Link>
-            <input type="button" value="Chat" className="btn-menu" onClick={verChats} />
+            {/* <input type="button" value="Chat" className="btn-menu" onClick={verChats} /> */}
             <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
+            <input type="button" value="Ver mis solicitudes" className="btn-menu" onClick={verServicios} />
+
             <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
             <input type="button" value="Contadores Enviados" className="btn-menu" onClick={verContadores} />
 

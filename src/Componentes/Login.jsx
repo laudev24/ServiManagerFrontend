@@ -20,6 +20,8 @@ const Login = () => {
    if(fromLogout && localStorage.getItem("token")){
       localStorage.removeItem("token");
       localStorage.removeItem("nombre");
+    campoUsuario.current.focus();
+
     }
     setIsDisabled(true);
     campoUsuario.current.value = "";  
@@ -32,6 +34,7 @@ const Login = () => {
   const enableBtnLogin = () => {
     if(campoPassword.current.value != "" && campoUsuario.current.value != ""){
         setIsDisabled(false);
+        
     }
   }
 

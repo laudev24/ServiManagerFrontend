@@ -1,10 +1,19 @@
+/* :root {
+  --fondo: #f5f5f5;          
+  --gris-suave: #dcdcdc;        
+  --gris-intermedio: #a9a9a9;   
+  --oscuro-suave: #333333;      
+  --verde-accion: #00c853;      
+  --verde-hover: #009624;      
+} */
+
 :root {
     --verde-claro: #bed5c5;
     --beige: #dadad1;
     --azul-oscuro: #132b3e;
     --gris-azulado: #889797;
     --crema: #f7f7f1;
-}
+} 
 
 *{
     /* background-color: var(--verde-claro); */
@@ -1224,7 +1233,29 @@ footer a:hover {
     width: 100%;
     margin: 5px 
 }
+.formulario-cliente label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
 
+.formulario-cliente .form-control {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+  background-color: var(--beige);
+  border: 1px solid var(--gris-azulado);
+  border-radius: 4px;
+  color: var(--azul-oscuro);
+}
+
+/* Estilo específico para textarea si querés diferenciar */
+.formulario-cliente textarea {
+  resize: vertical;
+  min-height: 100px;
+}
 
 /*========== Contadores recibidos ===================*/
 
@@ -1397,3 +1428,35 @@ footer a:hover {
   color: var(--gris-azulado);
 }
 
+/* Botón estilo menú */
+.opciones-foto button,
+.btn-menu {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background-color: var(--azul-oscuro);
+  color: var(--crema);
+  border: none;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.opciones-foto button{
+    background-color: black;
+}
+
+
+.btn-menu:hover {
+  background-color: #0f2332;
+}
+
+/* Opciones de cámara/galería */
+/* .opciones-foto > div {
+  margin-top: 1rem;
+} */
+
+.servicioTecnico{
+    max-width: 400px;
+    /* margin: 2rem auto; */
+}

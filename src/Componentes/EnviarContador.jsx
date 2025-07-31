@@ -10,9 +10,7 @@ const EnviarContador = () => {
     let navigate = useNavigate();
 
     const [showCamera1, setShowCamera1] = React.useState(false);
-    const [showCamera2, setShowCamera2] = React.useState(false);
     const [galeria1, setGaleria1] = useState(false);
-    const [galeria2, setGaleria2] = useState(false);
     const [foto, setFoto] = useState(null);
     const [fotoFile, setFotoFile] = useState(null);
     const [fotoUrl, setFotoUrl] = useState("");
