@@ -146,7 +146,11 @@ footer a:hover {
         flex-direction: column;
         gap: 1rem;
     }
-
+    .tabla-insumos thead tr{
+         
+    display: none;
+  
+    }
     
 }
 /* ===== Estilos para el login ===== */
@@ -918,9 +922,12 @@ footer a:hover {
     color: var(--azul-oscuro);
 }
 
+
 .formulario-cliente a:hover {
     text-decoration: underline;
 }
+
+
 
 .formulario-cliente table {
     width: 100%;
@@ -1328,7 +1335,20 @@ footer a:hover {
     }
 }
 
+.search-bar {
+    margin: 1rem 0;
+}
 
+.search-bar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: var(--beige);
+    border: 1px solid var(--gris-azulado);
+    border-radius: 4px;
+    color: var(--azul-oscuro);
+}
 
 .tabla-resumen {
     margin: 2rem 0;
@@ -1365,3 +1385,15 @@ footer a:hover {
     border: 1px solid var(--gris-azulado);
     border-radius: 4px;
 }
+
+.enlace-accion {
+  font-weight: bold;
+  text-decoration: underline !important;
+  color: var(--azul-oscuro);
+}
+
+.enlace-accion:hover {
+  text-decoration: underline;
+  color: var(--gris-azulado);
+}
+

@@ -169,6 +169,10 @@ const VerCliente = () => {
       navigate("/informacionContadores")
     }
 
+    const irAPagos = () => {
+      navigate("/pagos")
+    }
+
     
     return (
     <div className="contenedor-menu">
@@ -246,7 +250,7 @@ const VerCliente = () => {
   <button>Chat</button>
   <button onClick={irAContadoresRecibidos}>Contadores recibidos</button>
   <button onClick={irAInformacionContadores}>Información Contadores</button>
-  <button>Pagos</button>
+  <button onClick={irAPagos}>Pagos</button>
 </div>
 </div>
 </div>

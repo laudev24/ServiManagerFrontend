@@ -75,36 +75,41 @@ const PagosCliente = () => {
 
   return (
     <div className="contenedor-menu">
-      <h1>Pagos del cliente</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Total</th>
-            <th>Confirmado</th>
-            <th>Ingresar monto</th>
-            <th></th>
+  <div className="formulario-cliente">
+    <h1>Pagos del cliente</h1>
+
+    <table className="tabla-responsive">
+      <thead>
+        <tr>
+          <th>Total</th>
+          <th>Confirmado</th>
+          <th>Ingresar monto</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {pagos.map(pago => (
+          <tr key={pago.id}>
+            <td>{pago.valor}</td>
+            <td>{pago.confirmado ? "✅" : "❌"}</td>
+            <td>
+              <input
+                type="number"
+                className="input-monto"
+                value={montos[pago.id] || ""}
+                onChange={(e) => handleMontoChange(pago.id, e.target.value)}
+              />
+            </td>
+            <td>
+              <button onClick={() => saldarPago(pago)}>Saldar</button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {pagos.map(pago => (
-            <tr key={pago.id}>
-              <td>{pago.valor}</td>
-              <td>{pago.confirmado ? "✅" : "❌"}</td>
-              <td>
-                <input
-                  type="number"
-                  value={montos[pago.id] || ""}
-                  onChange={(e) => handleMontoChange(pago.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <button onClick={() => saldarPago(pago)}>Saldar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
   );
 };
 
