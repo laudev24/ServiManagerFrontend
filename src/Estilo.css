@@ -9,6 +9,7 @@
 
 :root {
     --verde-claro: #bed5c5;
+    /* --verde-claro: #ccf5cc; */
     --beige: #dadad1;
     --azul-oscuro: #132b3e;
     --gris-azulado: #889797;
@@ -132,6 +133,44 @@ header img:hover {
     transform: scale(1.05);
 }
 
+.icon-placeholder {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+    background-color: var(--verde-claro);
+}
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.encabezado-bienvenida {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  gap: 1rem; 
+}
+.encabezado-bienvenida h1 {
+    /* height: 50px; */
+    /* text-align-last: center; */
+  margin: 0;
+  padding-top: 20px;
+  line-height: 1.2;
+  font-size: clamp(1.2rem, 2.5vw + 0.8rem, 2.5rem); /* Ya compatible con tu estilo */
+}
+.logo-servimanager {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+
+
 main {
     flex-grow: 1;
     /* padding: 2rem; */
@@ -225,7 +264,6 @@ footer a:hover {
 .card-login .enlace-recuperar:hover {
     text-decoration: underline;
 }
-
 
 
 

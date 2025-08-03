@@ -48,8 +48,10 @@ const InicioAdm = () => {
   return (
     <div className="contenedor-menu">
        <div className="menu-principal">
+        <div className="encabezado-bienvenida">
+          <img src="/LogoDiegoVidal.jpeg" alt="Logo" className="logo-servimanager" />
           <h1>Hola {nombre}!</h1>
-
+        </div>
           <Link to="/datosUsuario" className="menu-usuario">
             <figure>
               <img src="/usuarioAzul3.png" alt="Usuario" />
@@ -62,7 +64,7 @@ const InicioAdm = () => {
           <input type="button" value="Fichas Técnicas" className="btn-menu" onClick={verFichas} />
           <input type="button" value="Solicitudes" className="btn-menu" onClick={verSolicitudes} />
           <input type="button" value="Insumos" className="btn-menu" onClick={verInsumos} />
-          <input type="button" value="Chats" className="btn-menu" onClick={verChats} />
+          <input type="button" value="Notificaciones" className="btn-menu" onClick={verChats} />
           <input type="button" value="Bloc de notas" className="btn-menu" onClick={verChats} />
 
         </div>

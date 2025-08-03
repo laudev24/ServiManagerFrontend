@@ -1,7 +1,11 @@
 import React from 'react'
-import { Outlet, Link, NavLink } from 'react-router-dom'
+import { Outlet, Link, NavLink, useLocation } from 'react-router-dom'
 
 const Estructura = () => {
+     const location = useLocation();
+    const isInicio = location.pathname === '/inicio' || location.pathname === '/inicioAdm';
+    const fromLogin = location.state?.fromLogin;
+
 
     const irAInicio = () => {
         if(localStorage.getItem("esAdministrador") === "true"){
@@ -20,14 +24,23 @@ const Estructura = () => {
 
     <div className="container-fluid">
         <div className="contenido-central">
-        <header>
-            <nav>
-            <NavLink to="/InicioAdm" className="icon-link">
-                <img src="/Home.png" alt="Volver a inicio" onClick={irAInicio}/>
-            </NavLink>
-            <img src="/Back.png" alt="Volver atrás" onClick={volverAtras} />
-            </nav>
-        </header>
+       <header>
+  <nav className="nav-header">
+    {/** Icono Home o espacio vacío del mismo tamaño */}
+    {isInicio ? (
+      <div className="icon-placeholder" />  // mantiene el espacio
+    ) : (
+      <NavLink to="/InicioAdm" className="icon-link">
+        <img src="/Home.png" alt="Volver a inicio" onClick={irAInicio} />
+      </NavLink>
+    )}
+
+    {!fromLogin && (
+      <img src="/Back.png" alt="Volver atrás" onClick={volverAtras} />
+    )}
+  </nav>
+</header>
+
 
         <main>
             <Outlet />
@@ -38,26 +51,7 @@ const Estructura = () => {
         </footer>
         </div>
     </div>
-    // Original code commented out
-
-    // <div className='container-fluid'>
-    //     <header className='row'>
-    //         <nav>
-    //             <NavLink to="/InicioAdm">
-    //                 <img src="/Home.png" alt="Volver a inicio" />
-    //             </NavLink>
-
-    //             <img src="/Back.png" alt="Volver atrás" onClick={volverAtras}/>
-            
-    //         </nav>
-    //     </header>
-    //     <main className='row'>
-    //         <Outlet/>
-    //     </main>
-    //     <footer className='row'>
-    //         <NavLink className="" to="/">Logout</NavLink>
-    //     </footer>
-    // </div>
+   
   )
 }
 

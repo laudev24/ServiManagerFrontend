@@ -34,7 +34,7 @@ const Login = () => {
   const enableBtnLogin = () => {
     if(campoPassword.current.value != "" && campoUsuario.current.value != ""){
         setIsDisabled(false);
-        
+
     }
   }
 
@@ -83,10 +83,12 @@ const Login = () => {
         dispatch(guardarTipoUsuario(datos.esAdmin));
         if(datos.esAdmin === false){
           buscarCliente(datos.token);
-          navigate("/inicio");
+          // navigate("/inicio");
+          navigate('/inicio', { state: { fromLogin: true } })
         }
         else if(datos.esAdmin === true){
-          navigate("/inicioAdm")
+          // navigate("/inicioAdm")
+          navigate('/inicioAdm', { state: { fromLogin: true } })
         }
       })
   }
