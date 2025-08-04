@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    maquinas : []
-    
+    maquinas: []
+
 }
 export const maquinasSlice = createSlice({
     name: "maquinas",
     initialState,
-    reducers:{
+    reducers: {
         guardarMaquinas: (state, action) => {
             state.maquinas = action.payload;
+        },
+        agregarMaquina: (state, action) => {
+            state.maquinas.push(action.payload);
         },
         eliminarMaquina: (state, action) => {
             const idAEliminar = action.payload;
@@ -19,5 +22,5 @@ export const maquinasSlice = createSlice({
     }
 })
 
-export const {guardarMaquinas, eliminarMaquina} = maquinasSlice.actions;
+export const { guardarMaquinas, eliminarMaquina, agregarMaquina } = maquinasSlice.actions;
 export default maquinasSlice.reducer;
