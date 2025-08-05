@@ -138,19 +138,19 @@ const AsociarCliente = () => {
     <input type="text" ref={campoCargoFijo} />
   </label>
 
-  {maquina?.tipoImpresion === 'Color' && (
+  {maquina?.tipoImpresion === "Color" && (
     <label>
       Costo por Copia Color:
       <input type="text" ref={campoCostoColor} />
     </label>
   )}
 
-  {maquina?.tipoImpresion === 'Monocromatico' && (
+  
     <label>
       Costo por Copia B&N:
       <input type="text" ref={campoCostoBYN} />
     </label>
-  )}
+  
 
   <input type="button" value="Asociar Cliente" onClick={asociar} />
 
@@ -172,43 +172,6 @@ const AsociarCliente = () => {
   </table>
 </div>
 </div>
-
-
-
-    // <div>
-    //     <h1>Asociar Clientes a la Máquina {maquina.numero}</h1>
-    //     <select className="clientes" ref={campoIdClienteElegido}  /*onChange={mostrarFormulario}*/ >
-    //         <option value="">Elegir cliente</option>
-    //         {clientes.map((cliente) => (
-    //             <option key={cliente.id} value={cliente.id}>{cliente.nombreEmpresa}</option>
-    //         ))}
-    //         {clientes.length===0 && <option key="">No hay clientes para mostrar.</option>}
-    //     </select><br />
-    //     <label>Cargo fijo:
-    //         <input type="text" className='cargoFijo' ref={campoCargoFijo}/>
-    //     </label><br />
-    //     {maquina?.tipoImpresion == 'Color' && 
-    //     <label>Costo por Copia Color:
-    //         <input type="text" className='costoColor' ref={campoCostoColor}/>
-    //     </label>}
-    //     {maquina?.tipoImpresion == 'Monocromatico' && 
-    //     <label>Costo por Copia B&N:
-    //         <input type="text" className='costoBYN' ref={campoCostoBYN}/>
-    //     </label>}
-    //     <input type="button" value="Asociar Cliente" onClick={asociar}/><br />
-    //     <h2>Clientes asociados:</h2>
-    //     <table>
-    //         <tbody>
-    //                 {clientesAsociados.map((cliente) => (
-    //                     <tr>
-    //                         <td key={cliente.id}>{cliente.nombreEmpresa}</td>
-    //                     </tr>
-    //                 ))}
-    //                 {clientesAsociados.length===0 && <tr><td key="">No hay clientes asociados a esta máquina.</td></tr>}
-                
-    //         </tbody>
-    //     </table>
-    // </div>
   )
 }
 
