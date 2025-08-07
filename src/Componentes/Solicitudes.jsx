@@ -9,7 +9,7 @@ const Solicitudes = () => {
   }, [])
   
   const traerSolicitudes = () => {
-  
+    
     
   }
 

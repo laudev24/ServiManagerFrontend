@@ -107,22 +107,7 @@ const EnviarContador = () => {
     }, []);
 
    
-// const enviarContador = useCallback(async () => {
-//   if (!fotoFile) return toast.error("Añade foto");
-//   setSubmitting(true);
-//   const form = new FormData();
-//   form.append("EnvioContador", JSON.stringify(...));
-//   form.append("Imagen", fotoFile);
-//   try {
-//     const res = await fetch(...);
-//     if (!res.ok) throw new Error();
-//     navigate("/contadoresEnviados");
-//   } catch(err) {
-//     toast.error(err.message);
-//   } finally {
-//     setSubmitting(false);
-//   }
-// }, [fotoFile, numeroBYN, numeroColor, maquinaIdSel]);
+
 
 
     const enviarContador = useCallback(async () => {
@@ -161,7 +146,7 @@ const EnviarContador = () => {
             }
             formData.append("EnviosContadores[1].EnvioContador", new Blob([JSON.stringify(contadorColor)], { type: "application/json" }));
             formData.append("EnviosContadores[1].Imagen", fotoFile || null);
-            console.log("Datos a enviar:", formData);
+            // console.log("Datos a enviar:", formData);
             for (let pair of formData.entries()) {
                 console.log(`${pair[0]}:`, pair[1]);
             }

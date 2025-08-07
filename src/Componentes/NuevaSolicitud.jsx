@@ -11,6 +11,7 @@ const NuevaSolicitud = () => {
     const campoDescripcion = useRef("");
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("id");
+    const [idCliente, setIdCliente] = useState(id);
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
     const [showCamera1, setShowCamera1] = React.useState(false);
         const [galeria1, setGaleria1] = useState(false);
@@ -42,6 +43,7 @@ const NuevaSolicitud = () => {
         }) 
         .then(datos => {
         localStorage.setItem("clienteId", datos.id);
+        setIdCliente(datos.id);
         if(datos)traerMaquinasAsociadas(datos.id)
         })
         .catch(error => {
@@ -50,7 +52,7 @@ const NuevaSolicitud = () => {
         
     }
 
-    const traerMaquinasAsociadas = (idCliente) => {
+    const traerMaquinasAsociadas = () => {
       
         fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${idCliente}`, {
             method: 'GET',
@@ -93,37 +95,49 @@ const NuevaSolicitud = () => {
         }
         const solicitud = {
             descripcion: descripcion,
-            maquinaId: maquinaSeleccionadaId
+            maquinaId: maquinaSeleccionadaId,
+            clienteId: Number(id)
         };
-        // fetch("https://localhost:5001/api/solicitudes", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //        'Authorization': `Bearer ${token}`
-        //     },
-        //     body: JSON.stringify(solicitud)
-        // })
-        // .then(response => {
-        //     if (!response.ok) {
-        //         if (response.status === 401) {
-        //             toast.error("No autorizado. Por favor, inicia sesión.");
-        //             navigate("/");
-        //         }else {
-        //             throw new Error("Error al enviar la solicitud");
-        //         }
-        //         throw new Error("Error al enviar la solicitud");
-        //     }
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     toast.success("Solicitud enviada con éxito.");
-        //     campoDescripcion.current.value = "";
-        //     navigate("/InicioCliente");
-        // })
-        // .catch(error => {
-        //     console.error("Error:", error);
-        //     toast.error("Ocurrió un error al enviar la solicitud.");
-        // });
+        const formData = new FormData();
+
+        formData.append(
+          "SolicitudJson",
+          JSON.stringify(solicitud));
+
+        if (fotoFile) {
+          formData.append("Imagen", fotoFile);
+        }
+
+        console.log("Solicitud a enviar:", solicitud);
+        fetch("https://localhost:5201/api/solicitudServicio", {
+            method: "POST",
+            body: formData,
+            headers: {
+               'Authorization': `Bearer ${token}`
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 401) {
+                    toast.error("No autorizado. Por favor, inicia sesión.");
+                    navigate("/");
+                }else {
+                    throw new Error("Error al enviar la solicitud");
+                }
+                throw new Error("Error al enviar la solicitud");
+            }
+            return response.json();
+        })
+        .then(data => {
+            toast.success("Solicitud enviada con éxito.");
+            campoDescripcion.current.value = "";
+            navigate("/inicio")
+            // navigate("/mis-solicitudes");
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            toast.error("Ocurrió un error al enviar la solicitud.");
+        });
     }
 
 
