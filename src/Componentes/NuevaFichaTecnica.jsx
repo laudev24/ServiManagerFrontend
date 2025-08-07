@@ -1,250 +1,253 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { guardarClientes } from '../features/clientesSlice';
-import { guardarMaquinas } from '../features/maquinasSlice';
-
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { guardarClientes } from "../features/clientesSlice";
+import { guardarMaquinas } from "../features/maquinasSlice";
 
 const NuevaFichaTecnica = () => {
-  const clientes = useSelector(state => state.clientesSlice.clientes);
-  const maquinas = useSelector(state => state.maquinasSlice.maquinas);
-  const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
-  const tokenSelector = useSelector(state => state.usuarioSlice.token)
-  // const [token, setToken] = useState("")
-    const token = localStorage.getItem("token")
+  const clientes = useSelector((state) => state.clientesSlice.clientes);
+  const maquinas = useSelector((state) => state.maquinasSlice.maquinas);
+  const token = localStorage.getItem("token");
 
+  const [maquina, setMaquina] = useState(null);
+  const [insumos, setInsumos] = useState([]);
+  const [insumosSeleccionados, setInsumosSeleccionados] = useState([]);
+  const [idMaquinaSeleccionada, setIdMaquinaSeleccionada] = useState("");
 
   const campoIdClienteElegido = useRef("");
-  const campoIdMaquinaElegida = useRef("");
-  const campoContadorBYN = useRef("");
-  const campoContadorColor = useRef("");
-  const campoIdInsumosElegidos = useRef("");
+  const campoContadorColor1 = useRef("");
+  const campoContadorColor2 = useRef("");
+  const campoContadorBYN1 = useRef("");
+  const campoContadorBYN2 = useRef("");
   const campoDescripcion = useRef("");
-  let navigate = useNavigate();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const { from, id } = location.state || {};
-  const [maquina, setMaquina] = useState("")
-  const [insumoElegido, setInsumoElegido] = useState("")
-  const [insumos, setInsumos] = useState([])
-
 
   useEffect(() => {
-     if(!localStorage.getItem("token"))
-      navigate("/")
-    if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
+    if (!token) navigate("/");
+    if (localStorage.getItem("esAdmin") === "false") navigate("/inicio");
 
-    if(clientes.length===0)traerClientes()
-    if(insumos.length===0)traerInsumos()
-    traerMaquinas()
-  }, [])
+    if (clientes.length === 0) traerClientes();
+    if (insumos.length === 0) traerInsumos();
+    traerMaquinas();
+  }, []);
 
   const traerClientes = () => {
     fetch("https://localhost:5201/api/cliente", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
-            }
-        })
-    .then(r =>{
-        if(!r.ok){
-            throw new Error("Error en la respuesta del servidor");
-        }
-        return r.json()
-        }) 
-    .then(datos => {
-        dispatch(guardarClientes(datos))
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch(error => {
-        console.error("Error al obtener los clientes:", error);
-    })
-  }
+      .then((r) => r.json())
+      .then((datos) => dispatch(guardarClientes(datos)))
+      .catch(console.error);
+  };
 
   const traerInsumos = () => {
     fetch("https://localhost:5201/api/insumo", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
-            }
-        })
-    .then(r =>{
-        if(!r.ok){
-            throw new Error("Error en la respuesta del servidor");
-        }
-        return r.json()
-        }) 
-    .then(datos => {
-        setInsumos(datos)
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch(error => {
-        console.error("Error al obtener los insumos:", error);
-    })
-  }
+      .then((r) => r.json())
+      .then((datos) => setInsumos(datos))
+      .catch(console.error);
+  };
 
   const traerMaquinas = () => {
-    if(from == "fichasTecnicas"){
-      fetch("https://localhost:5201/api/maquina", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
-            }
-        })
-      .then(r =>{
-          if(!r.ok){
-              throw new Error("Error en la respuesta del servidor");
-          }
-          return r.json()
-          }) 
-      .then(datos => {
-          dispatch(guardarMaquinas(datos))
-      })
-      .catch(error => {
-          console.error("Error al obtener las maquinas:", error);
-      })
-    }
-    else if(from == "fichasMaquina"){
-      fetch(`https://localhost:5201/api/maquina/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
-            }
-        })
-      .then(r =>{
-        if(!r.ok){
-            throw new Error("Error en la respuesta del servidor");
-        }
-        return r.json()
-        }) 
-      .then(datos => {
-        setMaquina(datos)
-      })
-      .catch(error => {
-        console.error("Error al obtener las maquinas:", error);
-      })
-    }
-  }
-  
-  
-  const ingresarFicha = () => {
-    // const insumosElegidos = []
-    // const selectedIds = Array.from(campoIdInsumosElegidos.current.selectedOptions, option => option.value);
+    const url =
+      from === "fichasMaquina"
+        ? `https://localhost:5201/api/maquina/${id}`
+        : "https://localhost:5201/api/maquina";
 
-    // const insumosSeleccionados = selectedIds
-    //   .map((idIn) => insumos.find((i) => i.id === idIn))
-    //   .filter(Boolean);
-    if(from=="fichasTecnicas") setMaquina(maquinas.find(c => c.id === Number(campoIdMaquinaElegida.current.value)))
-    const insumoAEnviar = insumos.find(c => c.id === Number(insumoElegido))
-  const insumosAEnviar = [insumoAEnviar]
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((r) => r.json())
+      .then((datos) =>
+        from === "fichasMaquina"
+          ? setMaquina(datos)
+          : dispatch(guardarMaquinas(datos))
+      )
+      .catch(console.error);
+  };
+
+  const agregarInsumo = () => {
+    setInsumosSeleccionados([...insumosSeleccionados, { insumoId: "", cantidad: 0 }]);
+  };
+
+  const actualizarInsumo = (index, campo, valor) => {
+    const copia = [...insumosSeleccionados];
+    copia[index][campo] = campo === "cantidad" ? Number(valor) : valor;
+    setInsumosSeleccionados(copia);
+  };
+
+  const eliminarInsumo = (index) => {
+    const copia = [...insumosSeleccionados];
+    copia.splice(index, 1);
+    setInsumosSeleccionados(copia);
+  };
+
+  const esColor = () => {
+    if (from === "fichasMaquina") return maquina?.tipoImpresion === 0;
+    const idSeleccionado = Number(idMaquinaSeleccionada);
+    const maquinaSeleccionada = maquinas.find((m) => m.id === idSeleccionado);
+    return maquinaSeleccionada?.tipoImpresion === 0;
+  };
+
+  const ingresarFicha = () => {
     const ficha = {
-      clienteId : Number(campoIdClienteElegido.current.value),
-      maquinaId : maquina.id,
-      fechaYHora : null,
-      contadorColor : Number(campoContadorColor.current.value),
-      contadorBYN : Number(campoContadorBYN.current.value),
-      // insumos : insumosAEnviar,
-      descripcion : campoDescripcion.current.value
-    }
-    console.log("Datos a enviar:", ficha);
-    
+      clienteId: Number(campoIdClienteElegido.current.value),
+      maquinaId:
+        from === "fichasMaquina"
+          ? maquina.id
+          : Number(idMaquinaSeleccionada),
+      fechaYHora: null,
+      contadorColor1: esColor() ? Number(campoContadorColor1.current.value) : 0,
+      contadorColor2: esColor() ? Number(campoContadorColor2.current.value) : 0,
+      contadorBYN1: Number(campoContadorBYN1.current.value),
+      contadorBYN2: Number(campoContadorBYN2.current.value),
+      descripcion: campoDescripcion.current.value,
+      insumos: insumosSeleccionados.map((i) => ({
+        insumoId: Number(i.insumoId),
+        cantidad: Number(i.cantidad),
+      })),
+    };
+
     fetch("https://localhost:5201/api/fichaTecnica", {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(ficha),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': `Bearer ${token}`
-
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${token}`,
       },
-      })
+    })
       .then((response) => {
-        response.json()
-        console.log(response)
-        if(response.status===201){
-            toast("Ficha registrada con éxito")
-            navigate('/inicioAdm')
+        if (response.status === 201) {
+          toast("Ficha registrada con éxito");
+          navigate("/inicioAdm");
+        } else {
+          return response.json().then((data) => {
+            throw new Error(data || "Error al crear ficha");
+          });
         }
       })
-    .catch((error) => {
-      console.error("Error al crear ficha:", error.message); 
-      toast(error.message);
-      // setMensaje(error.message)
-    });
-
-  }
-
-
+      .catch((error) => {
+        toast.error(error.message);
+        console.error(error);
+      });
+  };
 
   return (
     <div className="contenedor-menu">
       <div className="formulario-cliente">
         <h1>Crear Ficha Técnica</h1>
 
-        <select className="cliente" ref={campoIdClienteElegido}>
+        <select ref={campoIdClienteElegido}>
           <option value="">Elegir empresa</option>
           {clientes.map((cliente) => (
             <option key={cliente.id} value={cliente.id}>
               {cliente.nombreEmpresa}
             </option>
           ))}
-          {clientes.length === 0 && <option key="">No hay clientes para mostrar</option>}
         </select>
 
-        {from === "fichasMaquina" && (
-          <p><em>Máquina número:</em> {maquina.numero}</p>
+        {from === "fichasMaquina" ? (
+          <p>
+            <em>Máquina número:</em> {maquina?.numero}
+          </p>
+        ) : (
+          <select
+            value={idMaquinaSeleccionada}
+            onChange={(e) => setIdMaquinaSeleccionada(e.target.value)}
+          >
+            <option value="">Elegir máquina</option>
+            {maquinas.map((maquina) => (
+              <option key={maquina.id} value={maquina.id}>
+                {maquina.numero}
+              </option>
+            ))}
+          </select>
         )}
 
-        {from === "fichasTecnicas" && (
+        <label>
+          Contador B&N 1:
+          <input type="number" ref={campoContadorBYN1} />
+        </label>
+
+        <label>
+          Contador B&N 2:
+          <input type="number" ref={campoContadorBYN2} />
+        </label>
+
+        {esColor() && (
           <>
-            <select className="maquina" ref={campoIdMaquinaElegida}>
-              <option value="">Elegir máquina</option>
-              {maquinas.map((maquina) => (
-                <option key={maquina.id} value={maquina.id}>{maquina.numero}</option>
-              ))}
-              {maquinas.length === 0 && <option key="">No hay máquinas para mostrar</option>}
-            </select>
+            <label>
+              Contador Color 1:
+              <input type="number" ref={campoContadorColor1} />
+            </label>
+
+            <label>
+              Contador Color 2:
+              <input type="number" ref={campoContadorColor2} />
+            </label>
           </>
         )}
 
-        <label>
-          Contador B&N:
-          <input type="text" ref={campoContadorBYN} />
-        </label>
-
-        <label>
-          Contador Color:
-          <input type="text" ref={campoContadorColor} />
-        </label>
-
-        <label>
-          Elegir insumos:
-          <select
-            className="insumos"
-            value={insumoElegido}
-            onChange={(e) => setInsumoElegido(e.target.value)}
+        <label>Insumos utilizados:</label>
+        {insumosSeleccionados.map((item, index) => (
+          <div
+            key={index}
+            style={{ display: "flex", gap: "1rem", marginBottom: "0.5rem" }}
           >
-            <option value="">Elegir insumos:</option>
-            {insumos.map((i) => (
-              <option key={i.id} value={i.id}>{i.nombreInsumo}</option>
-            ))}
-            {insumos.length === 0 && <option key="">No hay insumos para mostrar</option>}
-          </select>
-        </label>
+            <select
+              value={item.insumoId}
+              onChange={(e) => actualizarInsumo(index, "insumoId", e.target.value)}
+            >
+              <option value="">Seleccionar insumo</option>
+              {insumos.map((insumo) => (
+                <option key={insumo.id} value={insumo.id}>
+                  {insumo.nombreInsumo}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              value={item.cantidad}
+              min="1"
+              onChange={(e) => actualizarInsumo(index, "cantidad", e.target.value)}
+              placeholder="Cantidad"
+            />
+            <button onClick={() => eliminarInsumo(index)}>❌</button>
+          </div>
+        ))}
+
+        <button onClick={agregarInsumo}>Agregar Insumo</button>
 
         <label>
           Descripción:
-          <textarea ref={campoDescripcion} />
+          <textarea ref={campoDescripcion}></textarea>
         </label>
 
         <input type="button" value="Crear Ficha" onClick={ingresarFicha} />
       </div>
     </div>
+  );
+};
 
-  )
-}
+export default NuevaFichaTecnica;
 
-export default NuevaFichaTecnica
+
+
