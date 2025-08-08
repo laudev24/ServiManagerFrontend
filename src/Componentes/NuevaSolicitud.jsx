@@ -10,7 +10,7 @@ const NuevaSolicitud = () => {
     let navigate = useNavigate()
     const campoDescripcion = useRef("");
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
+    const id = localStorage.getItem("clienteId");
     const [idCliente, setIdCliente] = useState(id);
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
     const [showCamera1, setShowCamera1] = React.useState(false);
@@ -53,8 +53,7 @@ const NuevaSolicitud = () => {
     }
 
     const traerMaquinasAsociadas = () => {
-      
-        fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${idCliente}`, {
+        fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
