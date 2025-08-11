@@ -17,10 +17,6 @@ const Inicio = () => {
     }, [])
 
 
-    // const verChats = () => {
-    //     navigate("/chat")
-    // }
-
     const solicitarServicio = () => {
         navigate("/nuevaSolicitud")
     }
@@ -33,8 +29,8 @@ const Inicio = () => {
         navigate("/contadoresEnviados")
     }
 
-    const verServicios = () => {
-        navigate("/solicitudes")
+    const verSolicitudes = () => {
+        navigate("/misSolicitudes")
     }
 
 
@@ -53,8 +49,7 @@ const Inicio = () => {
             </Link>
             {/* <input type="button" value="Chat" className="btn-menu" onClick={verChats} /> */}
             <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
-            <input type="button" value="Ver mis solicitudes" className="btn-menu" onClick={verServicios} />
-
+            <input type="button" value="Ver mis solicitudes" className="btn-menu" onClick={verSolicitudes} />
             <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
             <input type="button" value="Contadores Enviados" className="btn-menu" onClick={verContadores} />
 

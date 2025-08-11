@@ -1498,3 +1498,84 @@ footer a:hover {
     max-width: 400px;
     /* margin: 2rem auto; */
 }
+
+
+
+
+/* ===== Solicitudes de servicio ===== */
+.tarjeta-solicitud {
+  background-color: var(--crema);
+  color: var(--azul-oscuro);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--gris-azulado);
+}
+
+.tarjeta-solicitud h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--azul-oscuro);
+}
+
+.tarjeta-solicitud p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+}
+
+.tarjeta-solicitud strong {
+  font-weight: bold;
+}
+
+.tarjeta-solicitud .imagen-contador {
+  max-width: 200px;
+  max-height: 200px;
+  border: 1px solid var(--gris-azulado);
+  border-radius: 4px;
+  display: block;
+  margin: 1rem auto 0 auto;
+  object-fit: contain;
+}
+
+.sin-resultados {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--gris-azulado);
+}
+
+
+/* Cada solicitud */
+.solicitud-item {
+  background-color: var(--beige);
+  border: 1px solid var(--gris-azulado);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background-color: transparent;
+  color: red;
+  border: 1px solid red;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+.btn-eliminar:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Sin resultados */
+.sin-resultados {
+  text-align: center;
+  color: var(--gris-intermedio);
+  font-style: italic;
+}

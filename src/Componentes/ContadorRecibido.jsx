@@ -59,6 +59,30 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
     onConfirmar(dataParaEnviar); 
   };
 
+  const handleEliminar = (id) => () => {
+    fetch(`https://localhost:5201/api/envioContador/${id}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+                 'Authorization': `Bearer ${token}`
+  
+        }
+      })
+      .then(async (r) => {
+        if (r.status === 204) {
+            toast("Solicitud eliminada");
+            console.log(r.status)
+        } else {
+            console.log(r.status)
+            toast(r.mensaje || "Error eliminando solicitud");
+        }
+      })
+      .catch((err) => {
+        console.log("Error en la conexión: " + err)
+        toast("Error de conexión al eliminar solicitud");
+      });
+    }
+
   return (
     <div className="envio-contador">
       <h2>{clienteNombre}</h2>
@@ -104,7 +128,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
           </button>
         </div>
         <div className="btn-col">
-            <button className='btn-eliminar' onClick={() => console.log('Eliminar')}>
+            <button className='btn-eliminar' onClick={handleEliminar()}>
                 Eliminar
             </button>
         </div>

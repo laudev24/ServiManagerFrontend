@@ -119,7 +119,7 @@ const NuevaSolicitud = () => {
             if (!response.ok) {
                 if (response.status === 401) {
                     toast.error("No autorizado. Por favor, inicia sesión.");
-                    navigate("/");
+                    navigate("/misSolicitudes");
                 }else {
                     throw new Error("Error al enviar la solicitud");
                 }

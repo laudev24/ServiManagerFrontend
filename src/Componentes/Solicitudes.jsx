@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Solicitud from './Solicitud';
+import { toast } from 'react-toastify';
+
 
 const Solicitudes = () => {
   const token = localStorage.getItem("token")
@@ -64,10 +66,30 @@ const Solicitudes = () => {
   const agruparPorCliente = () => setMostrarAgrupadas(true);
   const desagrupar = () => setMostrarAgrupadas(false);
 
-  // TODO: definir tu lógica real de eliminar
-  const handleEliminar = (id) => {
-    setSolicitudes((prev) => prev.filter((s) => s.id !== id));
-  };
+  const handleEliminar = (idSol) => {
+      fetch(`https://localhost:5201/api/solicitudServicio/${idSol}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+                 'Authorization': `Bearer ${token}`
+  
+        }
+      })
+      .then(async (r) => {
+        if (r.status === 204) {
+            toast("Solicitud eliminada");
+            console.log(r.status)
+            setSolicitudes(prev => prev.filter(c => c.id !== idSol));
+        } else {
+            console.log(r.status)
+            toast(r.mensaje || "Error eliminando solicitud");
+        }
+      })
+      .catch((err) => {
+        console.log("Error en la conexión: " + err)
+        toast("Error de conexión al eliminar solicitud");
+      });
+    }
  
 
   if (loading) return <p>Cargando solicitudes...</p>;
