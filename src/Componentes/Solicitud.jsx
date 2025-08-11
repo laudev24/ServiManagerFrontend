@@ -4,6 +4,7 @@ import { parseISO, format } from "date-fns";
 
 const Solicitud = ({ solicitud }) => {
   const formatearFechaHora = (fecha) => {
+    
   if (!fecha) return "Fecha no disponible";
   try {
     return format(parseISO(fecha), "dd/MM/yyyy HH:mm");
