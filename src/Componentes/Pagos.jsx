@@ -7,9 +7,10 @@ const PagosCliente = () => {
   const [pagos, setPagos] = useState([]);
   const [montos, setMontos] = useState({});
   const token = localStorage.getItem("token");
+  const API_URL=import.meta.env.VITE_API_URL
 
   const cargarPagos = () => {
-    fetch(`https://localhost:5201/api/pago/cliente/${id}`, {
+    fetch(`${API_URL}/pago/cliente/${id}`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -51,7 +52,7 @@ const PagosCliente = () => {
     
     const pagoConMonto = { ...pago, monto: montoIngresado };
 
-    fetch(`https://localhost:5201/api/pago/${pago.id}`, {
+    fetch(`${API_URL}/pago/${pago.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

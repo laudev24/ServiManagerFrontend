@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const NuevaMaquina = () => {
   const token = localStorage.getItem("token")
-  API_URL=import.meta.env.VITE_API_URL
+  const API_URL=import.meta.env.VITE_API_URL
 
   const campoNumero = useRef("")
   const campoMarca = useRef("")

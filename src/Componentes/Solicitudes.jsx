@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 const Solicitudes = () => {
   const token = localStorage.getItem("token")
+  const API_URL=import.meta.env.VITE_API_URL
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorSolicitudes, setErrorSolicitudes] = useState(null);
@@ -17,7 +18,7 @@ const Solicitudes = () => {
       setLoading(true);
       try {
         // 1) Traer solicitudes
-        const r = await fetch("https://localhost:5201/api/solicitudServicio", {
+        const r = await fetch(`${API_URL}/solicitudServicio`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -67,7 +68,7 @@ const Solicitudes = () => {
   const desagrupar = () => setMostrarAgrupadas(false);
 
   const handleEliminar = (idSol) => {
-      fetch(`https://localhost:5201/api/solicitudServicio/${idSol}`, {
+      fetch(`${API_URL}/solicitudServicio/${idSol}`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ const FichasMaquina = () => {
     const { id } = useParams();
     let navigate = useNavigate()
     const token = localStorage.getItem("token")
-    API_URL=import.meta.env.VITE_API_URL
+    const API_URL=import.meta.env.VITE_API_URL
     
     const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
     const [fichas, setFichas] = useState([])

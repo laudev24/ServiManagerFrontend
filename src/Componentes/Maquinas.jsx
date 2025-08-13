@@ -17,7 +17,7 @@ const Maquinas = () => {
   const listaMaquinas = useSelector(state => state.maquinasSlice.maquinas || []);
   const maquinasPorNumero = [...listaMaquinas].sort((a, b) => a.numero - b.numero); 
   const token = localStorage.getItem("token")
-  API_URL=import.meta.env.VITE_API_URL
+  const API_URL=import.meta.env.VITE_API_URL
 
   const [paginaActual, setPaginaActual] = useState(1);
   const itemsPorPagina = 10;

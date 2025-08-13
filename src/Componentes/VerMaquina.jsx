@@ -6,21 +6,15 @@ import { toast } from 'react-toastify'
 const VerMaquina = () => {
   const { id } = useParams()
   let navigate = useNavigate()
-  const tokenSelector = useSelector(state => state.usuarioSlice.token)
-  // const [token, setToken] = useState("")
-    const token = localStorage.getItem("token")
-
+  const token = localStorage.getItem("token")
+  const API_URL=import.meta.env.VITE_API_URL
   
   const [maquina, setMaquina] = useState("")
   const [clientesAsociados, setClientesAsociados] = useState([])
 
   useEffect(() => {
-     if(!localStorage.getItem("token"))
-      navigate("/")
-    if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
     
-    fetch(`https://localhost:5201/api/maquina/${id}`, {
+    fetch(`${API_URL}/maquina/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -42,7 +36,7 @@ const VerMaquina = () => {
   }, [maquina])
 
   const cargarClientesAsociados = () => {
-    fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`, {
+    fetch(`${API_URL}/arrendamiento/arrendamiento/maquina/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

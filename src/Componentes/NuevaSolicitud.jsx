@@ -10,6 +10,7 @@ const NuevaSolicitud = () => {
     let navigate = useNavigate()
     const campoDescripcion = useRef("");
     const token = localStorage.getItem("token");
+    const API_URL=import.meta.env.VITE_API_URL
     const id = localStorage.getItem("clienteId");
     const [idCliente, setIdCliente] = useState(id);
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
@@ -28,7 +29,7 @@ const NuevaSolicitud = () => {
 
     const traerCliente = () => {
         const nombre = localStorage.getItem("nombre");
-        fetch(`https://localhost:5201/api/cliente/usuario?nombre=${nombre}`, {
+        fetch(`${API_URL}/cliente/usuario?nombre=${nombre}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ const NuevaSolicitud = () => {
     }
 
     const traerMaquinasAsociadas = () => {
-        fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
+        fetch(`${API_URL}/cliente/maquinas-del-cliente?id=${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -108,7 +109,7 @@ const NuevaSolicitud = () => {
         }
 
         console.log("Solicitud a enviar:", solicitud);
-        fetch("https://localhost:5201/api/solicitudServicio", {
+        fetch(`${API_URL}/solicitudServicio`, {
             method: "POST",
             body: formData,
             headers: {

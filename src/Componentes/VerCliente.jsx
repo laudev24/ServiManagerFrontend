@@ -8,11 +8,8 @@ const VerCliente = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     let navigate = useNavigate()
-
-    const tokenSelector = useSelector(state => state.usuarioSlice.token)
-    // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
-
+    const API_URL=import.meta.env.VITE_API_URL
     const categorias = useSelector(state => state.categoriasSlice.categorias)
     const [categoria, setCategoria] = useState("")
     const [cliente, setCliente] = useState("")
@@ -21,7 +18,7 @@ const VerCliente = () => {
 
 
     const traerCliente = () => {
-        fetch(`https://localhost:5201/api/cliente/${id}`, {
+        fetch(`${API_URL}/cliente/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -42,10 +39,6 @@ const VerCliente = () => {
         })
     }
     useEffect(() => {
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
        
         if(cliente==="")traerCliente()
         if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
@@ -53,7 +46,7 @@ const VerCliente = () => {
     }, [])
 
     const traerMaquinasDelCliente = () => {
-     fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
+     fetch(`${API_URL}/cliente/maquinas-del-cliente?id=${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -76,7 +69,7 @@ const VerCliente = () => {
     }
     
     const traerCategorias = () => {
-          fetch("https://localhost:5201/api/categoria", {
+          fetch(`${API_URL}/categoria`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -137,7 +130,7 @@ const VerCliente = () => {
     const desasociar = (idMaquina) => {
         const maq = maquinasAsociadas.find(c => c.id === Number(idMaquina))
 
-        fetch(`https://localhost:5201/api/arrendamiento/${id}/${idMaquina}`, {
+        fetch(`${API_URL}/arrendamiento/${id}/${idMaquina}`, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',

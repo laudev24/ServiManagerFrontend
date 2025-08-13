@@ -4,7 +4,7 @@ import Solicitud from './Solicitud'
 
 const MisSolicitudes = () => {
     const token = localStorage.getItem("token")
-    API_URL=import.meta.env.VITE_API_URL
+    const API_URL=import.meta.env.VITE_API_URL
     const [solicitudes, setSolicitudes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorSolicitudes, setErrorSolicitudes] = useState(null);

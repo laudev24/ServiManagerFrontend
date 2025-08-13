@@ -9,6 +9,7 @@ const VerFichaTecnica = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
+  const API_URL=import.meta.env.VITE_API_URL
   const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
   const ficha = fichas.find(m => m.id === Number(id));
 
@@ -16,7 +17,7 @@ const VerFichaTecnica = () => {
     
 
     if(fichas.length === 0){
-      fetch("https://localhost:5201/api/fichaTecnica", {
+      fetch(`${API_URL}/fichaTecnica`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

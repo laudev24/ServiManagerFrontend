@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ContadoresEnviados = () => {
     const token = localStorage.getItem("token");
-    API_URL=import.meta.env.VITE_API_URL
+    const API_URL=import.meta.env.VITE_API_URL
     const clienteId = localStorage.getItem("clienteId");
    const [contadoresEnviados, setContadoresEnviados] = useState([])
 const [loading, setLoading] = useState(true);

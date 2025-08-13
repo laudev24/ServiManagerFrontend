@@ -8,7 +8,7 @@ const AsociarCliente = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const token = localStorage.getItem("token")
-    API_URL=import.meta.env.VITE_API_URL
+    const API_URL=import.meta.env.VITE_API_URL
     let navigate = useNavigate();
         
     const clientes = useSelector(state => state.clientesSlice.clientes);

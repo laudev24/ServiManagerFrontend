@@ -11,7 +11,7 @@ const FichasTecnicas = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate()
   const token = localStorage.getItem("token")
-  API_URL=import.meta.env.VITE_API_URL  
+  const API_URL=import.meta.env.VITE_API_URL  
 
   const listaFichas=useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
   const listaClientes=useSelector(state => state.clientesSlice.clientes);

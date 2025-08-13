@@ -4,13 +4,12 @@ import { toast } from 'react-toastify';
 
 const NuevoInsumo = () => {
   const token = localStorage.getItem("token")
+  const API_URL=import.meta.env.VITE_API_URL
   const campoNombre = useRef("");
   const campoCantidad = useRef("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    
-  }, [token]);
+ 
 
   const registrarInsumo = () => {
     const nombre = campoNombre.current.value.trim();
@@ -26,7 +25,7 @@ const NuevoInsumo = () => {
       cantidad: cantidad
     };
 
-    fetch("https://localhost:5201/api/insumo", {
+    fetch(`${API_URL}/insumo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

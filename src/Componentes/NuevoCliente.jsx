@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const NuevoCliente = () => {
     const categorias = useSelector(state => state.categoriasSlice.categorias);
     const token = localStorage.getItem("token")
-    
+    const API_URL=import.meta.env.VITE_API_URL
     const [mensaje, setMensaje] = useState("")
 
     const campoNombreEmpresa = useRef("")
@@ -25,14 +25,6 @@ const NuevoCliente = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    useEffect(() => {
-
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
-     
-    }, [])
     
     const registrar = () => {
       // console.log("Categorias:", categorias);
@@ -58,7 +50,7 @@ const NuevoCliente = () => {
       //En el backend estaria faltando la fecha de pago, que tiene tres opciones: del 1 al 10, del 11 al 20 y del 21 al 30. 
       
       if(campoContrasenia.current.value.toLowerCase() === campoContrasenia2.current.value.toLowerCase()){
-        fetch("https://localhost:5201/api/cliente", {
+        fetch(`${API_URL}/cliente`, {
           method: 'POST',
           body: JSON.stringify(clienteNuevo),
           headers: {

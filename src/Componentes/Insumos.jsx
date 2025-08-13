@@ -8,7 +8,7 @@ const Insumos = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const itemsPorPagina = 10;
   const token = localStorage.getItem('token');
-  API_URL=import.meta.env.VITE_API_URL
+  const API_URL=import.meta.env.VITE_API_URL
   const navigate = useNavigate();
 
   useEffect(() => {

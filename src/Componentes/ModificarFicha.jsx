@@ -11,7 +11,7 @@ const ModificarFicha = () => {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
-  API_URL=import.meta.env.VITE_API_URL
+  const API_URL=import.meta.env.VITE_API_URL
 
   const fichasTecnicas = useSelector(
     (state) => state.fichasTecnicasSlice.fichasTecnicas

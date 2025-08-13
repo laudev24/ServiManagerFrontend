@@ -7,7 +7,7 @@ const DatosUsuarioAdm = () => {
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
   const navigate = useNavigate();
-  API_URL=import.meta.env.VITE_API_URL
+  const API_URL=import.meta.env.VITE_API_URL
 
   useEffect(() => {
     setNombreUsuario(localStorage.getItem("nombre") || "");
