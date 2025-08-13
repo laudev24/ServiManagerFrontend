@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { guardarFichasTecnicas } from "../features/fichasTecnicasSlice";
+import { modificarFichaTecnica } from "../features/fichasTecnicasSlice";
 import { guardarInsumos } from "../features/insumosSlice";
 
 const ModificarFicha = () => {
@@ -11,7 +12,7 @@ const ModificarFicha = () => {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
-  const API_URL=import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL
 
   const fichasTecnicas = useSelector(
     (state) => state.fichasTecnicasSlice.fichasTecnicas
@@ -57,7 +58,6 @@ const ModificarFicha = () => {
     const fichaEncontrada = fichasTecnicas.find((f) => f.id === Number(id));
     if (fichaEncontrada) {
       setFicha(fichaEncontrada);
-
 
       if (Array.isArray(fichaEncontrada.insumos) && fichaEncontrada.insumos.length > 0) {
         setInsumosSeleccionados(
@@ -117,6 +117,7 @@ const ModificarFicha = () => {
       .then((res) => {
         if (res.ok) {
           toast.success("Ficha técnica modificada con éxito");
+          dispatch(modificarFichaTecnica(fichaModificada));
           navigate("/fichasTecnicas");
         } else {
           toast.error("Error al modificar la ficha");

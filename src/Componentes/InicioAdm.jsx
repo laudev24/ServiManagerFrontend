@@ -48,7 +48,7 @@ const InicioAdm = () => {
           <img src="/LogoDiegoVidal.jpeg" alt="Logo" className="logo-servimanager" />
           <h1>Hola {nombre}!</h1>
         </div>
-          <Link to="/datosUsuario" className="menu-usuario">
+          <Link to="/datosUsuarioAdm" className="menu-usuario">
             <figure>
               <img src="/usuarioAzul3.png" alt="Usuario" />
               <figcaption>Ver mis datos</figcaption>

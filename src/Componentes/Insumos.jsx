@@ -135,67 +135,7 @@ const Insumos = () => {
 </div>
 
     
-  //   <div className="contenedor-menu">
-  //     <h1>Insumos</h1>
-
-  //     <Link to="/nuevoInsumo">Crear nuevo insumo</Link>
-
-  //     <div className="search-bar">
-  //       <input
-  //         type="text"
-  //         placeholder="Buscar insumo..."
-  //         value={filtro}
-  //         onChange={e => {
-  //           setFiltro(e.target.value);
-  //           setPaginaActual(1);
-  //         }}
-  //       />
-  //     </div>
-
-  //     <table>
-  //       <thead>
-  //         <tr>
-  //           <th>Nombre</th>
-  //           <th>Cantidad</th>
-  //           <th>Modificar</th>
-  //           <th>Eliminar</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {insumosPaginados.map(insumo => (
-  //           <tr key={insumo.id}>
-  //             <td>{insumo.nombreInsumo}</td>
-  //             <td>{insumo.cantidad}</td>
-  //             <td>
-  //               <button onClick={() => handleModificar(insumo.id)}>Modificar</button>
-  //             </td>
-  //             <td>
-  //               <button className="eliminar" onClick={() => handleEliminar(insumo.id)}>Eliminar</button>
-  //             </td>
-  //           </tr>
-  //         ))}
-  //         {insumosFiltrados.length === 0 && (
-  //           <tr><td colSpan="4">No hay resultados</td></tr>
-  //         )}
-  //       </tbody>
-  //     </table>
-
-  //     {totalPaginas > 1 && (
-  //       <div className="paginador">
-  //         <button
-  //           disabled={paginaActual === 1}
-  //           onClick={() => setPaginaActual(paginaActual - 1)}
-  //         >Anterior</button>
-
-  //         <span>Página {paginaActual} de {totalPaginas}</span>
-
-  //         <button
-  //           disabled={paginaActual === totalPaginas}
-  //           onClick={() => setPaginaActual(paginaActual + 1)}
-  //         >Siguiente</button>
-  //       </div>
-  //     )}
-  //   </div>
+  
   );
 };
 
