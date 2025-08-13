@@ -1,111 +1,117 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { guardarFichasTecnicas } from '../features/fichasTecnicasSlice';
 
 const VerFichaTecnica = () => {
-    const { id } = useParams()
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch()
-    const tokenSelector = useSelector(state => state.usuarioSlice.token)
-    // const [token, setToken] = useState("")
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+  const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
+  const ficha = fichas.find(m => m.id === Number(id));
 
-    const fichas = useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
-    const ficha = fichas.find(m => m.id === Number(id))
+  useEffect(() => {
     
-    useEffect(() => {
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
-   
-        if(fichas.length==0){
-            fetch("https://localhost:5201/api/fichaTecnica", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-               'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(r =>{
-                if(!r.ok){
-                    throw new Error("Error en la respuesta del servidor");
-                }
-                return r.json()
-                }) 
-            .then(datos => {
-                dispatch(guardarFichasTecnicas(datos))
-            })
-            .catch(error => {
-                console.error("Error al obtener las fichas:", error);
-            })
+
+    if(fichas.length === 0){
+      fetch("https://localhost:5201/api/fichaTecnica", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
-    }, [])
-
-    if (!ficha) {
-        return <p>Cargando ficha o ficha no encontrada...</p>;
+      })
+      .then(r => {
+        if(!r.ok) throw new Error("Error en la respuesta del servidor");
+        return r.json();
+      }) 
+      .then(datos => dispatch(guardarFichasTecnicas(datos)))
+      .catch(error => {
+        console.error("Error al obtener las fichas:", error);
+      });
     }
+  }, [dispatch, fichas.length, navigate, token]);
 
-     const formatearFechaHora = (fechaISO) => {
-  const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
-  const dia = String(fecha.getDate()).padStart(2, '0');
-  const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-  const anio = fecha.getFullYear();
-  const horas = String(fecha.getHours()).padStart(2, '0');
-  const minutos = String(fecha.getMinutes()).padStart(2, '0');
+  if (!ficha) {
+    return <p>Cargando ficha o ficha no encontrada...</p>;
+  }
 
-  return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
-};
+  const formatearFechaHora = (fechaISO) => {
+    if(!fechaISO) return "";
+    const fecha = new Date(fechaISO); 
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const horas = String(fecha.getHours()).padStart(2, '0');
+    const minutos = String(fecha.getMinutes()).padStart(2, '0');
+
+    return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+  };
 
   return (
     <div className="contenedor-menu">
+      <div className="ficha-detalle">
+        <h1>Ficha Técnica nro. {id}</h1>
 
-<div className="ficha-detalle">
-  <h1>Ficha Técnica nro. {id}</h1>
+        <Link to={`/modificarFicha/${id}`}>Modificar ficha</Link>
 
-  <Link to={`/modificarFicha/${id}`}>Modificar ficha</Link>
+        <table>
+          <tbody>
+            <tr>
+              <th>Nombre de la empresa:</th>
+              <td data-label="Empresa">{ficha.cliente?.nombreEmpresa || "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Máquina número:</th>
+              <td data-label="Máquina">{ficha.maquina?.numero || "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Fecha:</th>
+              <td data-label="Fecha">{formatearFechaHora(ficha.fechaYHora)}</td>
+            </tr>
+            <tr>
+              <th>Contador BYN 1:</th>
+              <td data-label="BYN1">{ficha.contadorBYN1 ?? "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Contador BYN 2:</th>
+              <td data-label="BYN2">{ficha.contadorBYN2 ?? "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Contador Color 1:</th>
+              <td data-label="Color1">{ficha.contadorColor1 ?? "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Contador Color 2:</th>
+              <td data-label="Color2">{ficha.contadorColor2 ?? "No definido"}</td>
+            </tr>
+            <tr>
+              <th>Insumos:</th>
+              <td data-label="Insumos">
+                {ficha.insumos && ficha.insumos.length > 0 ? (
+                  <ul style={{ paddingLeft: '20px', margin: 0 }}>
+                    {ficha.insumos.map((item, index) => (
+                      <li key={index}>
+                        {item.insumo?.nombreInsumo || "Insumo no definido"} - Cantidad: {item.cantidad}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>No hay insumos registrados</span>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <th>Descripción:</th>
+              <td data-label="Descripción">{ficha.descripcion || "-"}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
-  <table>
-    <tbody>
-      <tr>
-        <th>Nombre de la empresa:</th>
-        <td data-label="Empresa">{ficha.cliente.nombreEmpresa}</td>
-      </tr>
-      <tr>
-        <th>Máquina número:</th>
-        <td data-label="Máquina">{ficha.maquina.numero}</td>
-      </tr>
-      <tr>
-        <th>Fecha:</th>
-        <td data-label="Fecha">{formatearFechaHora(ficha.fechaYHora)}</td>
-      </tr>
-      <tr>
-        <th>Contador BYN:</th>
-        <td data-label="BYN">{ficha.contadorBYN}</td>
-      </tr>
-      <tr>
-        <th>Contador Color:</th>
-        <td data-label="Color">{ficha.contadorColor}</td>
-      </tr>
-      <tr>
-        <th>Insumos:</th>
-        <td data-label="Insumos">
-          {ficha.insumos.map((i, index) => (
-            <span key={index}>- {i.nombre} -</span>
-          ))}
-        </td>
-      </tr>
-      <tr>
-        <th>Descripción:</th>
-        <td data-label="Descripción">{ficha.descripcion}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-  )
-}
-
-export default VerFichaTecnica
+export default VerFichaTecnica;

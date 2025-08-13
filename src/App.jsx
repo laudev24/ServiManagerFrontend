@@ -26,6 +26,7 @@ const Insumos = lazy(() => import('./Componentes/Insumos'));
 const Maquinas = lazy(() => import('./Componentes/Maquinas'));
 const Mensaje = lazy(() => import('./Componentes/Mensaje'));
 const Solicitudes = lazy(() => import('./Componentes/Solicitudes'));
+const MisSolicitudes = lazy(() => import('./Componentes/MisSolicitudes'));
 const NuevaMaquina = lazy(() => import('./Componentes/NuevaMaquina'));
 const ModificarMaquina = lazy(() => import('./Componentes/ModificarMaquina'));
 const ModificarCliente = lazy(() => import('./Componentes/ModificarCliente'));
@@ -82,6 +83,7 @@ function App() {
               <Route path="modificarMaquina/:id" element={<RequireAuthAdm><ModificarMaquina /></RequireAuthAdm>} />
               <Route path="modificarCliente/:id" element={<RequireAuthAdm><ModificarCliente /></RequireAuthAdm>} />
               <Route path="modificarFicha/:id" element={<RequireAuthAdm><ModificarFicha /></RequireAuthAdm>} />
+              <Route path="misSolicitudes" element={<RequireAuthCli><MisSolicitudes /></RequireAuthCli>} />
               <Route path="mensaje" element={<Mensaje />} />
               <Route path="solicitudes" element={<Solicitudes />} />
               <Route path="asociarMaquinas/:id" element={<RequireAuthAdm><AsociarMaquinas /></RequireAuthAdm>} />

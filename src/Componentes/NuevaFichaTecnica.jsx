@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { guardarClientes } from "../features/clientesSlice";
 import { guardarMaquinas } from "../features/maquinasSlice";
+import { agregarFichaTecnica } from "../features/fichasTecnicasSlice";
 
 const NuevaFichaTecnica = () => {
   const clientes = useSelector((state) => state.clientesSlice.clientes);
@@ -134,14 +135,15 @@ const NuevaFichaTecnica = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.status === 201) {
+          const data = await response.json();
           toast("Ficha registrada con éxito");
-          navigate("/inicioAdm");
+          dispatch(agregarFichaTecnica(data));
+          navigate("/fichasTecnicas");
         } else {
-          return response.json().then((data) => {
-            throw new Error(data || "Error al crear ficha");
-          });
+          const errorData = await response.json();
+          throw new Error(errorData.mensaje || "Error al crear ficha");
         }
       })
       .catch((error) => {
@@ -149,6 +151,7 @@ const NuevaFichaTecnica = () => {
         console.error(error);
       });
   };
+
 
   return (
     <div className="contenedor-menu">
