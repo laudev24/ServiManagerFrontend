@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 const ModificarMaquina = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const tokenSelector = useSelector(state => state.usuarioSlice.token);
   const token = localStorage.getItem("token");
+  API_URL=import.meta.env.VITE_API_URL
 
   const [maquina, setMaquina] = useState(null);
   const [numero, setNumero] = useState("");
@@ -18,21 +18,13 @@ const ModificarMaquina = () => {
   const [cantidadContadores, setCantidadContadores] = useState("");
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-      return;
-    }
-    if (localStorage.getItem("esAdmin") === "false") {
-      navigate("/inicio");
-      return;
-    }
     if (!maquina) {
       traerMaquina();
     }
   }, [maquina, navigate]);
 
   const traerMaquina = () => {
-    fetch(`https://localhost:5201/api/maquina/${id}`, {
+    fetch(`${API_URL}/maquina/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +72,7 @@ const ModificarMaquina = () => {
       cantidadContadores: Number(cantidadContadores),
     };
 
-    fetch(`https://localhost:5201/api/maquina/${id}`, {
+    fetch(`${API_URL}/maquina/${id}`, {
       method: 'PUT',
       body: JSON.stringify(maquinaModificada),
       headers: {

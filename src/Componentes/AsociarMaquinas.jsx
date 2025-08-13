@@ -8,6 +8,7 @@ const AsociarMaquinas = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const token = localStorage.getItem("token")
+  API_URL=import.meta.env.VITE_API_URL
 
   const maquinas = useSelector(state => state.maquinasSlice.maquinas);
   const [idMaquinaElegida, setIdMaquinaElegida] = useState("")
@@ -23,10 +24,6 @@ const AsociarMaquinas = () => {
   const campoUltimoContadorColor = useRef("")
 
   useEffect(() => {
-    if (!localStorage.getItem("token"))
-      navigate("/")
-    if (localStorage.getItem("esAdmin") === "false")
-      navigate("/Inicio")
 
     if (!maquinas.length) cargarMaquinas()
     if (!maquinasAsociadas.length) traerMaquinasDelCliente()
@@ -38,7 +35,7 @@ const AsociarMaquinas = () => {
   }, [maquinas, maquinasAsociadas])
 
   const cargarMaquinas = () => {
-    fetch("https://localhost:5201/api/maquina", {
+    fetch(`${API_URL}/maquina`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +48,7 @@ const AsociarMaquinas = () => {
   }
 
   const traerMaquinasDelCliente = () => {
-    fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${id}`, {
+    fetch(`${API_URL}/cliente/maquinas-del-cliente?id=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +68,7 @@ const AsociarMaquinas = () => {
   };
 
   const traerCliente = () => {
-    fetch(`https://localhost:5201/api/cliente/${id}`, {
+    fetch(`${API_URL}/cliente/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +103,7 @@ const AsociarMaquinas = () => {
         : null
     }
 
-    fetch("https://localhost:5201/api/arrendamiento", {
+    fetch(`${API_URL}/arrendamiento`, {
       method: 'POST',
       body: JSON.stringify(arrendamiento),
       headers: {

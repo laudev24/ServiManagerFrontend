@@ -10,9 +10,8 @@ import { guardarCategorias } from '../features/categoriasSlice';
 const Clientes = () => {
     const listaClientes=useSelector(state => state.clientesSlice.clientes || []);
     const categorias=useSelector(state => state.categoriasSlice.categorias || []);
-    const tokenSelector = useSelector(state => state.usuarioSlice.token)
-    // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
+    API_URL=import.meta.env.VITE_API_URL
     
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -37,11 +36,6 @@ const Clientes = () => {
    
 
     useEffect(() => {
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-          navigate("/inicio")
-      // console.log("ListaClientes: ", listaClientes)
       if (!listaClientes.length) {
         traerClientes();
       } else {
@@ -52,13 +46,9 @@ const Clientes = () => {
 
   
     
-
-//     useEffect(() => {
-//   console.log("Token guardado en state:", token);
-// }, [token]);
     
     const traerClientes = () => {
-        fetch("https://localhost:5201/api/cliente", {
+        fetch(`${API_URL}/cliente`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -82,7 +72,7 @@ const Clientes = () => {
         })
     }
     const traerCategorias = () => {
-          fetch("https://localhost:5201/api/categoria", {
+          fetch(`${API_URL}/categoria`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -119,7 +109,7 @@ const Clientes = () => {
         const idCategoria = Number(c)
         // console.log("ID de categoria: ", idCategoria)
         if(c != ""){
-            fetch(`https://localhost:5201/api/cliente/por-categoria?categoria=${idCategoria}`, {
+            fetch(`${API_URL}/cliente/por-categoria?categoria=${idCategoria}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -174,7 +164,7 @@ const Clientes = () => {
 
     const handleEliminar = (idCliente) => {
 
-        fetch(`https://localhost:5201/api/cliente/${idCliente}`, {
+        fetch(`${API_URL}/cliente/${idCliente}`, {
             method: 'DELETE',
            headers: {
             'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
     clienteId,
   } = grupo;
   const [mensajes, setMensajes] = useState({});
-
+  API_URL=import.meta.env.VITE_API_URL
 
   useEffect(() => {
   const inicial = {};
@@ -60,7 +60,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   };
 
   const handleEliminar = (id) => () => {
-    fetch(`https://localhost:5201/api/envioContador/${id}`, {
+    fetch(`${API_URL}/envioContador/${id}`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',

@@ -18,13 +18,10 @@ const Inicio = lazy(() => import('./Componentes/Inicio'));
 const Clientes = lazy(() => import('./Componentes/Clientes'));
 const NuevoCliente = lazy(() => import('./Componentes/NuevoCliente'));
 const NuevoInsumo = lazy(() => import('./Componentes/NuevoInsumo'));
-const Chat = lazy(() => import('./Componentes/Chat'));
-const Chats = lazy(() => import('./Componentes/Chats'));
 const DatosUsuarioAdm = lazy(() => import('./Componentes/DatosUsuarioAdm'));
 const FichasTecnicas = lazy(() => import('./Componentes/FichasTecnicas'));
 const Insumos = lazy(() => import('./Componentes/Insumos'));
 const Maquinas = lazy(() => import('./Componentes/Maquinas'));
-const Mensaje = lazy(() => import('./Componentes/Mensaje'));
 const Solicitudes = lazy(() => import('./Componentes/Solicitudes'));
 const MisSolicitudes = lazy(() => import('./Componentes/MisSolicitudes'));
 const NuevaMaquina = lazy(() => import('./Componentes/NuevaMaquina'));
@@ -74,8 +71,6 @@ function App() {
               <Route path="nuevaFichaTecnica" element={<RequireAuthAdm><NuevaFichaTecnica /></RequireAuthAdm>} />
               <Route path="nuevaSolicitud" element={<RequireAuthCli><NuevaSolicitud /></RequireAuthCli>} />
               <Route path="nuevoInsumo" element={<RequireAuthAdm><NuevoInsumo /></RequireAuthAdm>} />
-              <Route path="chat" element={<Chat />} />
-              <Route path="chats" element={<Chats />} />
               <Route path="datosUsuarioAdm" element={<RequireAuthAdm><DatosUsuarioAdm /></RequireAuthAdm>} />
               <Route path="fichasTecnicas" element={<RequireAuthAdm><FichasTecnicas /></RequireAuthAdm>} />
               <Route path="insumos" element={<RequireAuthAdm><Insumos /></RequireAuthAdm>} />
@@ -84,7 +79,6 @@ function App() {
               <Route path="modificarCliente/:id" element={<RequireAuthAdm><ModificarCliente /></RequireAuthAdm>} />
               <Route path="modificarFicha/:id" element={<RequireAuthAdm><ModificarFicha /></RequireAuthAdm>} />
               <Route path="misSolicitudes" element={<RequireAuthCli><MisSolicitudes /></RequireAuthCli>} />
-              <Route path="mensaje" element={<Mensaje />} />
               <Route path="solicitudes" element={<Solicitudes />} />
               <Route path="asociarMaquinas/:id" element={<RequireAuthAdm><AsociarMaquinas /></RequireAuthAdm>} />
               <Route path="asociarCliente/:id" element={<RequireAuthAdm><AsociarCliente /></RequireAuthAdm>} />

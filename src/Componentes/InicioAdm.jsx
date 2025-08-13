@@ -8,10 +8,6 @@ const InicioAdm = () => {
   const [nombre, setNombre] = useState("")
   
   useEffect(() => {
-    if(!localStorage.getItem("token"))
-      navigate("/")
-    if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
     if(nombre==="")setNombre(localStorage.getItem("nombre"))
       else setNombre(nombreSelector)
 
@@ -41,7 +37,7 @@ const InicioAdm = () => {
   }
 
   const verChats = () => {
-    navigate("/chats")
+    navigate("/")
   }
 
 

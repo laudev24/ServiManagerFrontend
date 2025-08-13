@@ -7,9 +7,8 @@ import { guardarClientes } from '../features/clientesSlice';
 const AsociarCliente = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-     const tokenSelector = useSelector(state => state.usuarioSlice.token)
-    // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
+    API_URL=import.meta.env.VITE_API_URL
     let navigate = useNavigate();
         
     const clientes = useSelector(state => state.clientesSlice.clientes);
@@ -23,18 +22,13 @@ const AsociarCliente = () => {
 
 
     useEffect(() => {
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
-       
         if(!clientes.length)cargarClientes()
         cargarClientesAsociados()
 
     }, [clientes])
 
     const cargarClientes = () => {
-        fetch("https://localhost:5201/api/cliente", {
+        fetch(`${API_URL}/cliente`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -56,7 +50,7 @@ const AsociarCliente = () => {
         })
     }
     const cargarClientesAsociados = () => {
-        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${id}`, {
+        fetch(`${API_URL}/arrendamiento/arrendamiento/maquina/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -94,7 +88,7 @@ const AsociarCliente = () => {
         console.log("Enviando: " + JSON.stringify(arrendamiento))
      
 
-        fetch("https://localhost:5201/api/arrendamiento", {
+        fetch(`${API_URL}/arrendamiento`, {
             method: 'POST',
             body: JSON.stringify(arrendamiento),
             headers: {

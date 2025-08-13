@@ -15,6 +15,7 @@ const Login = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const fromLogout = location.state?.fromLogout;
+  API_URL=import.meta.env.VITE_API_URL
 
   useEffect(() => {
    if(fromLogout && localStorage.getItem("token")){
@@ -44,7 +45,7 @@ const Login = () => {
       contraseña : campoPassword.current.value
     }
 
-      fetch("https://localhost:5201/api/login/login", {
+      fetch(`${API_URL}/login/login`, {
         method: 'POST',
         body: JSON.stringify(usuario),
         headers: {
@@ -95,7 +96,7 @@ const Login = () => {
 
   const buscarCliente = (token) => {
     const nombre = campoUsuario.current.value;
-    fetch(`https://localhost:5201/api/cliente/usuario?nombre=${nombre}`, {
+    fetch(`${API_URL}/cliente/usuario?nombre=${nombre}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

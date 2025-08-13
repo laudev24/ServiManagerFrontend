@@ -8,6 +8,7 @@ const ContadoresRecibidos = () => {
   const [maquinas, setMaquinas] = useState([]);
   const mensajesRef = useRef({});
   const token = localStorage.getItem("token");
+  API_URL=import.meta.env.VITE_API_URL
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   
@@ -21,7 +22,7 @@ useEffect(() => {
 
 
   const traerClientes = () => {
-    fetch("https://localhost:5201/api/cliente", {
+    fetch(`${API_URL}/cliente`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -33,7 +34,7 @@ useEffect(() => {
   };
 
   const traerMaquinas = () => {
-    fetch("https://localhost:5201/api/maquina", {
+    fetch(`${API_URL}/maquina`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -45,7 +46,7 @@ useEffect(() => {
   };
 
   const traerContadores = () => {
-    fetch("https://localhost:5201/api/contador", {
+    fetch(`${API_URL}/contador`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

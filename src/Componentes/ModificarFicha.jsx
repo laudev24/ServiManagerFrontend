@@ -11,6 +11,7 @@ const ModificarFicha = () => {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
+  API_URL=import.meta.env.VITE_API_URL
 
   const fichasTecnicas = useSelector(
     (state) => state.fichasTecnicasSlice.fichasTecnicas
@@ -31,7 +32,7 @@ const ModificarFicha = () => {
 
   useEffect(() => {
     if (fichasTecnicas.length === 0) {
-      fetch("https://localhost:5201/api/fichaTecnica", {
+      fetch(`${API_URL}/fichaTecnica`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -40,7 +41,7 @@ const ModificarFicha = () => {
     }
 
     if (insumos.length === 0) {
-      fetch("https://localhost:5201/api/insumo", {
+      fetch(`${API_URL}/insumo`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -105,7 +106,7 @@ const ModificarFicha = () => {
       })),
     };
 
-    fetch(`https://localhost:5201/api/fichaTecnica/${ficha.id}`, {
+    fetch(`${API_URL}/fichaTecnica/${ficha.id}`, {
       method: "PUT",
       body: JSON.stringify(fichaModificada),
       headers: {

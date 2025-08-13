@@ -4,6 +4,7 @@ import Solicitud from './Solicitud'
 
 const MisSolicitudes = () => {
     const token = localStorage.getItem("token")
+    API_URL=import.meta.env.VITE_API_URL
     const [solicitudes, setSolicitudes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorSolicitudes, setErrorSolicitudes] = useState(null);
@@ -16,7 +17,7 @@ const MisSolicitudes = () => {
             setLoading(true);
             try {
                 // 1) Traer solicitudes
-                const r = await fetch(`https://localhost:5201/api/solicitudServicio/cliente/${clienteId}`, {
+                const r = await fetch(`${API_URL}/solicitudServicio/cliente/${clienteId}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,

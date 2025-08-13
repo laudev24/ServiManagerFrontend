@@ -7,9 +7,8 @@ import { toast } from 'react-toastify';
 const FichasMaquina = () => {
     const { id } = useParams();
     let navigate = useNavigate()
-    // const tokenSelector = useSelector(state => state.usuarioSlice.token)
-    // const [token, setToken] = useState("")
     const token = localStorage.getItem("token")
+    API_URL=import.meta.env.VITE_API_URL
     
     const [insumosElegidos, setInsumosElegidos] = useState("") // Ojo que esta recibiendo ahora solo un insumo, pero la idea es que pueda recibir una lista
     const [fichas, setFichas] = useState([])
@@ -19,10 +18,6 @@ const FichasMaquina = () => {
     const [insumos, setInsumos] = useState([])
     
     useEffect(() => {
-       if(!localStorage.getItem("token"))
-      navigate("/")
-        if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
         cargarFichas()
         cargarInsumos()
         cargarClientes()
@@ -31,7 +26,7 @@ const FichasMaquina = () => {
     
     
     const cargarFichas = () => {
-        fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}`, {
+        fetch(`${API_URL}/fichaTecnica/maquina/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -53,7 +48,7 @@ const FichasMaquina = () => {
         })
     }
     const cargarInsumos = () => {
-        fetch("https://localhost:5201/api/Insumo", {
+        fetch(`${API_URL}/Insumo`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -75,7 +70,7 @@ const FichasMaquina = () => {
     }
     const cargarClientes = () => {
         const maquinaId = Number(id)
-        fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaId}`, {
+        fetch(`${API_URL}/arrendamiento/arrendamiento/maquina/${maquinaId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -105,7 +100,7 @@ const FichasMaquina = () => {
             cargarFichas()
         }
         else if(campoClienteElegidoId != "" && insumosElegidos != ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
+            fetch(`${API_URL}/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -126,7 +121,7 @@ const FichasMaquina = () => {
             })
         }
         else if(campoClienteElegidoId == "" && insumosElegidos != ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/maquina/${id}/insumo/${insId}`, {
+            fetch(`${API_URL}/fichaTecnica/maquina/${id}/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -147,7 +142,7 @@ const FichasMaquina = () => {
             })
         }
         else if(campoClienteElegidoId != "" && insumosElegidos == ""){
-            fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${id}`, {
+            fetch(`${API_URL}/fichaTecnica/cliente/${cliId}/maquina/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -174,7 +169,7 @@ const FichasMaquina = () => {
     }
 
     const handleEliminar = (idFicha) => {
-        fetch(`https://localhost:5201/api/fichaTecnica/${idFicha}`, {
+        fetch(`${API_URL}/fichaTecnica/${idFicha}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -203,7 +198,7 @@ const FichasMaquina = () => {
     }
 
     const cargarMaquina = () => {
-        fetch(`https://localhost:5201/api/maquina/${id}`, {
+        fetch(`${API_URL}/maquina/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

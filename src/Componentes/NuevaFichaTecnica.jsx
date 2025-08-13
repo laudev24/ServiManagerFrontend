@@ -10,6 +10,7 @@ const NuevaFichaTecnica = () => {
   const clientes = useSelector((state) => state.clientesSlice.clientes);
   const maquinas = useSelector((state) => state.maquinasSlice.maquinas);
   const token = localStorage.getItem("token");
+  API_URL=import.meta.env.VITE_API_URL
 
   const [maquina, setMaquina] = useState(null);
   const [insumos, setInsumos] = useState([]);
@@ -29,8 +30,6 @@ const NuevaFichaTecnica = () => {
   const { from, id } = location.state || {};
 
   useEffect(() => {
-    if (!token) navigate("/");
-    if (localStorage.getItem("esAdmin") === "false") navigate("/inicio");
 
     if (clientes.length === 0) traerClientes();
     if (insumos.length === 0) traerInsumos();
@@ -38,7 +37,7 @@ const NuevaFichaTecnica = () => {
   }, []);
 
   const traerClientes = () => {
-    fetch("https://localhost:5201/api/cliente", {
+    fetch(`${API_URL}/cliente`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +50,7 @@ const NuevaFichaTecnica = () => {
   };
 
   const traerInsumos = () => {
-    fetch("https://localhost:5201/api/insumo", {
+    fetch(`${API_URL}/insumo`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,8 +65,8 @@ const NuevaFichaTecnica = () => {
   const traerMaquinas = () => {
     const url =
       from === "fichasMaquina"
-        ? `https://localhost:5201/api/maquina/${id}`
-        : "https://localhost:5201/api/maquina";
+        ? `${API_URL}/maquina/${id}`
+        : `${API_URL}/maquina`;
 
     fetch(url, {
       method: "GET",
@@ -127,7 +126,7 @@ const NuevaFichaTecnica = () => {
       })),
     };
 
-    fetch("https://localhost:5201/api/fichaTecnica", {
+    fetch(`${API_URL}/fichaTecnica`, {
       method: "POST",
       body: JSON.stringify(ficha),
       headers: {

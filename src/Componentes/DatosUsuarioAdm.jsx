@@ -7,6 +7,7 @@ const DatosUsuarioAdm = () => {
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
   const navigate = useNavigate();
+  API_URL=import.meta.env.VITE_API_URL
 
   useEffect(() => {
     setNombreUsuario(localStorage.getItem("nombre") || "");
@@ -25,7 +26,7 @@ const DatosUsuarioAdm = () => {
 
     const nombre = localStorage.getItem("nombre");
 
-    fetch(`https://localhost:5201/api/usuario/cambiarContraseña?nombre=${encodeURIComponent(nombre)}&contraseña=${encodeURIComponent(nuevaPassword)}`, {
+    fetch(`${API_URL}/usuario/cambiarContraseña?nombre=${encodeURIComponent(nombre)}&contraseña=${encodeURIComponent(nuevaPassword)}`, {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`

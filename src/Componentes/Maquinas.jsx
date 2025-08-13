@@ -16,9 +16,8 @@ const Maquinas = () => {
   const dispatch = useDispatch();
   const listaMaquinas = useSelector(state => state.maquinasSlice.maquinas || []);
   const maquinasPorNumero = [...listaMaquinas].sort((a, b) => a.numero - b.numero); 
-  const tokenSelector = useSelector(state => state.usuarioSlice.token)
-  // const [token, setToken] = useState("")
   const token = localStorage.getItem("token")
+  API_URL=import.meta.env.VITE_API_URL
 
   const [paginaActual, setPaginaActual] = useState(1);
   const itemsPorPagina = 10;
@@ -31,17 +30,13 @@ const Maquinas = () => {
 
   
   useEffect(() => {
-     if(!localStorage.getItem("token"))
-      navigate("/")
-      if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
   
     if(listaMaquinas.length===0)cargarMaquinas()
       else setMaquinasFiltradas(listaMaquinas)
   }, [])
 
   const cargarMaquinas = () => {
-    fetch("https://localhost:5201/api/maquina", {
+    fetch(`${API_URL}/maquina`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -66,7 +61,7 @@ const Maquinas = () => {
 
   //Pedir al backend el listado de marcas
   // useEffect(() => {
-  //     fetch("https://localhost:5201/api/maquina", {
+  //     fetch(`${API_URL}/maquina`, {
         //     method: 'GET',
         //     headers: {
         //       'Content-Type': 'application/json',
@@ -88,7 +83,7 @@ const Maquinas = () => {
   // }, [])
 
   const mostrarModelos = (e) => {
-  //   fetch("https://localhost:5201/api/maquina", {
+  //   fetch(`${API_URL}/maquina`, {
         //     method: 'GET',
         //     headers: {
         //       'Content-Type': 'application/json',
@@ -131,7 +126,7 @@ const Maquinas = () => {
 
   const handleEliminar = (idMaquina) => { 
 
-    fetch(`https://localhost:5201/api/maquina/${idMaquina}`, {
+    fetch(`${API_URL}/maquina/${idMaquina}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

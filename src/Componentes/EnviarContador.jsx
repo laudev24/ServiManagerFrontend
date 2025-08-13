@@ -24,6 +24,7 @@ const EnviarContador = () => {
     const numeroColor = useRef(null)
     const clienteId = localStorage.getItem("clienteId")
     const token = localStorage.getItem("token");
+    API_URL=import.meta.env.VITE_API_URL
 
     useEffect(() => {
   
@@ -35,7 +36,7 @@ const EnviarContador = () => {
 
     const traerMaquinasDelCliente = () => {
         if (clienteId !== -1) {
-            fetch(`https://localhost:5201/api/cliente/maquinas-del-cliente?id=${clienteId}`, {
+            fetch(`${API_URL}/cliente/maquinas-del-cliente?id=${clienteId}`, {
                 method: 'GET',
                 headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ const EnviarContador = () => {
 
     const traerClienteId = () => {
         const nombre = localStorage.getItem("nombre");
-        fetch(`https://localhost:5201/api/cliente/usuario?nombre=${nombre}`, {
+        fetch(`${API_URL}/cliente/usuario?nombre=${nombre}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ const EnviarContador = () => {
             for (let pair of formData.entries()) {
                 console.log(`${pair[0]}:`, pair[1]);
             }
-            fetch(`https://localhost:5201/api/envioContador`, {
+            fetch(`${API_URL}/envioContador`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -175,7 +176,7 @@ const EnviarContador = () => {
         }
         else if(maquina.tipoImpresion === 1){
             
-            fetch(`https://localhost:5201/api/envioContador`, {
+            fetch(`${API_URL}/envioContador`, {
                 method: 'POST',
                 body: formData,
                 headers: {

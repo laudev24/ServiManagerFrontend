@@ -11,9 +11,8 @@ const ModificarCliente = () => {
   const { id } = useParams();
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  // const token = useSelector(state => state.usuarioSlice.token)
   const token = localStorage.getItem("token")
-
+  API_URL=import.meta.env.VITE_API_URL
 
   const categorias = useSelector(state => state.categoriasSlice.categorias);
   // const clientes = useSelector(state => state.clientesSlice.clientes);
@@ -36,7 +35,7 @@ const ModificarCliente = () => {
   }, [])
 
   const cargarCategorias = () => {
-    fetch("https://localhost:5201/api/categoria", {
+    fetch(`${API_URL}/categoria`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +55,7 @@ const ModificarCliente = () => {
   }
 
   const traerCliente = () => {
-    fetch(`https://localhost:5201/api/cliente/${id}`, {
+    fetch(`${API_URL}/cliente/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +113,7 @@ const ModificarCliente = () => {
       fechaPago: fechaPago
     };
 
-    fetch(`https://localhost:5201/api/cliente/${cliente.id}`, {
+    fetch(`${API_URL}/cliente/${cliente.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

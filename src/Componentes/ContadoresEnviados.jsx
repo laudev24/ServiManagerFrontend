@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ContadoresEnviados = () => {
     const token = localStorage.getItem("token");
+    API_URL=import.meta.env.VITE_API_URL
     const clienteId = localStorage.getItem("clienteId");
    const [contadoresEnviados, setContadoresEnviados] = useState([])
 const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ const [loading, setLoading] = useState(true);
 
     const traerContadoresEnviados = () => {
 
-      fetch(`https://localhost:5201/api/envioContador/cliente/${clienteId}`,
+      fetch(`${API_URL}/envioContador/cliente/${clienteId}`,
         {
           method: 'GET',
           headers: {

@@ -8,6 +8,7 @@ const Insumos = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const itemsPorPagina = 10;
   const token = localStorage.getItem('token');
+  API_URL=import.meta.env.VITE_API_URL
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const Insumos = () => {
   }, []);
 
   const traerInsumos = () => {
-    fetch("https://localhost:5201/api/insumo", {
+    fetch(`${API_URL}/insumo`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -35,7 +36,7 @@ const Insumos = () => {
   const handleEliminar = (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este insumo?")) return;
 
-    fetch(`https://localhost:5201/api/insumo/${id}`, {
+    fetch(`${API_URL}/insumo/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`

@@ -10,9 +10,8 @@ import { guardarClientes } from '../features/clientesSlice';
 const FichasTecnicas = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate()
-  const tokenSelector = useSelector(state => state.usuarioSlice.token)
-  // const [token, setToken] = useState("")
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token")
+  API_URL=import.meta.env.VITE_API_URL  
 
   const listaFichas=useSelector(state => state.fichasTecnicasSlice.fichasTecnicas);
   const listaClientes=useSelector(state => state.clientesSlice.clientes);
@@ -36,10 +35,6 @@ const FichasTecnicas = () => {
 
 
   useEffect(() => {
-     if(!localStorage.getItem("token"))
-      navigate("/")
-    if(localStorage.getItem("esAdmin") === "false")
-      navigate("/inicio")
     if(listaFichas.length===0){
       cargarFichas()
     }else{
@@ -63,7 +58,7 @@ const FichasTecnicas = () => {
   }, [])
 
    const cargarFichas = () => {
-    fetch("https://localhost:5201/api/fichaTecnica", {
+    fetch(`${API_URL}/fichaTecnica`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -87,7 +82,7 @@ const FichasTecnicas = () => {
   }
 
   const cargarClientes = () => {
-    fetch("https://localhost:5201/api/cliente", {
+    fetch(`${API_URL}/cliente`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -110,7 +105,7 @@ const FichasTecnicas = () => {
   }
 
   const cargarMaquinas = () => {
-    fetch("https://localhost:5201/api/maquina", {
+    fetch(`${API_URL}/maquina`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -133,7 +128,7 @@ const FichasTecnicas = () => {
   }
 
   const cargarInsumos = () => {
-    fetch("https://localhost:5201/api/Insumo", {
+    fetch(`${API_URL}/Insumo`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -157,7 +152,7 @@ const FichasTecnicas = () => {
   const filtrarMaquinas = () => {
     if(campoClienteElegidoId != ""){
       const clienteElegidoId = Number(campoClienteElegidoId)
-      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/cliente/${clienteElegidoId}`, {
+      fetch(`${API_URL}/arrendamiento/arrendamiento/cliente/${clienteElegidoId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -187,7 +182,7 @@ const FichasTecnicas = () => {
   const filtrarClientes = () => {
     if(campoMaquinaElegidaId != ""){
       const maquinaElegidaId = Number(campoMaquinaElegidaId)
-      fetch(`https://localhost:5201/api/arrendamiento/arrendamiento/maquina/${maquinaElegidaId}`, {
+      fetch(`${API_URL}/arrendamiento/arrendamiento/maquina/${maquinaElegidaId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -243,7 +238,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId != "" && insumosElegidos != ""){
       //[HttpGet("Cliente/{clienteId}/Maquina/{maquinaId}/Insumo/{insumoId}")]
-        fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}/insumo/${insId}`, {
+        fetch(`${API_URL}/fichaTecnica/cliente/${cliId}/maquina/${maqId}/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -266,7 +261,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId != "" && insumosElegidos != ""){
       //        [HttpGet("Cliente/{clienteId}/Insumo/{insumoId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
+      fetch(`${API_URL}/fichaTecnica/cliente/${cliId}/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -289,7 +284,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId == "" && insumosElegidos != ""){
       //     [HttpGet("Maquina/{maquinaId}/Insumo/{insumoId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}/insumo/${insId}`, {
+      fetch(`${API_URL}/fichaTecnica/maquina/${maqId}/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -312,7 +307,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId != "" && insumosElegidos == ""){
       //        [HttpGet("Cliente/{clienteId}/Maquina/{maquinaId}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}/maquina/${maqId}`, {
+      fetch(`${API_URL}/fichaTecnica/cliente/${cliId}/maquina/${maqId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -335,7 +330,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId == "" && insumosElegidos != ""){
       //        [HttpGet("Insumo/{id}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/insumo/${insId}`, {
+      fetch(`${API_URL}/fichaTecnica/insumo/${insId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -358,7 +353,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId == "" && campoClienteElegidoId != "" && insumosElegidos == ""){
       //     
-      fetch(`https://localhost:5201/api/fichaTecnica/cliente/${cliId}`, {
+      fetch(`${API_URL}/fichaTecnica/cliente/${cliId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -381,7 +376,7 @@ const FichasTecnicas = () => {
     }
     else if(campoMaquinaElegidaId != "" && campoClienteElegidoId == "" && insumosElegidos == ""){
       //          [HttpGet("Maquina/{id}")]
-      fetch(`https://localhost:5201/api/fichaTecnica/maquina/${maqId}`, {
+      fetch(`${API_URL}/fichaTecnica/maquina/${maqId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -410,7 +405,7 @@ const FichasTecnicas = () => {
   }
 
   const handleEliminar = (idFicha) => {
-    fetch(`https://localhost:5201/api/fichaTecnica/${idFicha}`, {
+    fetch(`${API_URL}/fichaTecnica/${idFicha}`, {
       method: 'DELETE',
       headers: {
       'Content-Type': 'application/json',

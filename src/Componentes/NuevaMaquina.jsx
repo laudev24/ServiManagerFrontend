@@ -5,10 +5,8 @@ import { agregarMaquina } from '../features/maquinasSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const NuevaMaquina = () => {
-  const tokenSelector = useSelector(state => state.usuarioSlice.token)
-  // const [token, setToken] = useState("")
   const token = localStorage.getItem("token")
-
+  API_URL=import.meta.env.VITE_API_URL
 
   const campoNumero = useRef("")
   const campoMarca = useRef("")
@@ -27,14 +25,7 @@ const NuevaMaquina = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token"))
-      navigate("/")
-    if (localStorage.getItem("esAdmin") === "false") {
-      navigate("/inicio")
-    }
-
-  }, [])
+ 
 
 
   const registrar = () => {
@@ -50,7 +41,7 @@ const NuevaMaquina = () => {
 
     console.log("Datos a enviar:", maquinaNueva);
 
-    fetch("https://localhost:5201/api/maquina", {
+    fetch(`${API_URL}/maquina`, {
       method: 'POST',
       body: JSON.stringify(maquinaNueva),
       headers: {
