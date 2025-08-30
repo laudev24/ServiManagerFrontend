@@ -44,10 +44,11 @@ const Clientes = () => {
   }, [listaClientes, categorias])
 
   const traerClientes = () => {
+    console.log(token)
     fetch(`${API_URL}/cliente`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
