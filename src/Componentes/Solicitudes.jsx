@@ -99,7 +99,7 @@ const Solicitudes = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Solicitudes Pendientes</h1>
 
         {!mostrarAgrupadas ? (

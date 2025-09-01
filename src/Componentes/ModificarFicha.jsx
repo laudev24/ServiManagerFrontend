@@ -132,7 +132,9 @@ const ModificarFicha = () => {
   if (!ficha) return <p>Cargando ficha técnica...</p>;
 
   return (
-    <div>
+    <div className="contenedor-menu">
+
+      <div className="contenedor-secundario">
       <h2>Modificar Ficha Técnica</h2>
       <label>Descripción:</label>
       <input
@@ -214,6 +216,7 @@ const ModificarFicha = () => {
 
       <br />
       <button onClick={modificarFicha}>Guardar Cambios</button>
+    </div>
     </div>
   );
 };

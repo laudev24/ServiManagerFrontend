@@ -207,7 +207,7 @@ const EnviarContador = () => {
     
   return (
     <div className="contenedor-menu">
-        <div className="formulario-cliente">
+        <div className="contenedor-secundario">
             <h1>Enviar Contador</h1>
             <label>
                 Selecciona la máquina:

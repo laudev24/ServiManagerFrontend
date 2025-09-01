@@ -123,23 +123,25 @@ const Login = () => {
       <div className="card-login">
         <h1>Bienvenido a ServiManager</h1>
         <h2>Ingresá tu usuario y tu contraseña</h2>
+        {/* <div className="form-group"> */}
 
-        <div className="form-group">
+        <div >
           <label>Usuario </label>
           <input
             type="text"
             ref={campoUsuario}
-            className="form-control"
+            // className="form-control"
             onChange={enableBtnLogin}
           />
         </div>
+        {/* <div className="form-group"> */}
 
-        <div className="form-group">
+        <div >
           <label>Contraseña </label>
           <input
             type="password"
             ref={campoPassword}
-            className="form-control"
+            // className="form-control"
             onChange={enableBtnLogin}
           />
         </div>

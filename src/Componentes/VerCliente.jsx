@@ -159,22 +159,29 @@ const VerCliente = () => {
     }
 
     const irAInformacionContadores = () => {
-      navigate("/informacionContadores")
+      navigate(`/informacionContadores`)
     }
 
     const irAPagos = () => {
       navigate(`/pagos/${cliente.id}`);
     }
 
+    const irAAsociarMaquinas = () => {
+      navigate(`/asociarMaquinas/${cliente.id}`);
+    }
+
+    const irAModificarCliente = () => {
+      navigate(`/modificarCliente/${cliente.id}`);
+    }
+
     
     return (
     <div className="contenedor-menu">
 
-<div className="datos-cliente">
-  <h1>Datos del cliente</h1>
-
-  <Link to={`/modificarCliente/${id}`}>Modificar Cliente</Link><br />
-    <button onClick={() => setMostrarDatosCliente(prev => !prev)} className="btn-toggle">
+<div className="contenedor-secundario">
+  <h1>Datos del cliente {cliente.nombreEmpresa}</h1>
+    <button onClick={irAModificarCliente}>Modificar Cliente</button>
+    <button className="btn-contrasenia" onClick={() => setMostrarDatosCliente(prev => !prev)} >
     {mostrarDatosCliente ? 'Ocultar datos del cliente' : 'Mostrar datos del cliente'}
     </button>
 {mostrarDatosCliente && (
@@ -182,46 +189,46 @@ const VerCliente = () => {
     <tbody>
       <tr>
         <th>Nombre de la empresa:</th>
-        <td>{cliente.nombreEmpresa}</td>
+        <td data-label="Empresa">{cliente.nombreEmpresa}</td>
       </tr>
       <tr>
         <th>Categoría:</th>
-        <td>{categoria?.nombre}</td>
+        <td data-label="Categoría">{categoria?.nombre}</td>
       </tr>
       <tr>
         <th>Dirección:</th>
-        <td>{cliente.direccion}</td>
+        <td data-label="Dirección">{cliente.direccion}</td>
       </tr>
       <tr>
         <th>Nombre del contacto:</th>
-        <td>{cliente.nombreContacto}</td>
+        <td data-label="Nombre del Contacto">{cliente.nombreContacto}</td>
       </tr>
       <tr>
-        <th>Teléfono/Celular:</th>
-        <td>{cliente.telefono}</td>
+        <th>Teléfono / Celular:</th>
+        <td data-label="Teléfono / Celular">{cliente.telefono}</td>
       </tr>
       <tr>
         <th>Correo electrónico:</th>
-        <td>{cliente.email}</td>
+        <td data-label="correo electrónico">{cliente.email}</td>
       </tr>
       <tr>
         <th>RUT:</th>
-        <td>{cliente.rut}</td>
+        <td data-label="RUT">{cliente.rut}</td>
       </tr>
       <tr>
         <th>Fecha de pago:</th>
-        <td>{cliente.fechaPago}</td>
+        <td data-label="Fecha de pago">{cliente.fechaPago}</td>
       </tr>
       <tr>
         <th>Nombre de usuario:</th>
-        <td>{cliente.fechaPago}</td>
+        <td data-label="Nombre de usuario">{cliente.fechaPago}</td>
       </tr>
     </tbody>
   </table>
 )}
 
 
-  <h2>Máquinas asociadas:</h2>
+  <h2 className='ver-cliente-h2'>Máquinas asociadas:</h2>
   <table>
     <tbody>
       {maquinasAsociadas.map((maq) => (
@@ -230,7 +237,7 @@ const VerCliente = () => {
             <Link to={`/verMaquina/${maq.id}`}>{maq.numero}</Link>
           </td>
           <td>
-            <button className="desasociar" onClick={() => mostrarToast(maq.id)}>
+            <button className="eliminar" onClick={() => mostrarToast(maq.id)}>
               Desasociar
             </button>
           </td>
@@ -238,9 +245,9 @@ const VerCliente = () => {
       ))}
     </tbody>
   </table><br />
-  <Link to={`/asociarMaquinas/${id}`}>Asociar Máquina</Link><br />
+
   <div className='ultimos-botones'>
-  <button>Chat</button>
+  <button onClick={irAAsociarMaquinas}>Asociar Máquina</button>
   <button onClick={irAContadoresRecibidos}>Contadores recibidos</button>
   <button onClick={irAInformacionContadores}>Información Contadores</button>
   <button onClick={irAPagos}>Pagos</button>

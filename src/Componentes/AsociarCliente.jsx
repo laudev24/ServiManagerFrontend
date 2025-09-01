@@ -114,7 +114,7 @@ const AsociarCliente = () => {
   return (
     <div className="contenedor-menu">
 
-<div className="formulario-cliente">
+<div className="contenedor-secundario">
   <h1>Asociar Clientes a la Máquina {maquina.numero}</h1>
 
   <select ref={campoIdClienteElegido}>

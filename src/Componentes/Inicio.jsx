@@ -36,7 +36,7 @@ const Inicio = () => {
 
   return (
     <div className="contenedor-menu">
-       <div className="menu-principal">
+       <div className="contenedor-secundario">
              <div className="encabezado-bienvenida">
                 <img src="/LogoDiegoVidal.jpeg" alt="Logo" className="logo-servimanager" />
                 <h1>Bienvenido a ServiManager, {nombre}</h1>

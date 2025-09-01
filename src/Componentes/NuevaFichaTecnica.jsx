@@ -154,7 +154,7 @@ const NuevaFichaTecnica = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Crear Ficha Técnica</h1>
 
         <select ref={campoIdClienteElegido}>

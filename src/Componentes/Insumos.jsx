@@ -71,7 +71,7 @@ const Insumos = () => {
    return (
 
     <div className="contenedor-menu">
-  <div className="formulario-cliente">
+  <div className="contenedor-secundario">
     <h1>Insumos</h1>
 
     <Link to="/nuevoInsumo" className="enlace-accion">Crear nuevo insumo</Link>

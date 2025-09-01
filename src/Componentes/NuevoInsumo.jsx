@@ -51,7 +51,7 @@ const NuevoInsumo = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Registrar Insumo</h1>
 
         <label>

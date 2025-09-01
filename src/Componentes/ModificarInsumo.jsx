@@ -78,7 +78,9 @@ const ModificarInsumo = () => {
     if (loading) return <p>Cargando insumo...</p>;
 
     return (
-        <div className="formulario-cliente">
+        <div className="contenedor-menu">
+
+      <div className="contenedor-secundario">
             <h1>Modificar Insumo</h1>
             <form onSubmit={handleModificar}>
                 <div className="campo-formulario">
@@ -101,6 +103,7 @@ const ModificarInsumo = () => {
                 </div>
                 <button type="submit">Guardar cambios</button>
             </form>
+        </div>
         </div>
     );
 };

@@ -50,9 +50,10 @@ const DatosUsuarioAdm = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cambio-contraseña">
+      <div className='contenedor-secundario'>
+      {/* <div className="formulario-cambio-contraseña"> */}
         <h1>Mis Datos</h1>
-        <p><strong>Nombre de usuario:</strong> {nombreUsuario}</p>
+        <p className='nombre-usuario'><strong>Nombre de usuario:</strong> {nombreUsuario}</p>
 
         <label>Nueva contraseña:</label>
         <input
@@ -71,6 +72,7 @@ const DatosUsuarioAdm = () => {
         />
 
         <input
+          className='btn-contrasenia'
           type="button"
           value="Actualizar contraseña"
           onClick={handleCambiarPassword}

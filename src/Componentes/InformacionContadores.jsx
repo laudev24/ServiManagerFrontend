@@ -12,6 +12,7 @@ const InformacionContadores = () => {
 
 
   return (
+    
     <div>
       <h1>{state.clienteNombre}</h1>
       <h2>{state.maquinaNombre}</h2>

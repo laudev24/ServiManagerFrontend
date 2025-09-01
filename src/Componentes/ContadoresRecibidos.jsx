@@ -131,7 +131,7 @@ const handleConfirmar = useCallback((dataGrupo) => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Contadores Recibidos</h1>
     {contadores.length > 0 ? (
   agruparEnvios(contadores).map((grupo, i) => (

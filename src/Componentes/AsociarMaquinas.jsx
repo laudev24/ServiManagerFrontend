@@ -133,7 +133,7 @@ const AsociarMaquinas = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Asociar Máquina al Cliente {cliente.nombreEmpresa}</h1>
 
         <select value={idMaquinaElegida} onChange={mostrarFormulario}>

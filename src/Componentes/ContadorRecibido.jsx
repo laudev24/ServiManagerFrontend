@@ -128,7 +128,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
           </button>
         </div>
         <div className="btn-col">
-            <button className='btn-eliminar' onClick={handleEliminar()}>
+            <button className='eliminar' onClick={handleEliminar()}>
                 Eliminar
             </button>
         </div>

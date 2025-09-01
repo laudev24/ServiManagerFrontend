@@ -36,14 +36,14 @@ const InicioAdm = () => {
     navigate("/insumos")
   }
 
-  const verChats = () => {
-    navigate("/")
+  const verNotificaciones = () => {
+    navigate("/inicioAdm")
   }
 
 
   return (
     <div className="contenedor-menu">
-       <div className="menu-principal">
+       <div className="contenedor-secundario">
         <div className="encabezado-bienvenida">
           <img src="/LogoDiegoVidal.jpeg" alt="Logo" className="logo-servimanager" />
           <h1>Hola {nombre}!</h1>
@@ -60,8 +60,8 @@ const InicioAdm = () => {
           <input type="button" value="Fichas Técnicas" className="btn-menu" onClick={verFichas} />
           <input type="button" value="Solicitudes" className="btn-menu" onClick={verSolicitudes} />
           <input type="button" value="Insumos" className="btn-menu" onClick={verInsumos} />
-          <input type="button" value="Notificaciones" className="btn-menu" onClick={verChats} />
-          <input type="button" value="Bloc de notas" className="btn-menu" onClick={verChats} />
+          <input type="button" value="Notificaciones" className="btn-menu" onClick={verNotificaciones} />
+          {/* <input type="button" value="Bloc  de notas" className="btn-menu" onClick={verChats} /> */}
 
         </div>
     </div>
