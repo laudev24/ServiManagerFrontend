@@ -73,9 +73,8 @@ const Insumos = () => {
     <div className="contenedor-menu">
   <div className="contenedor-secundario">
     <h1>Insumos</h1>
-
-    <Link to="/nuevoInsumo" className="enlace-accion">Crear nuevo insumo</Link>
-
+    <button onClick={() => navigate('/nuevoInsumo')} >Crear nuevo insumo</button>
+    <br /><br />
     <div className="search-bar">
       <input
         type="text"

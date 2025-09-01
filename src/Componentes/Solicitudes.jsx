@@ -111,7 +111,7 @@ const Solicitudes = () => {
             Ver sin agrupar
           </button>
         )}
-
+        <br /><br />
         {!mostrarAgrupadas && (
           <>
             {solicitudes.map((s) => (

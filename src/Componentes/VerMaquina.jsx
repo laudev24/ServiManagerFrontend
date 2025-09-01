@@ -160,7 +160,7 @@ const VerMaquina = () => {
         <tr key={cliente.id}>
           <td data-label="Cliente">{cliente.nombreEmpresa}</td>
           <td data-label="Acción">
-            <button className="btn btn-eliminar" onClick={() => mostrarToast(cliente.id)}>
+            <button className="eliminar" onClick={() => mostrarToast(cliente.id)}>
               Desasociar
             </button>
           </td>

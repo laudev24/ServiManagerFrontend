@@ -185,6 +185,12 @@ Link{
     text-decoration: underline;
 }
 
+p{
+     word-wrap: break-word;   
+  overflow-wrap: break-word; 
+  white-space: normal; 
+}
+
 
 
 /* Fondo principal del Login*/
@@ -534,6 +540,13 @@ Link{
 }
 .btn-contrasenia{
     margin-top: 1rem;
+}
+.label-contador{
+    margin-top: 1rem;
+}
+
+.p-descripcion{
+    
 }
 
 /* Paginador */
@@ -1205,6 +1218,7 @@ Link{
 
 .ficha-detalle-span {
     margin-right: 0.5rem;
+    text-align: right;
 }
 
 
@@ -1551,6 +1565,7 @@ Link{
 
 /* ===== Solicitudes de servicio ===== */
 .tarjeta-solicitud {
+    max-width: 400px;
   background-color: var(--crema);
   color: var(--azul-oscuro);
   border-radius: 0.5rem;
@@ -1567,8 +1582,13 @@ Link{
 }
 
 .tarjeta-solicitud p {
+  width: 100%;
+  max-width: 300px;
   margin: 0.4rem 0;
   font-size: 0.95rem;
+   word-wrap: break-word;   
+  overflow-wrap: break-word; 
+  white-space: normal; 
 }
 
 .tarjeta-solicitud strong {

@@ -141,7 +141,7 @@ const AsociarCliente = () => {
 
   
     <label>
-      Costo por Copia B&N:
+      Costo por Copia B/N:
       <input type="text" ref={campoCostoBYN} />
     </label>
   

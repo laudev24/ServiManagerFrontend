@@ -79,8 +79,8 @@ const PagosCliente = () => {
     <div className="contenedor-menu">
   <div className="contenedor-secundario">
     <h1>Pagos del cliente</h1>
-    <table>
-    {/* <table className="tabla-responsive"> */}
+    {/* <table> */}
+    <table className="tabla-responsive">
       <thead>
         <tr>
           <th>Total</th>

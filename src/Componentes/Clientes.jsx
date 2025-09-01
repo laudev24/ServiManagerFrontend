@@ -184,14 +184,17 @@ const Clientes = () => {
       });
   }
 
+  
+
   return (
     <div className="contenedor-menu">
       <div className="contenedor-secundario">
         <h1>Clientes</h1>
+        <button onClick={() => navigate('/nuevoCliente')} >Crear nuevo cliente</button>
+       <br />
+       <br />
 
-        <Link to="/nuevoCliente">Crear nuevo cliente</Link><br />
-
-        <input type="button" value="Con Alertas" className="con-alertas" onClick={conAlerta} /><br />
+        <input type="button" value="Con Alertas" onClick={conAlerta} /><br />
 
         {/* Filtro por categoría */}
         <select

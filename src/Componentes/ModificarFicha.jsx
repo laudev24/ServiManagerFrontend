@@ -135,7 +135,7 @@ const ModificarFicha = () => {
     <div className="contenedor-menu">
 
       <div className="contenedor-secundario">
-      <h2>Modificar Ficha Técnica</h2>
+      <h1>Modificar Ficha Técnica</h1>
       <label>Descripción:</label>
       <input
         type="text"
@@ -210,12 +210,12 @@ const ModificarFicha = () => {
           );
         })
       )}
-      <button type="button" onClick={agregarInsumo}>
+      <button type="button" className="btn-contrasenia" onClick={agregarInsumo}>
         Agregar Insumo
       </button>
 
       <br />
-      <button onClick={modificarFicha}>Guardar Cambios</button>
+      <button className="btn-contrasenia" onClick={modificarFicha}>Guardar Cambios</button>
     </div>
     </div>
   );
