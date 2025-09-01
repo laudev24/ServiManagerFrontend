@@ -207,7 +207,7 @@ const EnviarContador = () => {
     
   return (
     <div className="contenedor-menu">
-        <div className="formulario-cliente">
+        <div className="contenedor-secundario">
             <h1>Enviar Contador</h1>
             <label>
                 Selecciona la máquina:
@@ -228,13 +228,13 @@ const EnviarContador = () => {
                     {showCamera1 && <Camara activo={modoActivo === 'camara'} /*onPhotoTaken={handlePhotoData}*/ onData={(data) => handlePhotoData(data)} />}
                 </div>
                 <div>
-                    <button onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>
+                    <button className="btn-contrasenia" onClick={() => [setGaleria1(!galeria1), setModoActivo('galeria')]}>
                         {galeria1 ? 'Cerrar Galería de Fotos' : 'Abrir Galería de Fotos'}
                     </button>
                     {galeria1 && <GaleriaFotos activo={modoActivo === 'galeria'} onPhotoSelected={handlePhotoData} onData={(data) => handlePhotoData(data)}/>}
                 </div>
             </div>
-            <label>
+            <label className='label-contador'>
                 Contador B&N:
                 <input type="number" placeholder="Valor del contador" ref={numeroBYN}/>
             </label>

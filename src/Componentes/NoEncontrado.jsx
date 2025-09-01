@@ -4,7 +4,7 @@ const NoEncontrado = () => {
   return (
     <div className="contenedor-menu">
 
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h2>No encontrado 😢</h2>
     </div>
     </div>

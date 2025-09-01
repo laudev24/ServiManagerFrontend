@@ -140,6 +140,9 @@ const ModificarCliente = () => {
 
   };
 
+  const irACambiarContrasenia = () => {
+  }
+
   if (!cliente) {
     return <p>Cargando cliente...</p>;
   }
@@ -147,7 +150,7 @@ const ModificarCliente = () => {
   return (
     <div className="contenedor-menu">
 
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Modificar cliente</h1>
 
         <label>
@@ -241,9 +244,10 @@ const ModificarCliente = () => {
           />
         </label>
 
-        <Link to="/#">Cambiar contraseña</Link>
 
-        <input type="button" value="Modificar Cliente" onClick={modificar} />
+        {/* <Link to="/#">Cambiar contraseña</Link> */}
+        <input type="button" value="Cambiar contraseña"  onClick={irACambiarContrasenia}  />
+        <input type="button" value="Modificar Cliente" className="btn-contrasenia" onClick={modificar} />
       </div>
     </div>
   )

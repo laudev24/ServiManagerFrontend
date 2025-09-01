@@ -107,7 +107,7 @@ const [loading, setLoading] = useState(true);
 
   return (
    <div className="contenedor-menu">
-  <div className="formulario-cliente">
+  <div className="contenedor-secundario">
     <h1>Contadores enviados</h1>
     {loading ? (
   <p>Cargando datos...</p>

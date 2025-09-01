@@ -132,8 +132,10 @@ const ModificarFicha = () => {
   if (!ficha) return <p>Cargando ficha técnica...</p>;
 
   return (
-    <div>
-      <h2>Modificar Ficha Técnica</h2>
+    <div className="contenedor-menu">
+
+      <div className="contenedor-secundario">
+      <h1>Modificar Ficha Técnica</h1>
       <label>Descripción:</label>
       <input
         type="text"
@@ -208,12 +210,13 @@ const ModificarFicha = () => {
           );
         })
       )}
-      <button type="button" onClick={agregarInsumo}>
+      <button type="button" className="btn-contrasenia" onClick={agregarInsumo}>
         Agregar Insumo
       </button>
 
       <br />
-      <button onClick={modificarFicha}>Guardar Cambios</button>
+      <button className="btn-contrasenia" onClick={modificarFicha}>Guardar Cambios</button>
+    </div>
     </div>
   );
 };

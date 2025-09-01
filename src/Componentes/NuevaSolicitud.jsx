@@ -143,7 +143,7 @@ const NuevaSolicitud = () => {
 
   return (
     <div className="contenedor-menu">
-  <div className="formulario-cliente">
+  <div className="contenedor-secundario">
     <div className='servicioTecnico'>
     <h1>Solicitar Servicio Técnico</h1>
 

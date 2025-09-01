@@ -117,13 +117,16 @@ const Maquinas = () => {
       : "No";
   };
 
+  const irANuevaMaquina = () => {
+    navigate('/nuevaMaquina')
+  }
+
   return (
     <div className="contenedor-menu">
-      <div className="ver-maquinas">
+      <div className="contenedor-secundario">
         <h1>Máquinas</h1>
-
-        <Link to="/nuevaMaquina">Registrar nueva máquina</Link><br />
-
+        <button onClick={irANuevaMaquina}>Registrar nueva máquina</button>
+        <br /><br />
         <select onChange={handleMarcaChange}>
           <option value="">Todas las marcas</option>
           {marcas.map((m, index) => (

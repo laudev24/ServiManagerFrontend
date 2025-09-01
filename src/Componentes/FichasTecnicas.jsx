@@ -127,10 +127,10 @@ const FichasTecnicas = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="ver-fichas">
+      <div className="contenedor-secundario">
         <h1>Fichas Técnicas</h1>
 
-        <button onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' } })}>
+        <button className="crear-ficha" onClick={() => navigate('/nuevaFichaTecnica', { state: { from: 'fichasTecnicas' } })}>
           Crear Ficha Técnica
         </button>
 

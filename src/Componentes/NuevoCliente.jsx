@@ -78,7 +78,7 @@ const NuevoCliente = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="formulario-cliente">
+      <div className="contenedor-secundario">
         <h1>Registro de nuevo cliente</h1>
 
         <label>

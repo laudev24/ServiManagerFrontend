@@ -184,18 +184,21 @@ const Clientes = () => {
       });
   }
 
+  
+
   return (
     <div className="contenedor-menu">
-      <div className="ver-clientes">
+      <div className="contenedor-secundario">
         <h1>Clientes</h1>
-
-        <Link to="/nuevoCliente">Crear nuevo cliente</Link><br />
+        <button onClick={() => navigate('/nuevoCliente')} >Crear nuevo cliente</button>
+       <br />
+       <br />
 
         <input type="button" value="Con Alertas" onClick={conAlerta} /><br />
 
         {/* Filtro por categoría */}
         <select
-          className="categoriaDeCliente"
+          // className="categoriaDeCliente"
           onChange={(e) => filtrarPorCategoria(e.target.value)}
         >
           <option value="">Todas las categorías</option>
@@ -220,7 +223,8 @@ const Clientes = () => {
         </select>
 
         
-        <div className="search-bar">
+        {/* <div className="search-bar"> */}
+        <div>
           <input
             type="text"
             placeholder="Buscar cliente..."

@@ -118,6 +118,10 @@ const VerMaquina = () => {
     });
   }
 
+  const irAAssociarCliente = () => {
+    navigate(`/asociarCliente/${id}`)
+  }
+
   const mostrarFichas = () => {
     navigate(`/fichasMaquina/${id}`)
   }
@@ -125,18 +129,26 @@ const VerMaquina = () => {
   return (
     <div className="contenedor-menu">
 
-<div className="datos-maquina">
+<div className="contenedor-secundario">
   <h1>Datos de la Máquina {maquina.numero}</h1>
-
-  <Link to={`/asociarCliente/${id}`}>Asociar Cliente</Link>
-  <button onClick={mostrarFichas}>Ver fichas</button>
+  <button onClick={irAAssociarCliente}>Asociar Cliente</button>  
+  <button className="btn-contrasenia" onClick={mostrarFichas}>Ver fichas</button>
 
   <table>
+     <thead>
+            <tr>
+              <th>Numero</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Año</th>
+            </tr>
+          </thead>
     <tbody>
-      <tr><td data-label="Número">Número:</td><td>{maquina.numero}</td></tr>
-      <tr><td data-label="Marca">Marca:</td><td>{maquina.marca}</td></tr>
-      <tr><td data-label="Modelo">Modelo:</td><td>{maquina.modelo}</td></tr>
-      <tr><td data-label="Año">Año:</td><td>{maquina.año}</td></tr>
+
+      <tr><td data-label="Número">{maquina.numero}</td></tr>
+      <tr><td data-label="Marca">{maquina.marca}</td></tr>
+      <tr><td data-label="Modelo">{maquina.modelo}</td></tr>
+      <tr><td data-label="Año">{maquina.año}</td></tr>
     </tbody>
   </table>
 
@@ -148,7 +160,7 @@ const VerMaquina = () => {
         <tr key={cliente.id}>
           <td data-label="Cliente">{cliente.nombreEmpresa}</td>
           <td data-label="Acción">
-            <button className="desasociar" onClick={() => mostrarToast(cliente.id)}>
+            <button className="eliminar" onClick={() => mostrarToast(cliente.id)}>
               Desasociar
             </button>
           </td>

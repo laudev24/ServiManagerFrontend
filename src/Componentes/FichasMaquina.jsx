@@ -247,7 +247,7 @@ const FichasMaquina = () => {
     return (
     <div className="contenedor-menu">
 
-<div className="formulario-cliente">
+<div className="contenedor-secundario">
   <h1>Fichas Técnicas de la Máquina {maquina.numero}</h1>
 
   <button

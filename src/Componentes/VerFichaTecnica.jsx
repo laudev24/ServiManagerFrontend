@@ -35,6 +35,10 @@ const VerFichaTecnica = () => {
     }
   }, [dispatch, fichas.length, navigate, token]);
 
+  const irAModificarFicha = () => {
+    navigate(`/modificarFicha/${id}`);
+  }
+
   if (!ficha) {
     return <p>Cargando ficha o ficha no encontrada...</p>;
   }
@@ -53,12 +57,12 @@ const VerFichaTecnica = () => {
 
   return (
     <div className="contenedor-menu">
-      <div className="ficha-detalle">
+      <div className="contenedor-secundario">
         <h1>Ficha Técnica nro. {id}</h1>
-
-        <Link to={`/modificarFicha/${id}`}>Modificar ficha</Link>
+        <button onClick={irAModificarFicha}>Modificar ficha</button>
 
         <table>
+          
           <tbody>
             <tr>
               <th>Nombre de la empresa:</th>
@@ -100,7 +104,7 @@ const VerFichaTecnica = () => {
                     ))}
                   </ul>
                 ) : (
-                  <span>No hay insumos registrados</span>
+                  <span className='ficha-detalle-span'>No hay insumos registrados</span>
                 )}
               </td>
             </tr>

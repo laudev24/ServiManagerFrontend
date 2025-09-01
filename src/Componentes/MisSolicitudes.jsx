@@ -50,7 +50,7 @@ const MisSolicitudes = () => {
 
   return (
     <div className="contenedor-menu">
-  <div className="formulario-cliente">
+  <div className="contenedor-secundario">
     {solicitudes.map((s) => (
       <Solicitud key={s.id} solicitud={s} />
     ))}

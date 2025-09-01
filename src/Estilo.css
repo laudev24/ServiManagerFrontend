@@ -27,78 +27,18 @@
     box-sizing: border-box;
 }
 
-h1 {
-    font-size: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
-}
-/* h2 {
-    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
-} */
-h2 {
-    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
-}
-button,
-input[type="button"] {
-    font-size: clamp(0.9rem, 1vw + 0.4rem, 1rem);
-    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.5vw, 1rem);
-}
-input[type="number"] {
-    color: black
-}
-
 main {
-    margin: 0 
+    margin: 0;
+    flex-grow: 1;
 }
 
-a{
-    margin:0;
-    text-decoration: underline;
-}
-
-Link{
-    text-decoration: underline;
-}
-
-header a{
-    background-color: var(--verde-claro);
-
-}
-
-/* Fondo principal */
-.contenedor-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* height: 100vh; */
-    background-color: var(--verde-claro);
-}
-
-/* ===== Layout general ===== */
-
-.container-fluid {
-    min-height: 100vh;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
+/* body {    <--Sugerencia automatica de codigo
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--verde-claro);
     color: var(--azul-oscuro);
-    font-family: sans-serif;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.contenido-central {
-    width: 100%;
-    height: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    
-}
-
-
+} */
 
 footer {
     background-color: var(--verde-claro);
@@ -108,6 +48,11 @@ footer {
     display: flex;
 }
 
+
+header a{
+    background-color: var(--verde-claro);
+
+}
 header, header nav{
     background-color: var(--verde-claro);
     width: 100%;
@@ -127,10 +72,161 @@ header img:first-of-type{
     margin: 0;
 }
 
-
 footer, 
 header img:hover {
     transform: scale(1.05);
+}
+
+footer a {
+    
+    background-color: var(--verde-claro);
+    text-decoration: none;
+    color: var(--azul-oscuro);
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    /* header nav, */
+    footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .tabla-insumos thead tr{
+         
+    display: none;
+  
+    }
+}
+
+
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
+}
+
+h2 {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
+}
+
+button,
+input[type="button"] {
+    background-color: var(--azul-oscuro);
+    color: var(--crema);
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 1vw + 0.4rem, 1rem);
+    /* margin-bottom: 1rem;  */
+    /* padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.5vw, 1rem); */
+}
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"],
+select {
+    width: 100%;
+    max-width: 400px; /*dudas*/
+    /* max-width: 300px; */
+    padding: 0.5rem;
+    /* margin-top: 0.25rem;  */
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+    box-sizing: border-box; /*dudas*/
+}
+
+textarea {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--gris-azulado);
+    border-radius: 0.3rem;
+    background-color: var(--beige);
+    color: var(--azul-oscuro);
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+select[multiple] {
+    height: auto;
+    min-height: 120px;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+
+a{
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--azul-oscuro);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+Link{
+    text-decoration: underline;
+}
+
+p{
+     word-wrap: break-word;   
+  overflow-wrap: break-word; 
+  white-space: normal; 
+}
+
+
+
+/* Fondo principal del Login*/
+.contenedor-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    background-color: var(--verde-claro);
+}
+
+/* ===== Layout general, contiene .contenido-general, y este: header, main y footer ===== */
+
+.container-fluid {
+    /* min-height: 100vh; */
+    min-height: 100dvh;
+    height: auto; /*prueba*/
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--verde-claro);
+    color: var(--azul-oscuro);
+    font-family: sans-serif;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.contenido-central {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    
 }
 
 .icon-placeholder {
@@ -171,43 +267,12 @@ header img:hover {
 
 
 
-main {
-    flex-grow: 1;
-    /* padding: 2rem; */
-}
 
-footer a {
-    
-    background-color: var(--verde-claro);
-    text-decoration: none;
-    color: var(--azul-oscuro);
-    font-weight: bold;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-    /* header nav, */
-    footer {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .tabla-insumos thead tr{
-         
-    display: none;
-  
-    }
-    
-}
 /* ===== Estilos para el login ===== */
 
-/* Tarjeta de login */
 .card-login {
     width: 100%;
     margin: 2rem;
-    /* height: 100vh; */
     max-width: 400px;
     padding: 2rem;
     background-color: var(--crema);
@@ -216,7 +281,6 @@ footer a:hover {
     border-radius: 0.5rem;
 }
 
-/* Títulos */
 .card-login h1,
 .card-login h2 {
     text-align: center;
@@ -233,12 +297,11 @@ footer a:hover {
     margin-bottom: 1rem;
 }
 
-/* Input de Bootstrap ya viene estilizado, pero podés personalizar más si querés */
-.card-login .form-control {
+/* .card-login .form-control {
     background-color: var(--beige);
     border: 1px solid var(--gris-azulado);
     color: var(--azul-oscuro);
-}
+} */
 
 /* Botón de login */
 .card-login .btn-login {
@@ -269,8 +332,6 @@ footer a:hover {
 
 /* InicioAdm */
 
-/* ===== Estilos para el menú principal ===== */
-
 .contenedor-menu {
     display: flex;
     justify-content: center;
@@ -280,20 +341,20 @@ footer a:hover {
 }
 
 
-.menu-principal {
+.contenedor-secundario {
     max-width: 800px;
-    width: 100%;
+    /* width: 100%; */
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
     margin: 2rem;
     padding: 2rem;
     background-color: var(--crema);
     color: var(--azul-oscuro);
-    min-height: auto;
+    /* min-height: auto; */
 }
 
 /* Título de bienvenida */
-.menu-principal h1 {
+.contenedor-secundario h1 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     background-color: var(--crema);
@@ -306,7 +367,7 @@ footer a:hover {
     flex-direction: column;
     text-align: center;
     align-items: center;
-    gap: 1rem;
+    /* gap: 1rem; */
     margin-bottom: 2rem;
     background-color: var(--crema);
     
@@ -358,38 +419,30 @@ footer a:hover {
 
 /* ===== Clientes ===== */
 
-.ver-clientes {
-    max-width: 800px;
-    margin: 2rem;
-    padding: 2rem;
-    background-color: var(--crema);
-    color: var(--azul-oscuro);
-    border-radius: 0.5rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-}
+
 
 /* Título principal */
-.ver-clientes h1 {
+/* .contenedor-secundario h1 {
     text-align: center;
     margin-bottom: 1.5rem;
-}
+} */
 
 /* Enlace para nuevo cliente */
-.ver-clientes a {
+/* .contenedor-secundario a {
     display: inline-block;
     margin-bottom: 1rem;
     color: var(--azul-oscuro);
     text-decoration: none;
     font-weight: bold;
     text-decoration: underline;
-}
+} */
 
-.ver-clientes a:hover {
+/* .contenedor-secundario a:hover { */
     /* text-decoration: underline; */
-}
+/* } */
 
 /* Botón de alerta */
-.ver-clientes input[type="button"] {
+/* .contenedor-secundario input[type="button"] {
     background-color: var(--azul-oscuro);
     color: var(--crema);
     border: none;
@@ -397,14 +450,14 @@ footer a:hover {
     border-radius: 0.3rem;
     margin-bottom: 1rem;
     cursor: pointer;
-}
+} */
 
-.ver-clientes input[type="button"]:hover {
+/* .contenedor-secundario input[type="button"]:hover {
     background-color: #0f2332;
-}
+} */
 
 /* Selector de categoría */
-.categoriaDeCliente {
+/* .categoriaDeCliente {
     width: 100%;
     max-width: 300px;
     padding: 0.5rem;
@@ -413,14 +466,14 @@ footer a:hover {
     border-radius: 0.3rem;
     background-color: var(--beige);
     color: var(--azul-oscuro);
-}
+} */
 
 /* Search bar */
-.search-bar {
+/* .search-bar {
     padding: 1rem 0;
-}
+} */
 
-.search-bar input {
+/* .search-bar input {
     width: 100%;
     padding: 0.5rem;
     font-size: 1rem;
@@ -428,29 +481,31 @@ footer a:hover {
     border: 1px solid var(--gris-azulado);
     background-color: var(--beige);
     color: var(--azul-oscuro);
-}
+} */
 
 /* Tabla de clientes */
-.ver-clientes table {
+.contenedor-secundario table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    ;
 }
 
-.ver-clientes th,
-.ver-clientes td {
+.contenedor-secundario th,
+.contenedor-secundario td {
     padding: 0.75rem;
     border: 1px solid var(--gris-azulado);
     vertical-align: middle;
+    text-align: left;
 }
 
-.ver-clientes img {
+.contenedor-secundario img {
     vertical-align: middle;
-    height: 20px;
+    /* height: 20px; */
 }
 
 /* Botones dentro de la tabla */
-.ver-clientes button {
+/* .contenedor-secundario button {
     padding: 0.4rem 0.8rem;
     border: none;
     border-radius: 0.3rem;
@@ -459,18 +514,39 @@ footer a:hover {
     cursor: pointer;
 }
 
-.ver-clientes button:hover {
+.contenedor-secundario button:hover {
     background-color: #0f2332;
-}
+} */
 
-.ver-clientes button.eliminar {
+.contenedor-secundario button.eliminar {
     color: red;
     background-color: transparent;
     border: 1px solid red;
 }
 
-.ver-clientes button.eliminar:hover {
+.contenedor-secundario button.eliminar:hover {
     background-color: rgba(255, 0, 0, 0.1);
+}
+.con-alertas{
+    margin-bottom: 1rem;
+}
+.crear-ficha{
+    margin-bottom: 1rem;
+}
+.nombre-usuario{
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+.btn-contrasenia{
+    margin-top: 1rem;
+}
+.label-contador{
+    margin-top: 1rem;
+}
+
+.p-descripcion{
+    
 }
 
 /* Paginador */
@@ -498,22 +574,28 @@ footer a:hover {
 
 /* Responsive para tablas */
 @media (max-width: 600px) {
-    .ver-clientes table,
-    .ver-clientes thead,
-    .ver-clientes tbody,
-    .ver-clientes th,
-    .ver-clientes td,
-    .ver-clientes tr {
+    .contenedor-secundario table,
+    /* .contenedor-secundario thead, */
+    .contenedor-secundario tbody,
+    .contenedor-secundario th,
+    .contenedor-secundario td,
+    .contenedor-secundario tr {
         display: block;
         width: 100%;
     }
+    .contenedor-secundario thead tr{
+        display: none;
+    }
+    .contenedor-secundario th{
+        display: none;
+    }
 
-    .ver-clientes tr {
+    .contenedor-secundario tr {
         margin-bottom: 1rem;
         border-bottom: 1px solid var(--gris-azulado);
     }
 
-    .ver-clientes td {
+    .contenedor-secundario td {
         padding: 0.75rem;
         border: none;
         display: flex;
@@ -521,7 +603,7 @@ footer a:hover {
         align-items: center;
     }
 
-    .ver-clientes td::before {
+    .contenedor-secundario td::before {
         content: attr(data-label);
         font-weight: bold;
         color: var(--gris-azulado);
@@ -531,7 +613,7 @@ footer a:hover {
 
 /* ===== Máquinas ===== */
 
-.ver-maquinas {
+/* .ver-maquinas {
     max-width: 800px;
     margin: 2rem;
     padding: 2rem;
@@ -569,7 +651,7 @@ footer a:hover {
     color: var(--azul-oscuro);
 }
 
-/* Tabla de máquinas */
+/* Tabla de máquinas 
 .ver-maquinas table {
     width: 100%;
     border-collapse: collapse;
@@ -586,7 +668,7 @@ footer a:hover {
     text-align: left;
 }
 
-/* Botones de acción */
+/* Botones de acción 
 .ver-maquinas button {
     padding: 0.4rem 0.8rem;
     border: none;
@@ -610,7 +692,7 @@ footer a:hover {
     background-color: rgba(255, 0, 0, 0.1);
 }
 
-/* Responsive */
+/* Responsive 
 @media (max-width: 600px) {
     .ver-maquinas table,
     .ver-maquinas tbody,
@@ -646,11 +728,11 @@ footer a:hover {
         color: var(--gris-azulado);
         margin-right: 1rem;
     }
-}
+} */
 
 /* ===== Fichas Técnicas ===== */
 
-.ver-fichas {
+/* .ver-fichas {
     max-width: 800px;
     margin: 2rem;
     padding: 2rem;
@@ -750,14 +832,14 @@ footer a:hover {
         color: var(--gris-azulado);
         margin-right: 1rem;
     }
-}
+} */
 
 /* Reutilizamos .paginador de clientes */
 
 
 /* ===== Datos del Cliente ===== */
 
-.datos-cliente {
+/* .datos-cliente {
     max-width: 800px;
     margin: 2rem;
     padding: 2rem;
@@ -782,7 +864,7 @@ footer a:hover {
 }
 
 .datos-cliente a:hover {
-    /* text-decoration: underline; */
+    /* text-decoration: underline; 
 }
 
 .datos-cliente table {
@@ -799,7 +881,7 @@ footer a:hover {
     text-align: left;
 }
 
-/* Botón desasociar */
+/* Botón desasociar 
 .datos-cliente button {
     padding: 0.4rem 0.8rem;
     border: none;
@@ -823,13 +905,13 @@ footer a:hover {
     background-color: rgba(255, 0, 0, 0.1);
 }
 
-/* Responsive */
+/* Responsive 
 @media (max-width: 600px) {
     .datos-cliente table,
     .datos-cliente thead,
     .datos-cliente tbody,
     .datos-cliente th,
-    /* .datos-cliente td, */
+    /* .datos-cliente td, 
     .datos-cliente tr {
         display: block;
         width: 100%;
@@ -872,12 +954,12 @@ footer a:hover {
 .datos-cliente .btn-toggle:hover {
     background-color: #6d7c7c;
 }
-
+ */
 
 
 /* ===== Modificar Cliente ===== */
 
-.formulario-cliente {
+/* .formulario-cliente {
     max-width: 800px;
     margin: 2rem;
     padding: 2rem;
@@ -906,13 +988,13 @@ footer a:hover {
     height: auto;
     min-height: 120px;
 }
-
+ */
 
 /* .formulario-cliente h1 {
     text-align: center;
     margin-bottom: 1.5rem;
 } */
-.formulario-cliente h1 {
+.contenedor-secundario h1 {
     font-size: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
     max-width: 360px;
     margin: 0 auto 1.5rem auto; /* centrado */
@@ -920,49 +1002,49 @@ footer a:hover {
 }
 
 
-.formulario-cliente label {
+/* .formulario-cliente label {
     display: block;
     margin-bottom: 0.75rem;
     font-weight: bold;
-}
+} */
 
-.formulario-cliente input[type="text"],
-.formulario-cliente input[type="email"],
-.formulario-cliente input[type="password"],
-.formulario-cliente select {
+.contenedor-secundario input[type="text"],
+.contenedor-secundario input[type="email"],
+.contenedor-secundario input[type="password"],
+.contenedor-secundario select {
     box-sizing: border-box;
-    width: 100%;
     max-width: 400px;
+   /* width: 100%;
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid var(--gris-azulado);
     border-radius: 0.3rem;
     background-color: var(--beige);
-    color: var(--azul-oscuro);
+    color: var(--azul-oscuro);*/
     margin-top: 0.25rem;
     margin-bottom: 1rem;
 }
 
 
 
-.formulario-cliente input[type="button"] {
-    background-color: var(--azul-oscuro);
+.contenedor-secundario input[type="button"] {
+    /* background-color: var(--azul-oscuro);
     color: var(--crema);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 0.3rem;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: bold; */
     font-size: 1rem;
     display: block;
     margin-top: 1rem;
 }
 
-.formulario-cliente input[type="button"]:hover {
+/* .formulario-cliente input[type="button"]:hover {
     background-color: #0f2332;
-}
+} */
 
-.formulario-cliente a {
+/* .formulario-cliente a {
     display: inline-block;
     margin-top: 1rem;
     text-decoration: none;
@@ -988,12 +1070,12 @@ footer a:hover {
     vertical-align: top;
     text-align: left;
 }
-
+ */
 
 
 /* ===== Ver maquina ===== */
 
-
+/* 
 .datos-maquina {
     max-width: 800px;
     margin: 2rem ;
@@ -1088,11 +1170,11 @@ footer a:hover {
         display: block;
         margin-bottom: 0.25rem;
     }
-}
+} */
 
 /* ===== Ver ficha ===== */
 
-
+/* 
 .ficha-detalle {
     max-width: 800px;
     margin: 2rem;
@@ -1132,42 +1214,16 @@ footer a:hover {
     border: 1px solid var(--gris-azulado);
     vertical-align: top;
     text-align: left;
-}
+} */
 
-.ficha-detalle td span {
+.ficha-detalle-span {
     margin-right: 0.5rem;
+    text-align: right;
 }
 
-@media (max-width: 600px) {
-    .ficha-detalle table,
-    .ficha-detalle thead,
-    .ficha-detalle tbody,
-    .ficha-detalle th,
-    .ficha-detalle td,
-    .ficha-detalle tr {
-        display: block;
-        width: 100%;
-    }
 
-    .ficha-detalle tr {
-        margin-bottom: 1rem;
-        border-bottom: 1px solid var(--gris-azulado);
-    }
 
-    .ficha-detalle td,
-    .ficha-detalle th {
-        padding: 0.75rem;
-        border: none;
-    }
-
-    .ficha-detalle td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: var(--gris-azulado);
-        display: block;
-        margin-bottom: 0.25rem;
-    }
-}
+   
 
 /* ===== Estilos para la cámara y el uploader de imágenes ===== */
 .camara-container,
@@ -1216,7 +1272,7 @@ footer a:hover {
     margin-left: 1rem;
 }
 
-
+/* 
 .formulario-cliente table {
     width: 100%;
     border-collapse: collapse;
@@ -1264,19 +1320,19 @@ footer a:hover {
         margin-bottom: 0.25rem;
         color: var(--gris-azulado);
     }
-}
+} */
 
 .ultimos-botones button{
     display: block;
     width: 100%;
     margin: 5px 
 }
-.formulario-cliente label {
+/* .formulario-cliente label {
   display: block;
   margin-bottom: 1rem;
   font-weight: bold;
-}
-
+/* } */
+/* 
 .formulario-cliente .form-control {
   width: 100%;
   max-width: 400px;
@@ -1287,14 +1343,19 @@ footer a:hover {
   border: 1px solid var(--gris-azulado);
   border-radius: 4px;
   color: var(--azul-oscuro);
-}
+} */
 
-/* Estilo específico para textarea si querés diferenciar */
+/* Estilo específico para textarea si querés diferenciar 
 .formulario-cliente textarea {
   resize: vertical;
   min-height: 100px;
+} */
+.ver-cliente-h2{
+    text-align: center;
+    margin: 1rem;
+    font-weight: bold;
+    font-size: 1.3rem;
 }
-
 /*========== Contadores recibidos ===================*/
 
 
@@ -1361,7 +1422,7 @@ footer a:hover {
 .btn-col {
     width: 100%;
 }
-
+/* 
 .btn-reenviar,
 .btn-confirmar,
 .btn-eliminar {
@@ -1374,7 +1435,7 @@ footer a:hover {
 }
 
 .btn-reenviar {
-    background-color: var(--gris-azulado); /* amarillo Bootstrap warning */
+    background-color: var(--gris-azulado); /* amarillo Bootstrap warning 
 }
 
 .btn-reenviar:hover {
@@ -1395,7 +1456,7 @@ footer a:hover {
 
 .btn-eliminar:hover {
     background-color: rgb(97, 2, 2);
-}
+} */
 
 
 @media (max-width: 768px) {
@@ -1403,7 +1464,7 @@ footer a:hover {
         grid-template-columns: 1fr;
     }
 }
-
+/* 
 .search-bar {
     margin: 1rem 0;
 }
@@ -1417,8 +1478,8 @@ footer a:hover {
     border: 1px solid var(--gris-azulado);
     border-radius: 4px;
     color: var(--azul-oscuro);
-}
-
+} */
+/* /* 
 .tabla-resumen {
     margin: 2rem 0;
 }
@@ -1443,8 +1504,8 @@ footer a:hover {
     vertical-align: top;
     font-size: 1rem;
     color: var(--azul-oscuro);
-}
-
+} */
+/*
 .input-descuento {
     width: 100%;
     padding: 0.4rem;
@@ -1464,7 +1525,7 @@ footer a:hover {
 .enlace-accion:hover {
   text-decoration: underline;
   color: var(--gris-azulado);
-}
+} */
 
 /* Botón estilo menú */
 .opciones-foto button,
@@ -1504,6 +1565,7 @@ footer a:hover {
 
 /* ===== Solicitudes de servicio ===== */
 .tarjeta-solicitud {
+    max-width: 400px;
   background-color: var(--crema);
   color: var(--azul-oscuro);
   border-radius: 0.5rem;
@@ -1520,14 +1582,19 @@ footer a:hover {
 }
 
 .tarjeta-solicitud p {
+  width: 100%;
+  max-width: 300px;
   margin: 0.4rem 0;
   font-size: 0.95rem;
+   word-wrap: break-word;   
+  overflow-wrap: break-word; 
+  white-space: normal; 
 }
 
 .tarjeta-solicitud strong {
   font-weight: bold;
 }
-
+/* 
 .tarjeta-solicitud .imagen-contador {
   max-width: 200px;
   max-height: 200px;
@@ -1542,7 +1609,7 @@ footer a:hover {
   text-align: center;
   font-size: 1rem;
   color: var(--gris-azulado);
-}
+} */
 
 
 /* Cada solicitud */
@@ -1558,7 +1625,7 @@ footer a:hover {
 }
 
 /* Botón eliminar */
-.btn-eliminar {
+/* .btn-eliminar {
   background-color: transparent;
   color: red;
   border: 1px solid red;
@@ -1571,7 +1638,7 @@ footer a:hover {
 
 .btn-eliminar:hover {
   background-color: rgba(255, 0, 0, 0.1);
-}
+} */
 
 /* Sin resultados */
 .sin-resultados {
