@@ -1,9 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   const {
     clienteNombre,
     maquinaNombre,
+    maquinaId,
     fechaFormateada,
     imagen,
     envios,
@@ -11,6 +13,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   } = grupo;
   const [mensajes, setMensajes] = useState({});
   const API_URL=import.meta.env.VITE_API_URL
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
   const inicial = {};
@@ -34,7 +37,9 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
       const inputValor = mensajes[envio.id];
       const mensaje = inputValor != null ? String(inputValor).trim() : '';
       return {
+        clienteId: clienteId,
         envioId: envio.id,
+        maquinaId: envio.maquinaId,
         mensaje,
         tipoImpresion: envio.tipoImpresion
       };
@@ -50,9 +55,12 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
 
     const dataParaEnviar = {
       clienteNombre,
+      clienteId,
       maquinaNombre,
+      maquinaId,
       fechaFormateada,
       imagen,
+      envioIds: envios.map(e => e.id),
       mensajes: mensajesGrupo
     };
 
@@ -71,14 +79,14 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
       .then(async (r) => {
         if (r.status === 204) {
             toast("Solicitud eliminada");
-            console.log(r.status)
+            // console.log(r.status)
         } else {
-            console.log(r.status)
+            // console.log(r.status)
             toast(r.mensaje || "Error eliminando solicitud");
         }
       })
       .catch((err) => {
-        console.log("Error en la conexión: " + err)
+        // console.log("Error en la conexión: " + err)
         toast("Error de conexión al eliminar solicitud");
       });
     }

@@ -47,7 +47,6 @@ const Inicio = () => {
                     <figcaption>Ver mis datos</figcaption>
                 </figure>
             </Link>
-            {/* <input type="button" value="Chat" className="btn-menu" onClick={verChats} /> */}
             <input type="button" value="Solicitar Servicio Técnico" className="btn-menu" onClick={solicitarServicio} />
             <input type="button" value="Ver mis solicitudes" className="btn-menu" onClick={verSolicitudes} />
             <input type="button" value="Enviar Contador" className="btn-menu" onClick={enviarContador} />
