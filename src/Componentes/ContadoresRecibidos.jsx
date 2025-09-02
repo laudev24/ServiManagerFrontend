@@ -12,6 +12,7 @@ const ContadoresRecibidos = () => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   
+  
 useEffect(() => {
   Promise.all([traerClientes(), traerMaquinas(), traerContadores()])
     .then(() => setLoading(false))
@@ -75,11 +76,13 @@ const agruparEnvios = (contadores) => {
       
       const clave = `${envio.maquinaId}-${envio.clienteId}-${formatearFechaHora(envio.fechaYHora)}`;
 
-      const grupoExistente = agrupados.find(g => g.clave === clave);
+      const grupoExistente = agrupados.find(a => a.clave === clave);
 
       const envioExtendido = {
         ...envio,
         clienteNombre: buscarCliente(envio.clienteId),
+        clienteId: envio.clienteId,
+        maquinaId: envio.maquinaId,
         maquinaNombre: buscarMaquina(envio.maquinaId),
         fechaFormateada: formatearFechaHora(envio.fechaYHora),
       };
@@ -145,7 +148,7 @@ const handleConfirmar = useCallback((dataGrupo) => {
     </article>
   ))
 ) : (
-  <p>Cargando datos o no hay contadores...</p>
+  <p>Cargando datos (puede demorar si hay varios contadores) o no hay contadores...</p>
 )}
 
       </div>

@@ -158,7 +158,7 @@ const VerCliente = () => {
       navigate("/contadoresRecibidos")
     }
 
-    const irAInformacionContadores = () => {
+    const irAInformacionContadores = (id) => {
       navigate(`/informacionContadores`)
     }
 
