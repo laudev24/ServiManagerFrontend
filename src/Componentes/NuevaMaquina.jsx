@@ -39,7 +39,7 @@ const NuevaMaquina = () => {
       cantidadContadores: Number(campoCantidadContadores.current.value),
     };
 
-    console.log("Datos a enviar:", maquinaNueva);
+    // console.log("Datos a enviar:", maquinaNueva);
 
     fetch(`${API_URL}/maquina`, {
       method: 'POST',

@@ -108,7 +108,7 @@ const NuevaSolicitud = () => {
           formData.append("Imagen", fotoFile);
         }
 
-        console.log("Solicitud a enviar:", solicitud);
+        // console.log("Solicitud a enviar:", solicitud);
         fetch(`${API_URL}/solicitudServicio`, {
             method: "POST",
             body: formData,

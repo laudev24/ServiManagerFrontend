@@ -29,7 +29,7 @@ const Solicitudes = () => {
         if (cancelado) return;
 
         const lista = Array.isArray(data) ? data : [];
-        console.log("Solicitudes obtenidas:", lista);
+        // console.log("Solicitudes obtenidas:", lista);
         setSolicitudes(lista);
         if (cancelado) return;
 

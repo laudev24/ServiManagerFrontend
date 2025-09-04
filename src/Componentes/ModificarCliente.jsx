@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { guardarClientes } from '../features/clientesSlice';
 import { modificarCliente } from '../features/clientesSlice';
 import { guardarCategorias } from '../features/categoriasSlice';
+import { set } from 'date-fns';
 
 const ModificarCliente = () => {
   const { id } = useParams();
@@ -83,21 +84,56 @@ const ModificarCliente = () => {
       setNombreEmpresa(cliente.nombreEmpresa)
       setDireccion(cliente.direccion)
       setEmail(cliente.email)
-      const categoriaEncontrada = categorias.find(c => c.id === cliente.categoria);
-      setCategoria(categoriaEncontrada ? categoriaEncontrada.nombre : "");
+      // const categoriaEncontrada = categorias.find(c => c.id === cliente.categoria);
+      // setCategoria(categoriaEncontrada ? categoriaEncontrada.nombre : "");
+      setCategoria(cliente.categoria)
       setNombreContacto(cliente.nombreContacto)
       setTelefono(cliente.telefono)
       setRut(cliente.rut)
       setFechaPago(cliente.fechaPago)
       setNombre(cliente.nombre)
+      console.log("categoria:", categoria)
+      console.log("fechaPago:", fechaPago)
     }
   }, [cliente, categorias])
 
+const MAP_DISPLAY_TO_ENUM = {
+  "1 al 10": "UnoADiez",
+  "11 al 20": "OnceAVeinte",
+  "21 al 30": "VeintiunoATreinta",
+};
 
+const MAP_ENUM_TO_DISPLAY = {
+  UnoADiez: "1 al 10",
+  OnceAVeinte: "11 al 20",
+  VeintiunoATreinta: "21 al 30",
+};
+
+function convertirFechaPago(valor) {
+  if (!valor) return "";
+  // si viene en formato display
+  if (MAP_DISPLAY_TO_ENUM[valor]) return MAP_DISPLAY_TO_ENUM[valor];
+  // si ya viene en formato enum, lo devolvemos tal cual
+  if (MAP_ENUM_TO_DISPLAY[valor]) return valor;
+  return "";
+}
+
+function convertirFechaPagoAOriginal(valor) {
+  if (!valor) return "";
+  return MAP_ENUM_TO_DISPLAY[valor] ?? valor;
+}
 
   const modificar = () => {
-    const categoriaSeleccionada = categorias.find(c => c.nombre === categoria);
-
+    if(!categoria || !fechaPago) toast.error("Debe seleccionar categoría y fecha de pago");
+  //  if(!categoria) setCategoria(cliente.categoria)
+    console.log("fechaPago:", fechaPago)
+    console.log("categoria:", categoria)
+      const fechaFormateada = convertirFechaPago(fechaPago);
+  const fechaPagoValor = fechaFormateada || cliente.fechaPago;
+    // const fechaFormateada = convertirFechaPago(fechaPago);
+    // const categoriaSeleccionada = categorias.find(c => c.nombre === categoria);
+    // const fechaPagoValor = fechaFormateada != cliente.fechaPago ? fechaFormateada : cliente.fechaPago;
+    console.log("fechaPagoValor:", fechaPagoValor)
     const clienteModificado = {
       id: Number(id),
       nombre: nombre,
@@ -109,8 +145,8 @@ const ModificarCliente = () => {
       telefono: telefono,
       nombreContacto: nombreContacto,
       activo: cliente.activo,
-      categoria: categoriaSeleccionada ? categoriaSeleccionada.id : null,
-      fechaPago: fechaPago
+      categoria: categoria,
+      fechaPago: fechaPagoValor
     };
 
     fetch(`${API_URL}/cliente/${cliente.id}`, {
@@ -131,11 +167,11 @@ const ModificarCliente = () => {
       .then(data => {
         dispatch(modificarCliente(data));
         toast.success("Cliente modificado con éxito");
-        navigate("/clientes");
+        navigate(`/verCliente/${cliente.id}`);
       })
       .catch(err => {
         console.error(err);
-        toast.error(err.message);
+        toast.error("Error modificando cliente");
       });
 
   };
@@ -168,7 +204,7 @@ const ModificarCliente = () => {
             onChange={(e) => setCategoria(e.target.value)}
             value={categoria}
           >
-            <option value="">Seleccionar categoría</option>
+            <option value={cliente.categoria}>{cliente.categoria}</option>
             {categorias.map((cat) => (
               <option key={cat.id} value={cat.nombre}>{cat.nombre}</option>
             ))}
@@ -226,9 +262,9 @@ const ModificarCliente = () => {
           Fecha de pago:
           <select
             onChange={(e) => setFechaPago(e.target.value)}
-            value={fechaPago || ''}
+            value={fechaPago}
           >
-            <option value="">Elegir rango</option>
+            <option value={cliente.fechaPago}>{convertirFechaPagoAOriginal(cliente.fechaPago)}</option>
             <option value="1 al 10">1 al 10</option>
             <option value="11 al 20">11 al 20</option>
             <option value="21 al 30">21 al 30</option>

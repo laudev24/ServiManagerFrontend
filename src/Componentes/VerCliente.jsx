@@ -16,7 +16,6 @@ const VerCliente = () => {
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([])
     const [mostrarDatosCliente, setMostrarDatosCliente] = useState(true);
 
-
     const traerCliente = () => {
         fetch(`${API_URL}/cliente/${id}`, {
             method: 'GET',
@@ -33,16 +32,16 @@ const VerCliente = () => {
         }) 
         .then(datos => {
             setCliente(datos)
+            console.log(datos)
         })
         .catch(error => {
             console.error("Error al obtener el cliente:", error);
         })
     }
     useEffect(() => {
-       
+        if(categorias.length===0)traerCategorias()
         if(cliente==="")traerCliente()
         if(maquinasAsociadas.length===0)traerMaquinasDelCliente()
-        if(categorias.length===0)traerCategorias()
     }, [])
 
     const traerMaquinasDelCliente = () => {
@@ -84,6 +83,10 @@ const VerCliente = () => {
               })
             .then(datos => {
                 dispatch(guardarCategorias(datos))
+                console.log(datos)
+
+                if(cliente)setCategoria(datos.find(c => c.id === cliente.categoria))
+                
             })
         
     }
@@ -91,8 +94,8 @@ const VerCliente = () => {
     useEffect(() => {
        const cat = categorias.find(c => c.id === cliente.categoria)
         setCategoria(cat)
-        console.log("cliente: ", cliente)
-        console.log("categoria: ", cat)
+        // console.log("cliente: ", cliente)
+        // console.log("categoria: ", cat)
 
     }, [cliente, categorias])
     
@@ -115,12 +118,12 @@ const VerCliente = () => {
             <ConfirmToast
                 onConfirm={() => {
                 toast.dismiss(id);
-                console.log('Confirmado');
+                // console.log('Confirmado');
                 desasociar(idMaquina)
                 }}
                 onCancel={() => {
                 toast.dismiss(id);
-                console.log('Cancelado');
+                // console.log('Cancelado');
                 }}
             />,
             { autoClose: false }
@@ -174,6 +177,12 @@ const VerCliente = () => {
       navigate(`/modificarCliente/${cliente.id}`);
     }
 
+     function convertirFechaPago(fechaPago) {
+      if (fechaPago === "UnoADiez") return "1 al 10"
+      if (fechaPago === "OnceAVeinte") return "11 al 20"
+      if (fechaPago === "VeintiunoATreinta") return "21 al 30"
+      return ""
+    }
     
     return (
     <div className="contenedor-menu">
@@ -193,7 +202,7 @@ const VerCliente = () => {
       </tr>
       <tr>
         <th>Categoría:</th>
-        <td data-label="Categoría">{categoria?.nombre}</td>
+        <td data-label="Categoría">{cliente.categoria}</td>
       </tr>
       <tr>
         <th>Dirección:</th>
@@ -217,11 +226,11 @@ const VerCliente = () => {
       </tr>
       <tr>
         <th>Fecha de pago:</th>
-        <td data-label="Fecha de pago">{cliente.fechaPago}</td>
+        <td data-label="Fecha de pago">{convertirFechaPago(cliente.fechaPago)}</td>
       </tr>
       <tr>
         <th>Nombre de usuario:</th>
-        <td data-label="Nombre de usuario">{cliente.fechaPago}</td>
+        <td data-label="Nombre de usuario">{cliente.nombre}</td>
       </tr>
     </tbody>
   </table>
