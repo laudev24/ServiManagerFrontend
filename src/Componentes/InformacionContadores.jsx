@@ -40,8 +40,7 @@ const InformacionContadores = () => {
       if(clienteId && contadores.length===0) traerContadoresDelCliente()
     }, [clienteId]);
 
-    // al contador, cambiar el estado a confirmado 
-    // al arrendamiendo, pedirle el contador actual
+  
 
     const traerArrendamiento = () => {
       fetch(`${API_URL}/arrendamiento/maquina/${maquinaId}/cliente/${clienteId}`, {
@@ -110,18 +109,17 @@ const InformacionContadores = () => {
     <tbody>
       {/* Inicial y Final */}
       <tr>
-        <td><em>Contador inicial:</em></td>
-        <td>{arrendamiento.ultimoContadorBYN || 0
-}</td>
+        <td><em>Contador B/N inicial:</em></td>
+        <td>{arrendamiento.ultimoContadorBYN || 0}</td>
       </tr>
       <tr>
-        <td><em>Contador final:</em></td>
+        <td><em>Contador B/N final:</em></td>
         <td>{m.mensaje}</td>
       </tr>
 
       {/* Total y Monto a abonar */}
       <tr>
-        <td><em>Total copias:</em></td>
+        <td><em>Total copias B/N:</em></td>
         <td>{calcularTotalCopias(m)}</td>
 
       </tr>
@@ -130,6 +128,23 @@ const InformacionContadores = () => {
 
         <td>{calcularMontoByN(m)}</td>
       </tr>
+      {m.tipoImpresion === 0 && (
+        <div>
+        <tr>
+          <td><em>Contador Color inicial:</em></td>
+          <td>{arrendamiento.ultimoContadorColor || 0}</td>
+        </tr>
+        <tr>
+          <td><em>Contador Color final:</em></td>
+          <td>{m.mensaje}</td>
+        </tr>
+      
+        <tr>
+          <td><em>Total copias color:</em></td>
+          <td>{calcularTotalCopias(m)}</td>
+        </tr>
+        </div>
+      )}
 
       {/* Descuento */}
       <tr>

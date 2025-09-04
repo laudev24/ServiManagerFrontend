@@ -79,12 +79,12 @@ const VerMaquina = () => {
       <ConfirmToast
         onConfirm={() => {
           toast.dismiss(id);
-          console.log('Confirmado');
+          // console.log('Confirmado');
           desasociar(idCliente)
         }}
         onCancel={() => {
           toast.dismiss(id);
-          console.log('Cancelado');
+          // console.log('Cancelado');
         }}
       />,
       { autoClose: false }

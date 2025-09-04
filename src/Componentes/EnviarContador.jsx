@@ -112,7 +112,14 @@ const EnviarContador = () => {
 
 
     const enviarContador = useCallback(async () => {
-
+        if(numeroBYN.current.value.trim() != '' && Number(numeroBYN.current.value) < 0){
+            toast.error("El valor del contador B/N no puede ser negativo");
+            return;
+        }
+        else if(numeroBYN.current.value.trim() === ''){
+            toast.error("Debe ingresar un valor numérico para el contador B/N");
+            return;
+        }
         const valorBYN = numeroBYN.current.value;
         const maquinaId = Number(document.querySelector('select').value); // Obtengo el ID de la máquina seleccionada
         const maquina = maquinasAsociadas.find(maq => maq.id === maquinaId);
@@ -134,6 +141,14 @@ const EnviarContador = () => {
         formData.append("EnviosContadores[0].Imagen", fotoFile || null);
         
        if(maquina.tipoImpresion === 0){
+         if(numeroColor.current.value.trim() != '' && Number(numeroColor.current.value) < 0){
+            toast.error("El valor del contador Color no puede ser negativo");
+            return;
+        }
+        else if(numeroColor.current.value.trim() === ''){
+            toast.error("Debe ingresar un valor numérico para el contador Color");
+            return;
+        }
             const valorColor = numeroColor.current.value;
             const contadorColor = {  
                 "id": 0,

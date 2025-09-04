@@ -35,9 +35,9 @@ const NuevoCliente = () => {
       rut: campoRut.current.value,
       direccion: campoDireccion.current.value,
       telefono: campoTelefono.current.value,
-      categoria: Number(campoCategoria.current.value),
+      categoria: campoCategoria.current.value,
       nombreContacto: campoNombreContacto.current.value,
-      fechaPago: campoFechaPago.current.value !== "" ? Number(campoFechaPago.current.value) : null,
+      fechaPago: campoFechaPago.current.value !== "" ? campoFechaPago.current.value : null,
       esAdministrador: false
     };
 

@@ -28,7 +28,7 @@ const Login = () => {
     campoUsuario.current.value = "";  
     campoPassword.current.value = "";
     campoUsuario.current.focus();
-    console.log("Desde Logout:", fromLogout);
+    // console.log("Desde Logout:", fromLogout);
   }, [fromLogout])
   
 
@@ -75,7 +75,7 @@ const Login = () => {
     })
        
       .then((datos) => {
-        console.log(datos)
+        // console.log(datos)
         localStorage.setItem("token", datos.token)
         localStorage.setItem("nombre", datos.nombre)
         localStorage.setItem("esAdmin", datos.esAdmin)

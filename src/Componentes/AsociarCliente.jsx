@@ -85,7 +85,7 @@ const AsociarCliente = () => {
             costoPorCopiaBYN : campoCostoBYN.current.value,
             costoPorCopiaColor : campoCostoColor.current.value
         }
-        console.log("Enviando: " + JSON.stringify(arrendamiento))
+        // console.log("Enviando: " + JSON.stringify(arrendamiento))
      
 
         fetch(`${API_URL}/arrendamiento`, {

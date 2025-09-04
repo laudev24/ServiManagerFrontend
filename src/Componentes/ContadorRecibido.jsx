@@ -1,3 +1,4 @@
+import { bn } from 'date-fns/locale';
 import React, { memo, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -11,6 +12,8 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
     envios,
     clienteId,
   } = grupo;
+  
+  // mensajes: { [envioId]: {bn: string, color: string }}
   const [mensajes, setMensajes] = useState({});
   const API_URL=import.meta.env.VITE_API_URL
   const token = localStorage.getItem("token");
@@ -18,40 +21,64 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   useEffect(() => {
   const inicial = {};
   envios.forEach(envio => {
-    inicial[envio.id] = envio.mensaje || ''; // mensaje precargado si lo hay
+    
+    const bn = envio.mensajeBN ??
+    (typeof envio.mensaje === 'string' ? envio.mensaje : '') ?? '';
+    const color = envio.mensajeColor ?? '';
+    inicial[envio.id] = {
+      bn: bn ?? '',
+      color: color ?? ''
+    };
   });
   setMensajes(inicial);
 }, [envios]);
 
-
-
-  const handleInputChange = (id, value) => {
+  const handleInputChange = (id, campo, value) => {
     setMensajes(prev => ({
       ...prev,
-      [id]: value
+      [envioId]: {
+        ...prev[envioId] ?? {bn: '', color: ''},
+        [campo]: value
+      }
     }));
-  };
+  }
 
-   const handleConfirmar = () => {
-    const mensajesGrupo = envios.map(envio => {
-      const inputValor = mensajes[envio.id];
-      const mensaje = inputValor != null ? String(inputValor).trim() : '';
-      return {
-        clienteId: clienteId,
-        envioId: envio.id,
-        maquinaId: envio.maquinaId,
-        mensaje,
-        tipoImpresion: envio.tipoImpresion
-      };
-    })
-    .filter(m => m.mensaje);
-    // (envio => ({
+   // Puede confirmar si al menos un campo tiene valores ingresados
+    const puedeConfirmar = Object.values(mensajes).some(v => (v?.bn?.toString().trim() || v?.color?.toString().trim()));
 
-    //   envioId: envio.id,
-    //   mensaje: String(mensajes[envio.id]).trim(),
-    //   tipoImpresion: envio.tipoImpresion
-    // }))
     
+
+  const handleConfirmar = () => {
+    // if(!puedeConfirmar) {
+    //   toast.error("Debe ingresar la cantidad de copias para confirmar");
+    //   return;
+    // }
+    const mensajesGrupo = envios.flatMap(envio => {
+      const entry = mensajes[envio.id] || {bn: '', color: ''};
+      const bn = String(entry.bn ?? '').trim();
+      const color = String(entry.color ?? '').trim();
+
+      const items = [];
+      if (bn) {
+        items.push({
+          clienteId,
+          envioId: envio.id,
+          maquinaId: envio.maquinaId,
+          mensaje: bn,
+          tipoImpresion: 1
+        });
+      }
+      if (envio.tipoImpresion === 0 && color) {
+        items.push({
+          clienteId,
+          envioId: envio.id,
+          maquinaId: envio.maquinaId,
+          mensaje: color,
+          tipoImpresion: 0
+        });
+      }
+      return items;
+    });
 
     const dataParaEnviar = {
       clienteNombre,
@@ -63,33 +90,79 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
       envioIds: envios.map(e => e.id),
       mensajes: mensajesGrupo
     };
+    onConfirmar(dataParaEnviar);
+  }
 
-    onConfirmar(dataParaEnviar); 
-  };
+//   useEffect(() => {
+//   const inicial = {};
+//   envios.forEach(envio => {
+//     inicial[envio.id] = envio.mensaje || ''; // mensaje precargado si lo hay
+//   });
+//   setMensajes(inicial);
+// }, [envios]);
 
-  const handleEliminar = (id) => () => {
-    fetch(`${API_URL}/envioContador/${id}`, {
+  // const handleInputChange = (id, value) => {
+  //   setMensajes(prev => ({
+  //     ...prev,
+  //     [id]: value
+  //   }));
+  // };
+
+  //  const handleConfirmar = () => {
+  //   const mensajesGrupo = envios.map(envio => {
+  //     const inputValor = mensajes[envio.id];
+  //     const mensaje = inputValor != null ? String(inputValor).trim() : '';
+  //     return {
+  //       clienteId: clienteId,
+  //       envioId: envio.id,
+  //       maquinaId: envio.maquinaId,
+  //       mensaje,
+  //       tipoImpresion: envio.tipoImpresion
+  //     };
+  //   })
+  //   .filter(m => m.mensaje);
+
+  //   const dataParaEnviar = {
+  //     clienteNombre,
+  //     clienteId,
+  //     maquinaNombre,
+  //     maquinaId,
+  //     fechaFormateada,
+  //     imagen,
+  //     envioIds: envios.map(e => e.id),
+  //     mensajes: mensajesGrupo
+  //   };
+
+  //   onConfirmar(dataParaEnviar); 
+  // };
+
+  const handleEliminarGrupo = async () => {
+    try{
+      const res = await Promise.allSettled(
+        envios.map(e =>
+      
+    fetch(`${API_URL}/envioContador/${e.id}`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',
-                 'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
   
         }
       })
-      .then(async (r) => {
-        if (r.status === 204) {
-            toast("Solicitud eliminada");
-            // console.log(r.status)
-        } else {
-            // console.log(r.status)
-            toast(r.mensaje || "Error eliminando solicitud");
-        }
-      })
-      .catch((err) => {
-        // console.log("Error en la conexión: " + err)
-        toast("Error de conexión al eliminar solicitud");
-      });
+    ))
+     const ok = res.filter(r => r.status === 'fulfilled' && r.value?.status === 204).length;
+      const fail = res.length - ok;
+
+      if(ok) toast.success(`Contador eliminado con éxito`);
+      if(fail) toast.error(`Error eliminando el contador`);
+
+
+    } catch {
+        toast("Error eliminando el contador");
     }
+    }
+
+    
 
   return (
     <div className="envio-contador">
@@ -108,10 +181,49 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
         </div>
 
         <div className="input-col">
+          {envios.map((envio) => {
+            const val = mensajes[envio.id] || {bn: '', color: ''};
+            return (
+              <div key={envio.id}>
+              <div  style={{ marginBottom: '1rem' }}>
+              <label>
+                <strong>B/N:</strong>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Escribe el valor"
+                  value={val.bn}
+                  onChange={(e) => handleInputChange(envio.id, 'bn', e.target.value)}
+                  inputMode='numeric'
+                />
+              </label>
+
+              {envio.tipoImpresion === 0 && (
+                <label>
+                  <strong>Color:</strong>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Escribe el valor"
+                    value={val.color}
+                    onChange={(e) => handleInputChange(envio.id, 'color', e.target.value)}
+                    inputMode='numeric'
+                  />
+                </label>
+              )}
+            </div>
+
+            
+           </div>
+            )
+          })}
+        </div>
+
+        {/* <div className="input-col">
           {envios.map((envio) => (
             <div key={envio.id} style={{ marginBottom: '1rem' }}>
               <label>
-                <strong>{envio.tipoImpresion === 1 ? 'B/N' : 'Color'}:</strong>
+                <strong>B/N:</strong>
                 <input
                   type="number"
                   className="form-control"
@@ -120,26 +232,42 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
                   onChange={(e) => handleInputChange(envio.id, e.target.value)}
                 />
               </label>
+              {envio.tipoImpresion === 0 && (
+                <label>
+                  <strong>Color:</strong>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Escribe el valor"
+                    value={mensajes[envio.id] ?? ''}
+                    onChange={(e) => handleInputChange(envio.id, e.target.value)}
+                  />
+                </label>
+              )}
             </div>
           ))}
-        </div>
+        </div> */}
 
-        <div className="btn-col">
-          <button className="btn-reenviar" onClick={() => console.log('Reenviar solicitud', clienteId)}>
-            Reenviar solicitud
-          </button>
-        </div>
+         {/* <div className="btn-col">
+           
+            
+          
+           </div> */}
+    
+        <div className="acciones" >
+        <button className="btn-reenviar" onClick={() => console.log('Reenviar solicitud grupo', clienteId)}>
+          Reenviar solicitud
+        </button>
+        
+        <button className="eliminar" style={{ marginTop: '1rem' }} onClick={handleEliminarGrupo}>
+          Eliminar
+        </button>
 
-        <div className="btn-col">
-          <button className="btn-confirmar" onClick={handleConfirmar}>
-            Confirmar
-          </button>
-        </div>
-        <div className="btn-col">
-            <button className='eliminar' onClick={handleEliminar()}>
-                Eliminar
-            </button>
-        </div>
+        <button className="btn-confirmar" style={{ marginTop: '1rem' }} onClick={handleConfirmar} disabled={!puedeConfirmar}>
+          Confirmar
+        </button>
+        
+      </div>
       </div>
     </div>
   );
