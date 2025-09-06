@@ -81,9 +81,14 @@ const AsociarCliente = () => {
             fechaInicio : null,
             fechaFin : null,
             activo : null,
-            cargoFijo : campoCargoFijo.current.value,
-            costoPorCopiaBYN : campoCostoBYN.current.value,
-            costoPorCopiaColor : campoCostoColor.current.value
+            cargoFijo : parseFloat(campoCargoFijo.current.value.replace(',', '.')),
+            costoPorCopiaBYN : campoCostoBYN.current?.value
+    ? parseFloat(campoCostoBYN.current.value.replace(',', '.'))
+    : null,
+             costoPorCopiaColor: maquinaElegida?.tipoImpresion === "Color" &&
+    campoCostoColor.current?.value
+    ? parseFloat(campoCostoColor.current.value.replace(',', '.'))
+    : null,
         }
         // console.log("Enviando: " + JSON.stringify(arrendamiento))
      

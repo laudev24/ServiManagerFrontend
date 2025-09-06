@@ -65,6 +65,7 @@ const AsociarMaquinas = () => {
       !maquinasAsociadas.some((asociada) => asociada.id === maq.id)
     );
     setMaquinasSinAsociar(lista);
+    console.log("Maquinas sin asociar:", lista);
   };
 
   const traerCliente = () => {
@@ -94,13 +95,18 @@ const AsociarMaquinas = () => {
       fechaInicio: null,
       fechaFin: null,
       activo: null,
-      cargoFijo: Number(campoCargoFijo.current.value),
-      costoPorCopiaBYN: campoCostoBYN.current?.value ?? null,
-      costoPorCopiaColor: campoCostoColor.current?.value ?? null,
-      ultimoContadorBYN: campoUltimoContadorBYN.current?.value ?? null,
+      cargoFijo: parseFloat(campoCargoFijo.current.value.replace(',', '.')),
+      costoPorCopiaBYN: campoCostoBYN.current?.value
+    ? parseFloat(campoCostoBYN.current.value.replace(',', '.'))
+    : null,
+      costoPorCopiaColor: maquinaElegida?.tipoImpresion === "Color" &&
+    campoCostoColor.current?.value
+    ? parseFloat(campoCostoColor.current.value.replace(',', '.'))
+    : null,
+      ultimoContadorBYN: Number(campoUltimoContadorBYN.current?.value) ?? null,
       ultimoContadorColor: maquinaElegida?.tipoImpresion === 0
-        ? campoUltimoContadorColor.current?.value ?? null
-        : null
+        ? Number(campoUltimoContadorColor.current?.value) : null
+        
     }
 
     fetch(`${API_URL}/arrendamiento`, {
@@ -164,8 +170,13 @@ const AsociarMaquinas = () => {
           <input type="text" ref={campoCostoBYN} />
         </label>
 
+          <label>
+          Último Contador B&N:
+          <input type="text" ref={campoUltimoContadorBYN} />
+        </label>
+
         
-        {maquinaElegida?.tipoImpresion === 0 && (
+        {maquinaElegida?.tipoImpresion === "Color" && (
           <>
             <label>
               Costo por Copia Color:
@@ -179,10 +190,7 @@ const AsociarMaquinas = () => {
         )}
 
         
-        <label>
-          Último Contador B&N:
-          <input type="text" ref={campoUltimoContadorBYN} />
-        </label>
+      
 
         <input type="button" value="Asociar Máquina" onClick={asociar} />
 
