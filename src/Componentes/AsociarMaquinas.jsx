@@ -104,7 +104,7 @@ const AsociarMaquinas = () => {
     ? parseFloat(campoCostoColor.current.value.replace(',', '.'))
     : null,
       ultimoContadorBYN: Number(campoUltimoContadorBYN.current?.value) ?? null,
-      ultimoContadorColor: maquinaElegida?.tipoImpresion === 0
+      ultimoContadorColor: maquinaElegida?.tipoImpresion === "Color"
         ? Number(campoUltimoContadorColor.current?.value) : null
         
     }
@@ -166,12 +166,12 @@ const AsociarMaquinas = () => {
 
         
         <label>
-          Costo por Copia B&N:
+          Costo por Copia B/N:
           <input type="text" ref={campoCostoBYN} />
         </label>
 
           <label>
-          Último Contador B&N:
+          Último Contador B/N:
           <input type="text" ref={campoUltimoContadorBYN} />
         </label>
 

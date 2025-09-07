@@ -144,6 +144,8 @@ const VerMaquina = () => {
               <th>Número de matrícula</th>
               <th>Marca</th>
               <th>Modelo</th>
+              {/* <th>Contador B/N</th>
+              <th>Contador Color</th> */}
               <th></th>
             </tr>
           </thead>
@@ -152,7 +154,9 @@ const VerMaquina = () => {
       <tr><td data-label="Número de matrícula">{maquina.numero}</td></tr>
       <tr><td data-label="Marca">{maquina.marca}</td></tr>
       <tr><td data-label="Modelo">{maquina.modelo}</td></tr>
-      <tr>
+      {/* <tr><td data-label="Contador B/N">{maquina.ultimoContadorBYN ?? "N/A"}</td></tr>
+      <tr><td data-label="Contador Color">{maquina.tipoImpresion === "Color" ? (maquina.ultimoContadorColor ?? "N/A") : "N/A"}</td></tr>*/}
+      <tr> 
         <td data-label="Modificar">
           <button onClick={() => handleModificar(maquina.id)}>Modificar</button>
         </td>
