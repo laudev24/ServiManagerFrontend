@@ -22,10 +22,32 @@ const AsociarCliente = () => {
 
 
     useEffect(() => {
-        if(!clientes.length)cargarClientes()
+        if(!clientes.length) cargarClientes()
         cargarClientesAsociados()
+        cargarMaquina()
 
-    }, [clientes])
+    }, [clientes, maquina])
+
+    const cargarMaquina = () => {
+        fetch(`${API_URL}/maquina/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(r =>{ 
+            if(!r.ok){
+                throw new Error("Error en la respuesta del servidor");
+            }
+            return r.json()
+            }
+        ) 
+        .then(datos => {
+            setMaquina(datos)
+        })
+        .catch(error => {
+            console.error("Error al obtener la máquina:", error);
+        })
+      }
 
     const cargarClientes = () => {
         fetch(`${API_URL}/cliente`, {
@@ -85,7 +107,7 @@ const AsociarCliente = () => {
             costoPorCopiaBYN : campoCostoBYN.current?.value
     ? parseFloat(campoCostoBYN.current.value.replace(',', '.'))
     : null,
-             costoPorCopiaColor: maquinaElegida?.tipoImpresion === "Color" &&
+             costoPorCopiaColor: maquina.tipoImpresion === "Color" &&
     campoCostoColor.current?.value
     ? parseFloat(campoCostoColor.current.value.replace(',', '.'))
     : null,
@@ -136,19 +158,18 @@ const AsociarCliente = () => {
     Cargo fijo:
     <input type="text" ref={campoCargoFijo} />
   </label>
-
-  {maquina?.tipoImpresion === "Color" && (
-    <label>
-      Costo por Copia Color:
-      <input type="text" ref={campoCostoColor} />
-    </label>
-  )}
-
   
     <label>
       Costo por Copia B/N:
       <input type="text" ref={campoCostoBYN} />
     </label>
+
+     {maquina?.tipoImpresion === "Color" && (
+    <label>
+      Costo por Copia Color:
+      <input type="text" ref={campoCostoColor} />
+    </label>
+  )}
   
 
   <input type="button" value="Asociar Cliente" onClick={asociar} />
