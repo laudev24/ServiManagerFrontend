@@ -14,7 +14,7 @@ const Inicio = () => {
     const nombreUsuario = localStorage.getItem("usuario")
     const id = localStorage.getItem("clienteId")
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([])
-    
+    const [loading, setLoading] = useState(true);
    
   const traerMaquinasDelCliente = () => {
     fetch(`${API_URL}/cliente/maquinas-del-cliente?id=${id}`, {
@@ -26,6 +26,7 @@ const Inicio = () => {
     })
       .then(r => r.json())
       .then(datos => setMaquinasAsociadas(datos))
+      .finally(() => setLoading(false))
       .catch(error => console.error("Error al obtener las maquinas:", error));
   }
 
@@ -75,6 +76,10 @@ const Inicio = () => {
         else{
         navigate("/misSolicitudes")
         }
+    }
+
+    if(loading) {
+      return <div>Cargando...</div>;
     }
     
         
