@@ -18,7 +18,7 @@ const EnviarContador = () => {
     const [modoActivo, setModoActivo] = useState(null); // 'camara' o 'galeria'
     const [maquinasAsociadas, setMaquinasAsociadas] = useState([]);
     const [tipoContador, setTipoContador] = useState(1);
-    const [maquinaIdSel, setMaquinaIdSel] = useState(null);
+    const [maquinaIdSel, setMaquinaIdSel] = useState(1);
 
     const numeroBYN = useRef(null)
     const numeroColor = useRef(null)
@@ -83,9 +83,9 @@ const EnviarContador = () => {
     }
 
     const setContador = () => {
-        // const maquinaIdSel = Number(document.querySelector('select').value); // Obtengo el ID
+        const maquinaIdSel = Number(document.querySelector('select').value); // Obtengo el ID
         const maquina = maquinasAsociadas.find(maq => maq.id === Number(maquinaIdSel));
-        if (maquina.tipoImpresion === 0) {
+        if (maquina.tipoImpresion === "Color") {
             setTipoContador(0); // Tipo de contador: 0 para color
         } else {    
             setTipoContador(1); // Tipo de contador: 1 para B&N
@@ -130,7 +130,7 @@ const EnviarContador = () => {
             "fechaYHora": null,
             "confirmado": true,
             "contador": 0,
-            "tipoImpresion": 1,
+            "tipoImpresion": "Monocromatico",
             "mensaje": valorBYN
         }
       
@@ -140,7 +140,7 @@ const EnviarContador = () => {
         formData.append("EnviosContadores[0].EnvioContador", new Blob([JSON.stringify(contadorByn)], { type: "application/json" }));
         formData.append("EnviosContadores[0].Imagen", fotoFile || null);
         
-       if(maquina.tipoImpresion === 0){
+       if(maquina.tipoImpresion === "Color"){
          if(numeroColor.current.value.trim() != '' && Number(numeroColor.current.value) < 0){
             toast.error("El valor del contador Color no puede ser negativo");
             return;
@@ -157,15 +157,17 @@ const EnviarContador = () => {
                 "fechaYHora": null,
                 "confirmado": true,
                 "contador": 0,
-                "tipoImpresion": 0,
+                "tipoImpresion": "Color",
                 "mensaje": valorColor
             }
             formData.append("EnviosContadores[1].EnvioContador", new Blob([JSON.stringify(contadorColor)], { type: "application/json" }));
             formData.append("EnviosContadores[1].Imagen", fotoFile || null);
+        
             // console.log("Datos a enviar:", formData);
-            for (let pair of formData.entries()) {
-                console.log(`${pair[0]}:`, pair[1]);
-            }
+
+            // for (let pair of formData.entries()) {
+            //     console.log(`${pair[0]}:`, pair[1]);
+            // }
             fetch(`${API_URL}/envioContador`, {
                 method: 'POST',
                 body: formData,
@@ -181,16 +183,20 @@ const EnviarContador = () => {
                 }
                 else if(r.ok)
                     navigate("/contadoresEnviados")
+                    toast.success("Contador enviado con éxito");
                 return r.json();
             })
             .catch(error => {
                 console.error("Error al enviar el contador:", error);
-                toast(error.message || "Error al enviar el contador");
+                toast.error("Error al enviar el contador");
             })
             .finally(setSubmitting(false));
         }
-        else if(maquina.tipoImpresion === 1){
-            
+        else if(maquina.tipoImpresion === "Monocromatico"){
+            // console.log("Datos a enviar:", formData)
+            // for (let pair of formData.entries()) {
+            //     console.log(`${pair[0]}:`, pair[1]);
+            // }
             fetch(`${API_URL}/envioContador`, {
                 method: 'POST',
                 body: formData,
@@ -206,12 +212,13 @@ const EnviarContador = () => {
                 }
                 else if(r.ok){
                     navigate("/contadoresEnviados")
+                    toast.success("Contador enviado con éxito");
                 }
                 return r.json();
             })
             .catch(error => {
                 console.error(error);
-                toast(error.message || "Error al enviar el contador");
+                toast.error("Error al enviar el contador");
             })
             .finally(setSubmitting(false));
         }
@@ -250,7 +257,7 @@ const EnviarContador = () => {
                 </div>
             </div>
             <label className='label-contador'>
-                Contador B&N:
+                Contador B/N:
                 <input type="number" placeholder="Valor del contador" ref={numeroBYN}/>
             </label>
             
