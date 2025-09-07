@@ -33,7 +33,7 @@ const NuevaMaquina = () => {
       numero: campoNumero.current.value,
       marca: campoMarca.current.value,
       modelo: campoModelo.current.value,
-      año: campoAnio.current.value,
+      // año: campoAnio.current.value,
       activa: true,
       tipoImpresion: parseInt(campoTipoImpresion.current.value),
       cantidadContadores: Number(campoCantidadContadores.current.value),
@@ -92,7 +92,7 @@ const NuevaMaquina = () => {
         <h1>Registro de nueva máquina</h1>
 
         <label>
-          Número:
+          Número de matrícula:
           <br />
           <input type="text" ref={campoNumero} />
         </label>
@@ -108,12 +108,12 @@ const NuevaMaquina = () => {
           <br />
           <input type="text" ref={campoModelo} />
         </label>
-
+{/* 
         <label>
           Año:
           <br />
           <input type="text" ref={campoAnio} />
-        </label>
+        </label> */}
 
         <label>
           Tipo de impresión:

@@ -67,7 +67,7 @@ const ModificarMaquina = () => {
       numero,
       marca,
       modelo,
-      año: anio,
+      // año: anio,
       tipoImpresion: Number(tipoImpresion),
       cantidadContadores: Number(cantidadContadores),
     };
@@ -98,7 +98,7 @@ const ModificarMaquina = () => {
         <h1>Modificar máquina</h1>
 
         <label>
-          Número:
+          Número de matrícula:
           <input
             type="text"
             value={numero}
@@ -124,14 +124,14 @@ const ModificarMaquina = () => {
           />
         </label>
 
-        <label>
+        {/* <label>
           Año:
           <input
             type="text"
             value={anio}
             onChange={(e) => setAnio(e.target.value)}
           />
-        </label>
+        </label> */}
 
         <label>
           Tipo de impresión:

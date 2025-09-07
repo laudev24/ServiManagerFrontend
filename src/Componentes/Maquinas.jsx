@@ -149,7 +149,7 @@ const Maquinas = () => {
           <tbody>
             {maquinasPaginadas.map((maquina) => (
               <tr key={maquina.id}>
-                <td data-label="Numero">
+                <td data-label="Número de matrícula">
                   <Link to={`/verMaquina/${maquina.id}`}>{maquina.numero}</Link>
                 </td>
                 <td data-label="Marca">{maquina.marca}</td>
