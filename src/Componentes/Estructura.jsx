@@ -19,25 +19,35 @@ const Estructura = () => {
         
         window.history.back();
     }
+    const isLogueado = !!localStorage.getItem("token");
 
   return (
 
     <div className="container-fluid">
         <div className="contenido-central">
        <header>
-  <nav className="nav-header">
+        <nav>
+  {/* <nav className="nav-header"> */}
+   {/* <div className="nav-left"> */}
     {/** Icono Home o espacio vacío del mismo tamaño */}
     {isInicio ? (
       <div className="icon-placeholder" />  // mantiene el espacio
     ) : (
-      <NavLink to="/InicioAdm" className="icon-link">
         <img src="/Home.png" alt="Volver a inicio" onClick={irAInicio} />
-      </NavLink>
+      
     )}
 
     {!fromLogin && (
       <img src="/Back.png" alt="Volver atrás" onClick={volverAtras} />
     )}
+    {/* </div> */}
+    {/* <div className="nav-right"> */}
+    {isLogueado && (
+      <NavLink to="/" state={{ fromLogout: true }} className="logout-link">Logout</NavLink>
+    )}
+    {/* </div> */}
+
+  {/* </nav> */}
   </nav>
 </header>
 
@@ -46,9 +56,7 @@ const Estructura = () => {
             <Outlet />
         </main>
 
-        <footer>
-            <NavLink to="/" state={{ fromLogout: true }}>Logout</NavLink>
-        </footer>
+     
         </div>
     </div>
    

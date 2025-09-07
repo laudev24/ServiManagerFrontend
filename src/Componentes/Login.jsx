@@ -24,6 +24,15 @@ const Login = () => {
     campoUsuario.current.focus();
 
     }
+    else if(localStorage.getItem("token")){
+      // toast.info("Ya estás logueado");
+      if(localStorage.getItem("esAdmin") === "true"){
+        navigate('/inicioAdm', { state: { fromLogin: true } })
+      }
+      else{
+        navigate('/inicio', { state: { fromLogin: true } })
+      }
+    }
     setIsDisabled(true);
     campoUsuario.current.value = "";  
     campoPassword.current.value = "";
