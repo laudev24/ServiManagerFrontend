@@ -52,7 +52,7 @@ const [loading, setLoading] = useState(true);
       const agrupados = {};
       contadores.forEach((contador) => {
         const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
-        console.log(contador.imagen)
+        // console.log(contador.imagen)
         const blob = new Blob([Uint8Array.from(atob(contador.imagen), c => c.charCodeAt(0))], { type: 'image/jpeg' });
         const url = URL.createObjectURL(blob);
 
