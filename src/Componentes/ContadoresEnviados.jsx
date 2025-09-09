@@ -98,7 +98,7 @@ const [loading, setLoading] = useState(true);
     <td>
       {grupo.mensajes.map((msg, idx) => (
         <div key={idx}>
-          <strong>{msg.tipoImpresion === 1 ? "B/N" : "Color"}:</strong> {msg.mensaje}
+          <strong>{msg.tipoImpresion === "Monocromatico" ? "B/N" : "Color"}:</strong> {msg.mensaje} 
         </div>
       ))}
     </td>

@@ -12,11 +12,28 @@ export default defineConfig({
     registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Mi PWA React',
-        short_name: 'PWAReact',
-        description: 'Mi Progressive Web App con React y Vite',
+        name: 'ServiManager',
+        short_name: 'ServiManager',
+        description: 'Proyecto integrador ORT',
         theme_color: '#ffffff',
-        icons: [],
+        icons: [
+    // {
+    //   "src": "/icons/icon-192.png",
+    //   "sizes": "192x192",
+    //   "type": "LogoDiegoVidal.jpeg"
+    // },
+    // {
+    //   "src": "/icons/icon-512.png",
+    //   "sizes": "512x512",
+    //   "type": "LogoDiegoVidal.jpeg"
+    // },
+    // {
+    //   "src": "/icons/maskable-512.png",
+    //   "sizes": "512x512",
+    //   "type": "LogoDiegoVidal.jpeg",
+    //   "purpose": "maskable"
+    // }
+  ],
       },
   })],
 })

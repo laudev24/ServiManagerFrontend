@@ -187,7 +187,7 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
               <div key={envio.id}>
               <div  style={{ marginBottom: '1rem' }}>
               <label>
-                <strong>B/N:</strong>
+                <strong>{envio.tipoImpresion == "Monocromatico" ? "B/N" : "Color"}</strong>
                 <input
                   type="number"
                   className="form-control"
@@ -197,62 +197,13 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
                   inputMode='numeric'
                 />
               </label>
-
-              {envio.tipoImpresion === 0 && (
-                <label>
-                  <strong>Color:</strong>
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Escribe el valor"
-                    value={val.color}
-                    onChange={(e) => handleInputChange(envio.id, 'color', e.target.value)}
-                    inputMode='numeric'
-                  />
-                </label>
-              )}
             </div>
-
-            
            </div>
             )
           })}
         </div>
 
-        {/* <div className="input-col">
-          {envios.map((envio) => (
-            <div key={envio.id} style={{ marginBottom: '1rem' }}>
-              <label>
-                <strong>B/N:</strong>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Escribe el valor"
-                  value={mensajes[envio.id] ?? ''}
-                  onChange={(e) => handleInputChange(envio.id, e.target.value)}
-                />
-              </label>
-              {envio.tipoImpresion === 0 && (
-                <label>
-                  <strong>Color:</strong>
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Escribe el valor"
-                    value={mensajes[envio.id] ?? ''}
-                    onChange={(e) => handleInputChange(envio.id, e.target.value)}
-                  />
-                </label>
-              )}
-            </div>
-          ))}
-        </div> */}
-
-         {/* <div className="btn-col">
-           
-            
-          
-           </div> */}
+       
     
         <div className="acciones" >
         <button className="btn-reenviar" onClick={() => console.log('Reenviar solicitud grupo', clienteId)}>
