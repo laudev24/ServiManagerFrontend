@@ -101,10 +101,10 @@ const NuevaFichaTecnica = () => {
   };
 
   const esColor = () => {
-    if (from === "fichasMaquina") return maquina?.tipoImpresion === 0;
+    if (from === "fichasMaquina") return maquina?.tipoImpresion === "Color";
     const idSeleccionado = Number(idMaquinaSeleccionada);
     const maquinaSeleccionada = maquinas.find((m) => m.id === idSeleccionado);
-    return maquinaSeleccionada?.tipoImpresion === 0;
+    return maquinaSeleccionada?.tipoImpresion === "Color";
   };
 
   const ingresarFicha = () => {
@@ -185,12 +185,12 @@ const NuevaFichaTecnica = () => {
         )}
 
         <label>
-          Contador B&N 1:
+          Contador B/N 1:
           <input type="number" ref={campoContadorBYN1} />
         </label>
 
         <label>
-          Contador B&N 2:
+          Contador B/N 2:
           <input type="number" ref={campoContadorBYN2} />
         </label>
 
