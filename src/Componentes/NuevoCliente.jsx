@@ -1,14 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { guardarClientes } from '../features/clientesSlice'
 import { useNavigate } from 'react-router-dom';
 
 const NuevoCliente = () => {
-  const categorias = useSelector(state => state.categoriasSlice.categorias);
+    const cat =  useSelector(state => state.categoriasSlice.categorias);
   const token = localStorage.getItem("token")
   const API_URL = import.meta.env.VITE_API_URL
   const [mensaje, setMensaje] = useState("")
+  const [nivelSeguridad, setNivelSeguridad] = useState("");
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const [categorias, setCategorias] = useState([])
+  const [mostrarInfoContrasenia, setMostrarInfoContrasenia] = useState(false);
+
+
 
   const campoNombreEmpresa = useRef("")
   const campoDireccion = useRef("")
@@ -25,8 +31,109 @@ const NuevoCliente = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
+  const traerCategorias = async () => {
+    try {
+      const resp = await fetch(`${API_URL}/categoria`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!resp.ok) {
+        throw new Error("Error al traer las categorías");
+      }
+      const datos = await resp.json();
+      setCategorias(datos);
+    } catch (error) {
+      console.error("Error en traerCategorias:", error);
+      // toast.error("No se pudieron cargar las categorías");
+    }
+  };
+
+
+ useEffect(() => {
+    if (cat &&  cat.length > 0) {
+      setCategorias(cat);
+    } else {
+      traerCategorias();
+    }
+  }, [cat, API_URL, token]); 
+  
+
+
+  const validarContrasenia = (password, campos) => {
+    const errores = [];
+
+    // Longitud
+    if (password.length < 12 || password.length > 20) {
+      errores.push("Debe tener entre 12 y 20 caracteres.");
+    }
+
+    // Letras, números y símbolos
+    if (!/[A-Z]/.test(password)) errores.push("Debe contener al menos una letra mayúscula.");
+    if (!/[a-z]/.test(password)) errores.push("Debe contener al menos una letra minúscula.");
+    if (!/[0-9]/.test(password)) errores.push("Debe contener al menos un número.");
+    if (!/[?!@#$%.\-;,&_]/.test(password)) errores.push("Debe contener al menos un carácter especial permitido.");
+
+    // Datos personales
+    const lowerPassword = password.toLowerCase();
+    campos.forEach((campo) => {
+      if (campo && lowerPassword.includes(campo.toLowerCase())) {
+        errores.push("La contraseña no puede contener datos personales.");
+      }
+    });
+
+    return errores;
+  };
+
+  const obtenerNivelSeguridad = (password) => {
+    let puntaje = 0;
+
+    if (password.length >= 12) puntaje++;
+    if (/[A-Z]/.test(password)) puntaje++;
+    if (/[a-z]/.test(password)) puntaje++;
+    if (/[0-9]/.test(password)) puntaje++;
+    if (/[?!@#$%.\-;,&_]/.test(password)) puntaje++;
+
+    if (puntaje <= 2) return "Baja";
+    if (puntaje === 3 || puntaje === 4) return "Media";
+    return "Alta";
+  };
+
+
+
+
+
+
+
   const registrar = () => {
-    const clienteNuevo = {
+   
+
+    const contrasenia = campoContrasenia.current.value;
+const contrasenia2 = campoContrasenia2.current.value;
+
+if (contrasenia !== contrasenia2) {
+  toast("Las contraseñas no coinciden.");
+  return;
+}
+
+const errores = validarContrasenia(contrasenia, [
+  campoNombreUsuario.current.value,
+  campoEmail.current.value,
+  campoTelefono.current.value,
+  campoRut.current.value,
+  campoDireccion.current.value,
+  campoNombreEmpresa.current.value,
+  campoNombreContacto.current.value
+]);
+
+if (errores.length > 0) {
+  setMensaje(errores.join(" "));
+  toast.error("Error en la contraseña: " + errores.join(" "));
+  return;
+}
+ const clienteNuevo = {
       id: 0,
       nombre: campoNombreUsuario.current.value,
       contraseña: campoContrasenia.current.value,
@@ -41,7 +148,6 @@ const NuevoCliente = () => {
       esAdministrador: false
     };
 
-    if (campoContrasenia.current.value === campoContrasenia2.current.value) {
       fetch(`${API_URL}/cliente`, {
         method: 'POST',
         body: JSON.stringify(clienteNuevo),
@@ -73,8 +179,9 @@ const NuevoCliente = () => {
           toast(error.message);
           setMensaje(error.message)
         });
-    }
   }
+
+  if(categorias === null) return <p>Cargando datos...</p>
 
   return (
     <div className="contenedor-menu">
@@ -129,12 +236,117 @@ const NuevoCliente = () => {
 
         <label>
           Contraseña:
-          <input type="password" ref={campoContrasenia} />
+          <span
+    style={{
+      marginLeft: "6px",
+      cursor: "pointer",
+      fontSize: "14px",
+      color: "#007bff"
+    }}
+    title="Mostrar reglas"
+    onClick={() => setMostrarInfoContrasenia(!mostrarInfoContrasenia)}
+  >
+    ℹ️
+  </span>
+
+  {mostrarInfoContrasenia && (
+    <div style={{
+      backgroundColor: "#f0f0f0",
+      border: "1px solid #ccc",
+      padding: "8px",
+      marginTop: "4px",
+      fontSize: "14px",
+      borderRadius: "4px",
+      width: "100%"
+    }}>
+      <strong>Requisitos de la contraseña:</strong>
+      <ul style={{ margin: "4px 0 0 16px", padding: 0 }}>
+        <li>12 a 20 caracteres</li>
+        <li>Al menos una letra mayúscula</li>
+        <li>Al menos una letra minúscula</li>
+        <li>Al menos un número</li>
+        <li>Al menos un símbolo: ? ! @ # $ % . - ; , &</li>
+        <li>No debe contener datos personales</li>
+      </ul>
+    </div>
+  )}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <input
+              type={mostrarContrasenia ? "text" : "password"}
+              ref={campoContrasenia}
+              onChange={(e) => {
+                const valor = e.target.value;
+                const nivel = obtenerNivelSeguridad(valor);
+                setNivelSeguridad(nivel);
+              }}
+              style={{ flex: 1 }}
+            />
+            <button
+              type="button"
+
+              onClick={() => setMostrarContrasenia(!mostrarContrasenia)}
+              style={{
+                marginLeft: "8px",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                width: "10px"
+              }}
+              title={mostrarContrasenia ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {mostrarContrasenia ? "🙈" : "👁️"}
+            </button>
+          </div>
+
+          {/* <input
+            type="password"
+            ref={campoContrasenia}
+            onChange={() => {
+              const valor = campoContrasenia.current.value;
+              const nivel = obtenerNivelSeguridad(valor);
+              setNivelSeguridad(nivel);
+            }}
+          /> */}
+          {nivelSeguridad && (
+            <p style={{
+              color: nivelSeguridad === "Alta" ? "green" :
+                    nivelSeguridad === "Media" ? "orange" :
+                    "red"
+            }}>
+              Seguridad de la contraseña: {nivelSeguridad}
+            </p>
+          )}
         </label>
 
         <label>
           Repetir contraseña:
-          <input type="password" ref={campoContrasenia2} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <input
+              type={mostrarContrasenia ? "text" : "password"}
+              ref={campoContrasenia2}
+              // onChange={() => {
+                // const valor = campoContrasenia.current.value;
+                // const nivel = obtenerNivelSeguridad(valor);
+                // setNivelSeguridad(nivel);
+              // }}
+              style={{ flex: 1 }}
+            />
+            <button
+              type="button"
+
+              onClick={() => setMostrarContrasenia(!mostrarContrasenia)}
+              style={{
+                marginLeft: "8px",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                width: "10px"
+              }}
+              title={mostrarContrasenia ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {mostrarContrasenia ? "🙈" : "👁️"}
+            </button>
+          </div>
         </label>
 
         <label>
