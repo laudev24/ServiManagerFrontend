@@ -79,15 +79,15 @@ const Solicitudes = () => {
       .then(async (r) => {
         if (r.status === 204) {
             toast("Solicitud eliminada");
-            console.log(r.status)
+            //console.log(r.status)
             setSolicitudes(prev => prev.filter(c => c.id !== idSol));
         } else {
-            console.log(r.status)
+            //console.log(r.status)
             toast(r.mensaje || "Error eliminando solicitud");
         }
       })
       .catch((err) => {
-        console.log("Error en la conexión: " + err)
+        //console.log("Error en la conexión: " + err)
         toast("Error de conexión al eliminar solicitud");
       });
     }

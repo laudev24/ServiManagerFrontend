@@ -85,6 +85,7 @@ const EnviarContador = () => {
     const setContador = () => {
         const maquinaIdSel = Number(document.querySelector('select').value); // Obtengo el ID
         const maquina = maquinasAsociadas.find(maq => maq.id === Number(maquinaIdSel));
+        // console.log(maquina.tipoImpresion)
         if (maquina.tipoImpresion === "Color") {
             setTipoContador(0); // Tipo de contador: 0 para color
         } else {    
@@ -162,12 +163,12 @@ const EnviarContador = () => {
             }
             formData.append("EnviosContadores[1].EnvioContador", new Blob([JSON.stringify(contadorColor)], { type: "application/json" }));
             formData.append("EnviosContadores[1].Imagen", fotoFile || null);
-        
-            // console.log("Datos a enviar:", formData);
+            console.log(contadorColor)
+            console.log("Datos a enviar:", formData);
 
-            // for (let pair of formData.entries()) {
-            //     console.log(`${pair[0]}:`, pair[1]);
-            // }
+            for (let pair of formData.entries()) {
+                console.log(`${pair[0]}:`, pair[1]);
+            }
             fetch(`${API_URL}/envioContador`, {
                 method: 'POST',
                 body: formData,

@@ -105,15 +105,15 @@ const VerMaquina = () => {
     .then(async (r) => {
       if (r.status === 204) {
         toast(`Cliente ${cliente.nombreEmpresa} desasociado.`);
-        console.log(r.status)
+        //console.log(r.status)
         cargarClientesAsociados()
       } else {
-        console.log(r.status)
+        //console.log(r.status)
         toast(r.mensaje || "Error desasociando cliente");
       }
     })
     .catch((err) => {
-      console.log("Error en la conexión: " + err)
+      //console.log("Error en la conexión: " + err)
       toast("Error de conexión al desasociar cliente");
     });
   }

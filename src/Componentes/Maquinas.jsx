@@ -105,7 +105,7 @@ const Maquinas = () => {
         }
       })
       .catch((err) => {
-        console.log("Error en la conexión: " + err)
+        //console.log("Error en la conexión: " + err)
         toast("Error de conexión al eliminar máquina");
       });
   }

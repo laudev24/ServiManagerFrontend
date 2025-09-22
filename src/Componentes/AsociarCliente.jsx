@@ -175,7 +175,7 @@ const AsociarCliente = () => {
       ultimoContadorColor: maquina?.tipoImpresion === "Color"
         ? Number(campoUltimoContadorColor.current?.value) : null
         }
-        console.log("Enviando: " + JSON.stringify(arrendamiento))
+        //console.log("Enviando: " + JSON.stringify(arrendamiento))
 
   try {
     const response = await fetch(`${API_URL}/arrendamiento`, {

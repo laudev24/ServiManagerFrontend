@@ -92,8 +92,8 @@ const ModificarCliente = () => {
       setRut(cliente.rut)
       setFechaPago(cliente.fechaPago)
       setNombre(cliente.nombre)
-      console.log("categoria:", categoria)
-      console.log("fechaPago:", fechaPago)
+      //console.log("categoria:", categoria)
+      //console.log("fechaPago:", fechaPago)
     }
   }, [cliente, categorias])
 
@@ -126,14 +126,14 @@ function convertirFechaPagoAOriginal(valor) {
   const modificar = () => {
     if(!categoria || !fechaPago) toast.error("Debe seleccionar categoría y fecha de pago");
   //  if(!categoria) setCategoria(cliente.categoria)
-    console.log("fechaPago:", fechaPago)
-    console.log("categoria:", categoria)
+    ("fechaPago:", fechaPago)
+    //console.log("categoria:", categoria)
       const fechaFormateada = convertirFechaPago(fechaPago);
   const fechaPagoValor = fechaFormateada || cliente.fechaPago;
     // const fechaFormateada = convertirFechaPago(fechaPago);
     // const categoriaSeleccionada = categorias.find(c => c.nombre === categoria);
     // const fechaPagoValor = fechaFormateada != cliente.fechaPago ? fechaFormateada : cliente.fechaPago;
-    console.log("fechaPagoValor:", fechaPagoValor)
+    //console.log("fechaPagoValor:", fechaPagoValor)
     const clienteModificado = {
       id: Number(id),
       nombre: nombre,

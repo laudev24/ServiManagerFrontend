@@ -65,7 +65,7 @@ const AsociarMaquinas = () => {
       !maquinasAsociadas.some((asociada) => asociada.id === maq.id)
     );
     setMaquinasSinAsociar(lista);
-    console.log("Maquinas sin asociar:", lista);
+    //console.log("Maquinas sin asociar:", lista);
   };
 
   const traerCliente = () => {

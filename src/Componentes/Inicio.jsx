@@ -41,7 +41,7 @@ const Inicio = () => {
 
 
     const solicitarServicio = () => {
-        console.log("maquinasAsociadas:", maquinasAsociadas);
+        //console.log("maquinasAsociadas:", maquinasAsociadas);
         if(!maquinasAsociadas){
             toast.error("No tienes máquinas asociadas. Contáctate con Diego.")
         }

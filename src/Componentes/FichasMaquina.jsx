@@ -179,7 +179,7 @@ const FichasMaquina = () => {
         .then(async (r) => {
             if (r.status === 204) {
                 toast("Ficha eliminada");
-                console.log(r.status)
+                //console.log(r.status)
                 setFichas(prev => prev.filter(c => c.id !== idFicha));
             } else {
                 console.log(r.status)
@@ -187,7 +187,7 @@ const FichasMaquina = () => {
             }
         })
         .catch((err) => {
-            console.log("Error en la conexión: " + err)
+            //console.log("Error en la conexión: " + err)
             toast("Error de conexión al eliminar ficha");
         });
     }

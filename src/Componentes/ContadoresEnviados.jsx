@@ -18,7 +18,7 @@ const [loading, setLoading] = useState(true);
 
     const traerContadoresEnviados = () => {
 
-      fetch(`${API_URL}/envioContador/cliente/${clienteId}`,
+      fetch(`${API_URL}/contador/cliente/${clienteId}/pendiente`,
         {
           method: 'GET',
           headers: {

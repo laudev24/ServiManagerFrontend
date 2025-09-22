@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 const InformacionContadores = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  console.log("state: ",state)
 
   const clienteId = state?.clienteId;
   const maquinaId = state?.maquinaId;
@@ -13,11 +14,12 @@ const InformacionContadores = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [contadores, setContadores] = useState([]);
+  const [contador, setContador] = useState(null);
   const [arrendamiento, setArrendamiento] = useState(null); // objeto
   const [envioContador, setEnvioContador] = useState(null);
   const [loading, setLoading] = useState(true);
   // const [descuento, setDescuento] = useState(''); // controlado como string para el input
-  const descuento = useRef()
+  const descuento = useRef(0)
 // const [total, setTotal] = useState(0);
   // ---------- FETCHERS ----------
   const traerContadoresDelCliente = async () => {
@@ -28,7 +30,9 @@ const InformacionContadores = () => {
       if (!r.ok) throw new Error('Error al traer contadores del cliente');
       const data = await r.json();
       setContadores(data);
-      console.log(data)
+      const index = data.length -1
+      setContador(data[index])
+      console.log("data: ", data)
     } catch (e) {
       console.error('Error al obtener los contadores del cliente:', e);
     }
@@ -46,6 +50,7 @@ const InformacionContadores = () => {
       // Si el API devuelve array, tomamos el primero; si es objeto, lo dejamos
       const a = Array.isArray(data) ? data[0] : data;
       setArrendamiento(a ?? null);
+      console.log("arrendamientos: ", data)
     } catch (e) {
       console.error('Error al obtener el arrendamiento:', e);
     } finally {
@@ -69,11 +74,17 @@ const InformacionContadores = () => {
     return m.mensaje - totalCopiasInicial
   }
 
-  const calcularMontoByN = () => {
-
+  const traerMontoAAbonar = (m) => {
+    const subtotal = m.tipoImpresion === "Monocromatico" ? contador.costoBYN : contador.costoColor
+    return subtotal
   }
   const calcularTotalAAbonar = () => {
-
+    const desc = descuento.current.value || 0
+    console.log("desc: ", desc)
+    console.log("contador: ", contador)
+    
+    const total = (contador.costo - desc) || 0
+    return total
   }
 
   // ---------- GUARDAR ----------
@@ -92,7 +103,7 @@ const InformacionContadores = () => {
   }
   // console.log(state.mensajes)
 
-  if (loading) return <p>Cargando datos...</p>;
+  if (loading || !contador) return <p>Cargando datos...</p>;
 
   // Si no hay arrendamiento, mostramos un fallback
   if (!arrendamiento) return <p>No se encontró arrendamiento.</p>;
@@ -133,7 +144,7 @@ const InformacionContadores = () => {
                 <tr>
                   <td><em>Monto a abonar {m.tipoImpresion === 1 ? "B/N" : "Color"}:</em></td>
 
-                  <td>{calcularMontoByN(m)}</td>
+                  <td>{traerMontoAAbonar(m)}</td>
                 </tr>
               </tbody>
             </table>

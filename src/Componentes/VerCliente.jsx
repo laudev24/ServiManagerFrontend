@@ -32,7 +32,7 @@ const VerCliente = () => {
         }) 
         .then(datos => {
             setCliente(datos)
-            console.log(datos)
+            //console.log(datos)
         })
         .catch(error => {
             console.error("Error al obtener el cliente:", error);
@@ -83,7 +83,7 @@ const VerCliente = () => {
               })
             .then(datos => {
                 dispatch(guardarCategorias(datos))
-                console.log(datos)
+                //console.log(datos)
 
                 if(cliente)setCategoria(datos.find(c => c.id === cliente.categoria))
                 

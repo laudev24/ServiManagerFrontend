@@ -80,6 +80,8 @@ const agruparEnvios = (contadores) => {
 
       const envioExtendido = {
         ...envio,
+        contadorId : contador.id,
+        costo: contador.costo,
         clienteNombre: buscarCliente(envio.clienteId),
         clienteId: envio.clienteId,
         maquinaId: envio.maquinaId,
@@ -92,6 +94,8 @@ const agruparEnvios = (contadores) => {
       } else {
         agrupados.push({
           clave,
+          contadorId: contador.id,
+          costo: contador.consto,
           maquinaId: envio.maquinaId,
           clienteId: envio.clienteId,
           imagen: envio.imagen,
@@ -128,7 +132,11 @@ const agruparEnvios = (contadores) => {
 
 
 const handleConfirmar = useCallback((dataGrupo) => {
+ 
+
   navigate('/informacionContadores', { state: dataGrupo });
+
+
 }, []);
 
 
@@ -148,7 +156,7 @@ const handleConfirmar = useCallback((dataGrupo) => {
     </article>
   ))
 ) : (
-  <p>Cargando datos (puede demorar si hay varios contadores) o no hay contadores...</p>
+  <p>Cargando datos o no hay contadores...</p>
 )}
 
       </div>

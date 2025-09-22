@@ -26,6 +26,8 @@ const Camara = ({activo , onData }) => {
         return () => {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
+                videoRef.current.srcObject = null;
+                setMediaStream(null);
             }        
         };    
     }, []); 
@@ -51,7 +53,7 @@ const Camara = ({activo , onData }) => {
                 onData(file)
                 }
                 setFotoFile(file);
-                console.log("📸 Foto capturada como File", file);
+                // console.log("📸 Foto capturada como File", file);
 
             }
             }, "image/jpeg", 0.9);
