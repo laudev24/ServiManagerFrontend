@@ -11,16 +11,29 @@ const Camara = ({activo , onData }) => {
 
     useEffect(() => {
         // Solicitar acceso a la cámara cuando el componente se monta
+        // async function setupCamera() {
+        //     try {
+        //         const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        //         videoRef.current.srcObject = mediaStream;                
+        //         setStream(mediaStream);            
+        //     } catch (err) {
+        //         console.error("Error al acceder a la cámara: ", err);
+        //         toast("No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados.");
+        //     }        
+        // }
         async function setupCamera() {
-            try {
-                const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-                videoRef.current.srcObject = mediaStream;                
-                setStream(mediaStream);            
-            } catch (err) {
-                console.error("Error al acceder a la cámara: ", err);
-                toast("No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados.");
-            }        
-        }
+    try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { ideal: "environment" } }
+        });
+        videoRef.current.srcObject = mediaStream;
+        setStream(mediaStream);
+    } catch (err) {
+        console.error("Error al acceder a la cámara: ", err);
+        toast("No se pudo acceder a la cámara trasera. Verifica los permisos.");
+    }
+}
+
         setupCamera();
         // Limpiar la transmisión de la cámara cuando el componente se desmonta
         return () => {
