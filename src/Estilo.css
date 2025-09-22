@@ -370,6 +370,7 @@ margin: 0;
     background-color: var(--crema);
 }
 
+
 /* Usuario en el cabezal */
 .menu-usuario {
     display: flex;
@@ -432,7 +433,8 @@ margin: 0;
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
-    ;
+  table-layout: fixed; /* Fija el ancho de las celdas */
+    
 }
 
 .contenedor-secundario th,
@@ -442,6 +444,20 @@ margin: 0;
     vertical-align: middle;
     text-align: left;
 }
+
+
+/* Para las celdas con descripción */
+.contenedor-secundario td[data-label="Descripción"],
+.descripcionFicha {
+  white-space: normal;        /* Permite saltos de línea */
+  word-wrap: break-word;      /* Rompe palabras largas si es necesario */
+  overflow-wrap: break-word;
+  /* word-break: break-all; */
+  word-break: break-word;
+
+    /* Compatibilidad moderna */
+}
+
 
 .contenedor-secundario img {
     vertical-align: middle;

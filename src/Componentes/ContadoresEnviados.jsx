@@ -77,16 +77,22 @@ const [loading, setLoading] = useState(true);
   
 
 
-     const formatearFechaHora = (fechaISO) => {
-        const fecha = new Date(fechaISO); // convierte desde UTC a local automáticamente
-        const dia = String(fecha.getDate()).padStart(2, '0');
-        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-        const anio = fecha.getFullYear();
-        const horas = String(fecha.getHours()).padStart(2, '0');
-        const minutos = String(fecha.getMinutes()).padStart(2, '0');
+   const formatearFechaHora = (fechaISO) => {
+  if (!fechaISO) return "";
 
-        return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
-    }
+  const fechaUTC = new Date(fechaISO);
+
+  // Obtener la hora local ajustando desde UTC
+  const fechaLocal = new Date(fechaUTC.getTime() - 3 * 60 * 60 * 1000);
+
+  const dia = String(fechaLocal.getDate()).padStart(2, '0');
+  const mes = String(fechaLocal.getMonth() + 1).padStart(2, '0');
+  const anio = fechaLocal.getFullYear();
+  const horas = String(fechaLocal.getHours()).padStart(2, '0');
+  const minutos = String(fechaLocal.getMinutes()).padStart(2, '0');
+
+  return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+};
 
     const Row = React.memo(({ grupo }) => (
   <tr>
