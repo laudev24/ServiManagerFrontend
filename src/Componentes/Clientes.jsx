@@ -93,7 +93,7 @@ const Clientes = () => {
     const textoBusqueda = nombreTexto.toLowerCase().trim();
     if (textoBusqueda !== "") {
       base = base.filter(cliente =>
-        cliente.nombreEmpresa?.toLowerCase().startsWith(textoBusqueda)
+        cliente.nombreEmpresa?.toLowerCase().includes(textoBusqueda)
       );
     }
 
