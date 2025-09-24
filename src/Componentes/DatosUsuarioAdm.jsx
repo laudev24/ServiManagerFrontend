@@ -138,9 +138,9 @@ useEffect(() => {
     console.log("Nueva contraseña:", nuevaPassword);
 
 const body = {
-  nombre: nombreUsuario,
-  contraseniaVieja: contraseniaActual.current.value,
-  contraseniaNueva: nuevaPassword
+  Nombre: nombreUsuario,
+  ContraseniaVieja: contraseniaActual.current.value,
+  ContraseniaNueva: nuevaPassword
 };
 
 console.log("Payload JSON:", body);
@@ -151,10 +151,10 @@ console.log("Payload JSON:", body);
     "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`
   },
-  body: JSON.stringify({body})
+  body: JSON.stringify(body)
 })
 .then(r => {
-  if (!r.ok) throw new Error(r.statusText);
+  if (!r.ok) throw new Error(r.detail);
   return r;
 })
 .then(() => {
