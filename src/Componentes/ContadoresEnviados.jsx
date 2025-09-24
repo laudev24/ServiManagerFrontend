@@ -1,3 +1,4 @@
+import { set } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +13,6 @@ const [loading, setLoading] = useState(true);
     let navigate = useNavigate();
 
     useEffect(() => {
-  
      traerContadoresEnviados()
     }, [])
 
@@ -45,32 +45,35 @@ const [loading, setLoading] = useState(true);
         })
         .catch(error => {
           console.error("Error al obtener los contadores enviados:", error);
+          setLoading(false);
         });
     }
 
     const agruparContadores = (contadores) => {
+      console.log("Contadores a agrupar: ", contadores);
       const agrupados = {};
       contadores.forEach((contador) => {
-        const key = `${contador.maquina.id}-${formatearFechaHora(contador.fechaYHora)}`;
+        contador.enviosContadores.forEach((envio) => {
+        const key = `${envio.maquina.id}-${formatearFechaHora(envio.fechaYHora)}`;
         // console.log(contador.imagen)
-        const blob = new Blob([Uint8Array.from(atob(contador.imagen), c => c.charCodeAt(0))], { type: 'image/jpeg' });
+        const blob = new Blob([Uint8Array.from(atob(envio.imagen), c => c.charCodeAt(0))], { type: 'image/jpeg' });
         const url = URL.createObjectURL(blob);
 
         if (!agrupados[key]) {
           agrupados[key] = {
-            maquina: contador.maquina,
-            fechaYHora: formatearFechaHora(contador.fechaYHora),
+            maquina: envio.maquina,
+            fechaYHora: formatearFechaHora(envio.fechaYHora),
             imagen: url,
             mensajes: [],
           };
         }
-        if (contador.mensaje?.trim()) {
+        if (envio.mensaje?.trim()) {
           agrupados[key].mensajes.push({
-            tipoImpresion: contador.tipoImpresion,
-            mensaje: contador.mensaje,
+            tipoImpresion: envio.tipoImpresion,
+            mensaje: envio.mensaje,
           });
         }
-      });
+      })});
       return Object.values(agrupados);
     };
 
