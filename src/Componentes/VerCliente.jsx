@@ -158,11 +158,11 @@ const VerCliente = () => {
     }
 
     const irAContadoresRecibidos = () => {
-      navigate("/contadoresRecibidos")
+      navigate("/contadoresRecibidos/"+cliente.id)
     }
 
     const irAInformacionContadores = (id) => {
-      navigate(`/informacionContadores`)
+      navigate(`/informacionContadores/${cliente.id}`)
     }
 
     const irAPagos = () => {

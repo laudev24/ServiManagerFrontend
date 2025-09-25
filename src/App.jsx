@@ -87,8 +87,8 @@ function App() {
               <Route path="fichasMaquina/:id" element={<RequireAuthAdm><FichasMaquina /></RequireAuthAdm>} />
               <Route path="enviarContador" element={<RequireAuthCli><EnviarContador /></RequireAuthCli>} />
               <Route path="contadoresEnviados" element={<RequireAuthCli><ContadoresEnviados /></RequireAuthCli>} />
-              <Route path="contadoresRecibidos" element={<RequireAuthAdm><ContadoresRecibidos/></RequireAuthAdm>} />
-              <Route path="informacionContadores" element={<RequireAuthAdm><InformacionContadores/></RequireAuthAdm>} />
+              <Route path="contadoresRecibidos/:id" element={<RequireAuthAdm><ContadoresRecibidos/></RequireAuthAdm>} />
+              <Route path="informacionContadores/:id" element={<RequireAuthAdm><InformacionContadores/></RequireAuthAdm>} />
               <Route path="pagos/:id" element={<RequireAuthAdm><Pagos/></RequireAuthAdm>} />
 
             </Route>

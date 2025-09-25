@@ -6,6 +6,8 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
   const {
     contadorId,
     costo,
+    costoBYN,
+    costoColor,
     clienteNombre,
     maquinaNombre,
     maquinaId,
@@ -14,7 +16,6 @@ const ContadorRecibido = memo(({ grupo, onConfirmar }) => {
     envios,
     clienteId,
   } = grupo;
-  // console.log("grupo: ", grupo) // Muestra undefined
   
   // mensajes: { [envioId]: {bn: string, color: string }}
   const [mensajes, setMensajes] = useState({});
@@ -104,6 +105,7 @@ const fechaISO = new Date(`${anio}-${mes}-${dia}T${hora}:00`).toISOString();
     };
     enviosContadores.push(envioByN)
     const envioCol = envios.find(e => e.tipoImpresion === "Color")
+    
     if(envioCol){
     
      const envioColor = {
@@ -141,13 +143,28 @@ const fechaISO = new Date(`${anio}-${mes}-${dia}T${hora}:00`).toISOString();
         'Authorization': `Bearer ${token}`
       }
     })
-    .then(r => {
-        if (!r.ok) throw new Error("Error en la respuesta del servidor");
-        // toast.success("Máquina modificada con éxito.");
-        // console.log(r)
-        // navigate("/");
-        return r.json();
-      })
+    .then(async r => {
+      const contentType = r.headers.get("content-type");
+    
+      let json = {};
+      if (contentType && contentType.includes("application/json")) {
+        json = await r.json();
+      } else {
+        const text = await r.text();
+        json = { message: text };
+      }
+    
+      if (!r.ok) {
+        const errorMsg = json.message || "Error desconocido";
+        const innerMsg = json.innerException || json.innerException?.message; // por si es string u objeto
+        toast.error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+        console.log("innerMsg: ", innerMsg);
+        throw new Error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+      }
+    
+      toast.success("Contador confirmado.");
+      return json;
+    })
       .catch(error => {
         console.error("Error al confirmar contador:", error);
         toast.error("Error al confirmar el contador.");

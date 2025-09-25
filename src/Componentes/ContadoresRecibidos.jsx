@@ -1,91 +1,141 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ContadorRecibido from './ContadorRecibido';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ContadoresRecibidos = () => {
   const [contadores, setContadores] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [maquinas, setMaquinas] = useState([]);
+  const [arrendamientos, setArrendamientos] = useState([]);
+  const [grupos, setGrupos] = useState([]);
+  // const [arrendamiento, setArrendamiento] = useState(null);
   const mensajesRef = useRef({});
   const token = localStorage.getItem("token");
   const API_URL=import.meta.env.VITE_API_URL
+  const clienteId = useParams();
+  const id = Number(clienteId.id)
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  
+
   
 useEffect(() => {
-  Promise.all([traerClientes(), traerMaquinas(), traerContadores()])
-    .then(() => setLoading(false))
-    .catch(console.error);
+  const cargarDatos = async () => {
+    try {
+      const [clientesData, maquinasData, contadoresData] = await Promise.all([
+        traerClientes(),
+        traerMaquinas(),
+        traerContadores()
+      ]);
+
+      await traerArrendamientos();
+
+      const agrupados = await agruparEnvios(contadoresData, clientesData, maquinasData); 
+      setGrupos(agrupados);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error al cargar datos:", error);
+    }
+  };
+
+  cargarDatos(); 
 }, []);
 
 
 
+const traerClientes = async () => {
+  const res = await fetch(`${API_URL}/cliente`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
 
-  const traerClientes = () => {
-    fetch(`${API_URL}/cliente`, {
+  if (!res.ok) throw new Error("Error en clientes");
+
+  const data = await res.json();
+  setClientes(data);
+  return data;
+};
+
+const traerMaquinas = async () => {
+  const res = await fetch(`${API_URL}/maquina`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) throw new Error("Error en máquinas");
+
+  const data = await res.json();
+  setMaquinas(data);
+  return data;
+};
+
+
+
+const traerContadores = async () => {
+  const res = await fetch(`${API_URL}/contador`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) throw new Error("Error en contadores");
+
+  const data = await res.json();
+  setContadores(data);
+  return data;
+};
+
+const buscarCliente = (id, listaClientes) => {
+  const cliente = listaClientes.find(cli => cli.id === id);
+  return cliente ? cliente.nombreEmpresa : "Desconocido";
+};
+const buscarMaquina = (id, listaMaquinas) => {
+  const maq = listaMaquinas.find(m => m.id === id);
+  return maq ? `${maq.numero} - ${maq.marca} - ${maq.modelo}` : "Desconocida";
+};
+
+
+
+  const traerArrendamientos = () => {
+    fetch(`${API_URL}/Arrendamiento/Arrendamiento/cliente/${id}`, {
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(r => r.ok ? r.json() : Promise.reject("Error en clientes"))
-      .then(setClientes)
+      .then(r => r.ok ? r.json() : Promise.reject("Error en arrendamientos"))
+      .then(setArrendamientos)
       .catch(console.error);
-  };
+  }
 
-  const traerMaquinas = () => {
-    fetch(`${API_URL}/maquina`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(r => r.ok ? r.json() : Promise.reject("Error en maquinas"))
-      .then(setMaquinas)
-      .catch(console.error);
-  };
 
-  const traerContadores = () => {
-    fetch(`${API_URL}/contador`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(r => r.ok ? r.json() : Promise.reject("Error en contadores"))
-      .then(setContadores)
-      .catch(console.error);
-  };
-
-  const buscarCliente = useCallback((idCliente) => {
-    const cliente = clientes.find(cli => cli.id === idCliente);
-    return cliente ? cliente.nombreEmpresa : "Desconocido";
-  }, [clientes]);
-
-  const buscarMaquina = useCallback((idMaquina) => {
-    const maq = maquinas.find(m => m.id === idMaquina);
-    return maq ? `${maq.numero} - ${maq.marca} - ${maq.modelo}` : "Desconocida";
-  }, [maquinas]);
-
-const agruparEnvios = (contadores) => {
+const agruparEnvios = async (contadores, clientes, maquinas) => {
   const agrupados = [];
 
   contadores.forEach((contador) => {
+    if (!Array.isArray(contador.enviosContadores)) return;
+
     contador.enviosContadores.forEach((envio) => {
-      
+      const arrendamiento = arrendamientos.find(a =>
+        a.maquinaId === envio.maquinaId && a.clienteId === envio.clienteId
+      );
+
       const clave = `${envio.maquinaId}-${envio.clienteId}-${formatearFechaHora(envio.fechaYHora)}`;
 
       const grupoExistente = agrupados.find(a => a.clave === clave);
 
       const envioExtendido = {
         ...envio,
-        contadorId : contador.id,
+        contadorId: contador.id,
         costo: contador.costo,
-        clienteNombre: buscarCliente(envio.clienteId),
-        clienteId: envio.clienteId,
-        maquinaId: envio.maquinaId,
-        maquinaNombre: buscarMaquina(envio.maquinaId),
+        costoBYN: arrendamiento?.costoBYN || 0,
+        costoColor: arrendamiento?.costoColor || 0,
+        clienteNombre: buscarCliente(envio.clienteId, clientes),
+        maquinaNombre: buscarMaquina(envio.maquinaId, maquinas),
         fechaFormateada: formatearFechaHora(envio.fechaYHora),
       };
 
@@ -95,24 +145,25 @@ const agruparEnvios = (contadores) => {
         agrupados.push({
           clave,
           contadorId: contador.id,
-          costo: contador.consto,
+          costo: 0,
+          costoBYN: 0,
+          costoColor: 0,
           maquinaId: envio.maquinaId,
           clienteId: envio.clienteId,
           imagen: envio.imagen,
           fecha: envio.fechaYHora,
-          clienteNombre: buscarCliente(envio.clienteId),
-          maquinaNombre: buscarMaquina(envio.maquinaId),
-          fechaFormateada: formatearFechaHora(envio.fechaYHora),
+          clienteNombre: envioExtendido.clienteNombre,
+          maquinaNombre: envioExtendido.maquinaNombre,
+          fechaFormateada: envioExtendido.fechaFormateada,
           envios: [envioExtendido],
         });
       }
     });
   });
 
-  
-  return agrupados
-
+  return agrupados;
 };
+
  const formatearFechaHora = (fechaISO) => {
   if (!fechaISO) return "";
 
@@ -131,39 +182,28 @@ const agruparEnvios = (contadores) => {
 };
 
 
-  // const handleMensajeChange = useCallback((envioId, texto) => {
-  //   mensajesRef.current[envioId] = texto;
-  // }, []);
-
-
 
 const handleConfirmar = useCallback((dataGrupo) => {
- 
-
-  navigate('/informacionContadores', { state: dataGrupo });
-
-
+  navigate(`/informacionContadores/${id}`, { state: dataGrupo });
 }, []);
 
+if(clientes.length === 0 || !maquinas.length === 0){
+  return <div>Cargando datos...</div>;
+}
 
   return (
     <div className="contenedor-menu">
       <div className="contenedor-secundario">
         <h1>Contadores Recibidos</h1>
-    {contadores.length > 0 ? (
-  agruparEnvios(contadores).map((grupo, i) => (
-    <article key={i} className="bloque-contador">
-      <ContadorRecibido
-        grupo={grupo}
-        // onMensajeChange={handleMensajeChange}
-        // mensajes={mensajesRef.current} 
-        onConfirmar={handleConfirmar}
-      />
-    </article>
-  ))
-) : (
-  <p>Cargando datos o no hay contadores...</p>
-)}
+        {loading ? (
+          <p>Cargando datos...</p>
+        ) : (
+          grupos.map((grupo, i) => (
+            <article key={i} className="bloque-contador">
+              <ContadorRecibido grupo={grupo} onConfirmar={handleConfirmar} />
+            </article>
+          ))
+        )}
 
       </div>
     </div>

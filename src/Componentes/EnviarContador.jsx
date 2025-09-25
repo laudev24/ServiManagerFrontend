@@ -170,28 +170,41 @@ const EnviarContador = () => {
                 console.log(`${pair[0]}:`, pair[1]);
             }
             fetch(`${API_URL}/envioContador`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            })
-            .then(r => {
-                if(!r.ok){
-                    // console.error("Error en la respuesta del servidor:", r.statusText);
-                    // toast.error("Error en la respuesta del servidor");
-                    throw new Error("Error en la respuesta del servidor", r);
-                }
-                else if(r.ok)
-                    navigate("/contadoresEnviados")
-                    toast.success("Contador enviado con éxito");
-                return r.json();
-            })
-            .catch(error => {
-                console.error("Error al enviar el contador:", error);
-                toast.error("Error al enviar el contador");
-            })
-            .finally(setSubmitting(false));
+  method: 'POST',
+  body: formData,
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
+.then(async r => {
+  const contentType = r.headers.get("content-type");
+
+  let json = {};
+  if (contentType && contentType.includes("application/json")) {
+    json = await r.json();
+  } else {
+    const text = await r.text();
+    json = { message: text };
+  }
+
+  if (!r.ok) {
+    const errorMsg = json.message || "Error desconocido";
+    const innerMsg = json.innerException || json.innerException?.message; // por si es string u objeto
+    toast.error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+    console.log("innerMsg: ", innerMsg);
+    throw new Error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+  }
+
+  toast.success("Contador enviado con éxito");
+  navigate("/contadoresEnviados");
+  return json;
+})
+.catch(error => {
+  console.error("Error al enviar el contador:", error);
+  toast.error(error.message || "Error al enviar el contador");
+})
+.finally(() => setSubmitting(false));
+
         }
         else if(maquina.tipoImpresion === "Monocromatico"){
             // console.log("Datos a enviar:", formData)
@@ -199,29 +212,41 @@ const EnviarContador = () => {
             //     console.log(`${pair[0]}:`, pair[1]);
             // }
             fetch(`${API_URL}/envioContador`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            })
-            .then(r => {
-                if(!r.ok){
-                    // console.error("Error en la respuesta del servidor:", r.statusText);
-                    // toast.error("Error en la respuesta del servidor");
-                    throw new Error("Error en la respuesta del servidor", r);
-                }
-                else if(r.ok){
-                    navigate("/contadoresEnviados")
-                    toast.success("Contador enviado con éxito");
-                }
-                return r.json();
-            })
-            .catch(error => {
-                console.error(error);
-                toast.error("Error al enviar el contador");
-            })
-            .finally(setSubmitting(false));
+  method: 'POST',
+  body: formData,
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
+.then(async r => {
+  const contentType = r.headers.get("content-type");
+
+  let json = {};
+  if (contentType && contentType.includes("application/json")) {
+    json = await r.json();
+  } else {
+    const text = await r.text();
+    json = { message: text };
+  }
+
+  if (!r.ok) {
+    const errorMsg = json.message || "Error desconocido";
+    const innerMsg = json.innerException || json.innerException?.message; // por si es string u objeto
+    toast.error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+    console.log("innerMsg: ", innerMsg);
+    throw new Error(`${errorMsg}${innerMsg ? ` - ${innerMsg}` : ''}`);
+  }
+
+  toast.success("Contador enviado con éxito");
+  navigate("/contadoresEnviados");
+  return json;
+})
+.catch(error => {
+  console.error("Error al enviar el contador:", error);
+  toast.error(error.message || "Error al enviar el contador");
+})
+.finally(() => setSubmitting(false));
+
         }
         
 
