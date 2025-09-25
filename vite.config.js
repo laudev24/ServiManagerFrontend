@@ -4,36 +4,32 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 
-export default defineConfig({
-  base: '',
+export default {
   plugins: [
-    react(),
-  VitePWA({
-    registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'ServiManager',
         short_name: 'ServiManager',
-        description: 'Proyecto integrador ORT',
-        theme_color: '#ffffff',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#000000',
         icons: [
-    // {
-    //   "src": "/icons/icon-192.png",
-    //   "sizes": "192x192",
-    //   "type": "LogoDiegoVidal.jpeg"
-    // },
-    // {
-    //   "src": "/icons/icon-512.png",
-    //   "sizes": "512x512",
-    //   "type": "LogoDiegoVidal.jpeg"
-    // },
-    // {
-    //   "src": "/icons/maskable-512.png",
-    //   "sizes": "512x512",
-    //   "type": "LogoDiegoVidal.jpeg",
-    //   "purpose": "maskable"
-    // }
-  ],
-      },
-  })],
-})
+          {
+            src: '/icons/LogoDiegoVidal_192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/LogoDiegoVidal_512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
+  ]
+}
+

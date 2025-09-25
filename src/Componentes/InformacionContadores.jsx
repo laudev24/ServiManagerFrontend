@@ -184,7 +184,26 @@ const InformacionContadores = () => {
   };
 
   const guardar = async () => {
-    // Guardar lógica aquí
+    const pago = {
+      // id : 0,
+      clienteId: clienteId,
+      valor : calcularTotalAAbonar(),
+      confirmado : false
+    }
+    fetch (`${API_URL}/pago`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(pago)
+    })
+    .then(r => {
+      if (!r.ok) throw new Error("Error al crear pago");
+      else navigate(`/pagos/${clienteId}`)
+      return r.json();
+    })
+    .catch(console.error);
   };
 
   const enviarACliente = () => {
@@ -192,8 +211,8 @@ const InformacionContadores = () => {
   };
 console.log(loading)
   console.log("contador: ", contador)
-  if (loading || !contador) return <p>Cargando datos...</p>;
-  if (!arrendamiento) return <p>No se encontró arrendamiento.</p>;
+  if (loading || !contador || !arrendamiento) return <p>Cargando datos...</p>;
+  // if (!arrendamiento) return <p>No se encontró arrendamiento.</p>;
 
   return (
     <div className="contenedor-menu">
@@ -277,7 +296,7 @@ console.log(loading)
         </table>
 
         <button onClick={guardar}>Guardar</button>
-        <button className="btn-contrasenia" onClick={enviarACliente}>Enviar a {state?.clienteNombre}</button>
+        <button className="btn-contrasenia" onClick={enviarACliente}>Guardar y enviar a {state?.clienteNombre}</button>
       </div>
     </div>
   );

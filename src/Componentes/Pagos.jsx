@@ -92,9 +92,9 @@ const PagosCliente = () => {
       <tbody>
         {pagos.map(pago => (
           <tr key={pago.id}>
-            <td>{pago.valor}</td>
-            <td>{pago.confirmado ? "✅" : "❌"}</td>
-            <td>
+            <td data-label= "Total">{pago.valor}</td>
+            <td data-label= "Confirmado">{pago.confirmado ? "✅" : "❌"}</td>
+            <td data-label= "Ingresar monto">
               <input
                 type="number"
                 className="input-monto"
