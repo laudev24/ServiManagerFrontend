@@ -4,32 +4,38 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 
-export default {
+export default defineConfig({
+  base: '',
   plugins: [
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+    react(),
+  VitePWA({
+    registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
         name: 'ServiManager',
         short_name: 'ServiManager',
-        start_url: '/',
-        display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#000000',
+        description: 'Proyecto integrador ORT',
+        theme_color: '#ffffff',
         icons: [
-          {
-            src: '/icons/LogoDiegoVidal_192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/icons/LogoDiegoVidal_512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    })
-  ]
-}
+    // {
+    //   "src": "/icons/icon-192.png",
+    //   "sizes": "192x192",
+    //   "type": "LogoDiegoVidal.jpeg"
+    // },
+    // {
+    //   "src": "/icons/icon-512.png",
+    //   "sizes": "512x512",
+    //   "type": "LogoDiegoVidal.jpeg"
+    // },
+    // {
+    //   "src": "/icons/maskable-512.png",
+    //   "sizes": "512x512",
+    //   "type": "LogoDiegoVidal.jpeg",
+    //   "purpose": "maskable"
+    // }
+  ],
+      },
+  })],
+})
+
 
